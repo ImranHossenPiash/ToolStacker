@@ -1,0 +1,38 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Security headers
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
+
+  # Browser caching for static assets
+  <IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+  </IfModule>
+
+  # Custom tool aliases
+  RewriteRule ^jpg-to-pdf/?$ tools/image-to-pdf.html [L]
+  RewriteRule ^png-to-pdf/?$ tools/image-to-pdf.html [L]
+  RewriteRule ^pdf-to-image/?$ tools/pdf-image-converter.html [L]
+  RewriteRule ^pdf-metadata/?$ tools/edit-pdf-metadata.html [L]
+
+  # Check if request has no extension and corresponding .html exists in root
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+
+  # Check if request exists in tools/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/tools/$1.html -f
+  RewriteRule ^(.*)$ tools/$1.html [L]
+</IfModule>

@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Add Watermark to PDF Online – Free & Private – ToolStacker</title>
+    <meta name="title" content="Add Watermark to PDF Online – Free & Private – ToolStacker" />
+    <meta name="description" content="Add text or image watermark to PDF documents. Customize text, font, color, opacity, angle, and 3x3 position with real-time live preview. 100% client-side." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF Libraries CDN -->
+    <!-- pdf-lib for watermarking -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <!-- pdf.js for preview canvas rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your PDF and Images Never Leave Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                PDF Studio
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- PWA Install Button -->
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Watermark PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 text-xs font-bold">
+            <i data-lucide="stamp" class="w-4 h-4 text-blue-500"></i>
+            <span>Text or Image • Real-Time Preview • 100% In-Browser</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-50 leading-tight">
+            Add Watermark to PDF – <span class="text-blue-600 dark:text-blue-400">Free &amp; Private</span>
+          </h1>
+          <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            Apply custom text or logo watermarks to your PDF documents. Customize font, size, color, opacity, angle, and position. No upload, no signup.
+          </p>
+        </div>
+
+        <!-- Large Upload Zone -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload PDF to watermark"
+          class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 dark:hover:border-blue-500 rounded-3xl p-8 sm:p-14 text-center cursor-pointer transition-all duration-200 bg-white/60 dark:bg-neutral-900/60 hover:bg-blue-50/50 dark:hover:bg-blue-950/20 backdrop-blur-sm group focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+        >
+          <input type="file" id="file-input" accept=".pdf,application/pdf" class="hidden" />
+          <div class="max-w-md mx-auto space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xs">
+              <i data-lucide="file-badge" class="w-8 h-8"></i>
+            </div>
+            <div class="space-y-1.5">
+              <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                Drag &amp; drop PDF here or click to browse
+              </h3>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400">
+                Supports PDF files up to 200MB. Processed 100% locally.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                id="browse-btn"
+                class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+              >
+                Choose PDF File
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace (Visible after PDF is loaded) -->
+      <section id="workspace" class="hidden space-y-6">
+        
+        <!-- File Info Bar -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 id="doc-name" class="font-bold text-sm text-neutral-900 dark:text-neutral-100 truncate">
+                document.pdf
+              </h3>
+              <p id="doc-details" class="text-xs text-neutral-500 font-mono mt-0.5">
+                0 KB • 0 pages
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 transition-colors cursor-pointer self-start sm:self-auto"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+            <span>Choose Another File</span>
+          </button>
+        </div>
+
+        <!-- Main Workspace Grid: Controls (Left) + Live Preview (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left Column: Controls (7 cols on lg) -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Mode Switch Tabs -->
+            <div class="flex p-1.5 rounded-2xl bg-neutral-200/80 dark:bg-neutral-800/80 border border-neutral-300 dark:border-neutral-700">
+              <button
+                type="button"
+                id="tab-text"
+                class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-xs transition-all cursor-pointer"
+              >
+                <i data-lucide="type" class="w-4 h-4"></i>
+                <span>Text Watermark</span>
+              </button>
+              <button
+                type="button"
+                id="tab-image"
+                class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all cursor-pointer"
+              >
+                <i data-lucide="image" class="w-4 h-4"></i>
+                <span>Image Watermark</span>
+              </button>
+            </div>
+
+            <!-- TAB 1: TEXT WATERMARK SETTINGS -->
+            <div id="panel-text" class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-7 shadow-xs space-y-5">
+              
+              <!-- Watermark Text Input & Quick Presets -->
+              <div class="space-y-2">
+                <label for="text-input" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                  Watermark Text <span class="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="text-input"
+                  value="CONFIDENTIAL"
+                  placeholder="e.g. CONFIDENTIAL, DRAFT, SAMPLE"
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/50 text-neutral-900 dark:text-neutral-100 text-xs font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+
+                <!-- Quick Presets -->
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                  <button type="button" data-text-preset="CONFIDENTIAL" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 transition-colors">
+                    CONFIDENTIAL
+                  </button>
+                  <button type="button" data-text-preset="DRAFT" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 transition-colors">
+                    DRAFT
+                  </button>
+                  <button type="button" data-text-preset="DO NOT COPY" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 transition-colors">
+                    DO NOT COPY
+                  </button>
+                  <button type="button" data-text-preset="COPYRIGHT" class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 transition-colors">
+                    COPYRIGHT
+                  </button>
+                </div>
+              </div>
+
+              <!-- Font & Color Selection -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Font Selector -->
+                <div class="space-y-1.5">
+                  <label for="font-select" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Font Family
+                  </label>
+                  <select
+                    id="font-select"
+                    class="w-full px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/50 text-neutral-900 dark:text-neutral-100 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none cursor-pointer"
+                  >
+                    <option value="Helvetica-Bold">Helvetica (Bold Sans)</option>
+                    <option value="Helvetica">Helvetica (Regular Sans)</option>
+                    <option value="Times-Roman">Times New Roman (Serif)</option>
+                    <option value="Courier-Bold">Courier (Bold Monospace)</option>
+                    <option value="Courier">Courier (Monospace)</option>
+                  </select>
+                </div>
+
+                <!-- Color Picker -->
+                <div class="space-y-1.5">
+                  <label class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Text Color
+                  </label>
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="color"
+                      id="text-color-picker"
+                      value="#dc2626"
+                      class="w-9 h-9 rounded-xl border border-neutral-300 dark:border-neutral-700 cursor-pointer p-0.5 bg-white dark:bg-neutral-800"
+                    />
+                    <input
+                      type="text"
+                      id="text-color-hex"
+                      value="#dc2626"
+                      class="w-full px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/50 text-neutral-900 dark:text-neutral-100 text-xs font-mono focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sliders: Size, Opacity, Angle -->
+              <div class="space-y-4 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                
+                <!-- Font Size Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-neutral-700 dark:text-neutral-300">Font Size</span>
+                    <span id="text-size-val" class="font-mono font-semibold text-blue-600 dark:text-blue-400">48 pt</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="text-size-slider"
+                    min="12"
+                    max="120"
+                    value="48"
+                    step="1"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                </div>
+
+                <!-- Opacity Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-neutral-700 dark:text-neutral-300">Opacity / Transparency</span>
+                    <span id="text-opacity-val" class="font-mono font-semibold text-blue-600 dark:text-blue-400">35%</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="text-opacity-slider"
+                    min="5"
+                    max="100"
+                    value="35"
+                    step="5"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                </div>
+
+                <!-- Rotation Angle Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-neutral-700 dark:text-neutral-300">Rotation Angle</span>
+                    <span id="text-angle-val" class="font-mono font-semibold text-blue-600 dark:text-blue-400">45°</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="text-angle-slider"
+                    min="0"
+                    max="360"
+                    value="45"
+                    step="5"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                  <!-- Angle Presets -->
+                  <div class="flex items-center gap-2 pt-1">
+                    <button type="button" data-angle-preset="0" class="px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-blue-600">0°</button>
+                    <button type="button" data-angle-preset="45" class="px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-blue-600">45°</button>
+                    <button type="button" data-angle-preset="90" class="px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-blue-600">90°</button>
+                    <button type="button" data-angle-preset="315" class="px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-blue-600">315° (-45°)</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 2: IMAGE WATERMARK SETTINGS -->
+            <div id="panel-image" class="hidden bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-7 shadow-xs space-y-5">
+              
+              <!-- Image Upload Dropzone -->
+              <div class="space-y-2">
+                <label class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                  Watermark Image (Logo/Stamp) <span class="text-rose-500">*</span>
+                </label>
+                <div
+                  id="image-dropzone"
+                  class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 rounded-2xl p-5 text-center cursor-pointer transition-colors bg-neutral-50/50 dark:bg-neutral-800/40 flex flex-col items-center justify-center min-h-[120px]"
+                >
+                  <input type="file" id="image-file-input" accept="image/png,image/jpeg,image/svg+xml,image/webp" class="hidden" />
+                  
+                  <div id="image-placeholder" class="space-y-1.5">
+                    <i data-lucide="upload-cloud" class="w-6 h-6 text-blue-500 mx-auto"></i>
+                    <p class="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                      Click to upload watermark image
+                    </p>
+                    <p class="text-[11px] text-neutral-500">
+                      PNG with transparency or SVG recommended
+                    </p>
+                  </div>
+
+                  <img id="image-preview-thumb" src="" alt="Watermark Preview" class="hidden max-h-24 max-w-full object-contain rounded-lg p-1 bg-white/40 dark:bg-black/30" />
+                </div>
+              </div>
+
+              <!-- Sliders: Scale, Opacity, Angle -->
+              <div class="space-y-4 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                
+                <!-- Size / Scale Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-neutral-700 dark:text-neutral-300">Image Scale</span>
+                    <span id="image-size-val" class="font-mono font-semibold text-blue-600 dark:text-blue-400">100%</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="image-size-slider"
+                    min="20"
+                    max="200"
+                    value="100"
+                    step="5"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                </div>
+
+                <!-- Opacity Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-neutral-700 dark:text-neutral-300">Opacity / Transparency</span>
+                    <span id="image-opacity-val" class="font-mono font-semibold text-blue-600 dark:text-blue-400">40%</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="image-opacity-slider"
+                    min="5"
+                    max="100"
+                    value="40"
+                    step="5"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                </div>
+
+                <!-- Angle Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-neutral-700 dark:text-neutral-300">Rotation Angle</span>
+                    <span id="image-angle-val" class="font-mono font-semibold text-blue-600 dark:text-blue-400">0°</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="image-angle-slider"
+                    min="0"
+                    max="360"
+                    value="0"
+                    step="5"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Position Selector (3x3 Grid) -->
+            <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider">
+                    Watermark Position (3x3 Grid)
+                  </h4>
+                  <p class="text-[11px] text-neutral-500">
+                    Choose anchor point on the document page
+                  </p>
+                </div>
+              </div>
+
+              <!-- 3x3 Grid Buttons -->
+              <div class="grid grid-cols-3 gap-2.5 max-w-xs mx-auto p-3 bg-neutral-100 dark:bg-neutral-800/60 rounded-2xl">
+                <button type="button" data-pos="top-left" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Top Left">
+                  <i data-lucide="arrow-up-left" class="w-4 h-4"></i>
+                  <span class="text-[10px]">TL</span>
+                </button>
+                <button type="button" data-pos="top-center" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Top Center">
+                  <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                  <span class="text-[10px]">TC</span>
+                </button>
+                <button type="button" data-pos="top-right" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Top Right">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                  <span class="text-[10px]">TR</span>
+                </button>
+                <button type="button" data-pos="middle-left" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Middle Left">
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                  <span class="text-[10px]">ML</span>
+                </button>
+                <button type="button" data-pos="center" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Center">
+                  <i data-lucide="circle-dot" class="w-4 h-4"></i>
+                  <span class="text-[10px]">Center</span>
+                </button>
+                <button type="button" data-pos="middle-right" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Middle Right">
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  <span class="text-[10px]">MR</span>
+                </button>
+                <button type="button" data-pos="bottom-left" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Bottom Left">
+                  <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
+                  <span class="text-[10px]">BL</span>
+                </button>
+                <button type="button" data-pos="bottom-center" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Bottom Center">
+                  <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                  <span class="text-[10px]">BC</span>
+                </button>
+                <button type="button" data-pos="bottom-right" class="p-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center gap-1 cursor-pointer" title="Bottom Right">
+                  <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+                  <span class="text-[10px]">BR</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Page Range Settings -->
+            <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-4">
+              <div class="flex items-center gap-2">
+                <i data-lucide="layers" class="w-4 h-4 text-blue-500"></i>
+                <h4 class="text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider">
+                  Page Range
+                </h4>
+              </div>
+
+              <div class="flex items-center gap-6">
+                <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+                  <input type="radio" name="page-range-mode" id="range-all" checked class="text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                  <span>All Pages</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-neutral-800 dark:text-neutral-200">
+                  <input type="radio" name="page-range-mode" id="range-specific" class="text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                  <span>Specific Pages</span>
+                </label>
+              </div>
+
+              <!-- Specific Pages Input -->
+              <div id="specific-pages-container" class="hidden space-y-1.5 pt-1">
+                <input
+                  type="text"
+                  id="specific-pages-input"
+                  placeholder="e.g. 1, 3, 5-7, even, odd"
+                  class="w-full px-3.5 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-800/50 text-neutral-900 dark:text-neutral-100 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <p id="range-hint" class="text-[11px] text-neutral-500">
+                Watermark will be added to all pages.
+              </p>
+            </div>
+
+            <!-- Watermark Layers (Multiple Watermarks Support) -->
+            <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider">
+                    Watermark Layers
+                  </h4>
+                  <p class="text-[11px] text-neutral-500">
+                    Add multiple watermarks to the same document
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  id="add-watermark-btn"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-900 transition-colors cursor-pointer"
+                >
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>Add Another Watermark</span>
+                </button>
+              </div>
+
+              <!-- List Container -->
+              <div id="watermarks-list" class="space-y-2">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Main Action Button -->
+            <div class="pt-2">
+              <button
+                type="button"
+                id="apply-watermark-btn"
+                class="w-full py-4 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold text-sm shadow-lg shadow-blue-600/25 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+              >
+                <i data-lucide="stamp" class="w-5 h-5"></i>
+                <span>Add Watermark to PDF</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Live Interactive Preview (5 cols on lg, sticky) -->
+          <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+            
+            <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="eye" class="w-4 h-4 text-blue-500"></i>
+                  <h4 class="text-xs font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider">
+                    Live Preview
+                  </h4>
+                </div>
+
+                <!-- Page Navigation -->
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    id="prev-page-btn"
+                    disabled
+                    class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                    title="Previous page"
+                  >
+                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <span id="page-indicator" class="text-[11px] font-mono font-semibold text-neutral-600 dark:text-neutral-300">
+                    Page 1 of 1
+                  </span>
+                  <button
+                    type="button"
+                    id="next-page-btn"
+                    disabled
+                    class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                    title="Next page"
+                  >
+                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Out of Bounds Warning -->
+              <div id="bounds-warning" class="hidden p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-[11px] text-amber-800 dark:text-amber-300 flex items-center gap-2">
+                <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500 shrink-0"></i>
+                <span>Watermark is large and may extend near page boundaries.</span>
+              </div>
+
+              <!-- Preview Canvas Container -->
+              <div
+                id="preview-container"
+                class="relative bg-neutral-100 dark:bg-neutral-950/80 rounded-2xl p-4 flex items-center justify-center overflow-hidden border border-neutral-200 dark:border-neutral-800 min-h-[360px]"
+              >
+                <!-- Rendered PDF Page -->
+                <div class="relative shadow-md rounded-md overflow-hidden bg-white">
+                  <canvas id="pdf-canvas" class="block max-w-full h-auto"></canvas>
+                  <!-- Real-time watermark overlay -->
+                  <div id="watermark-overlay" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+                </div>
+              </div>
+
+              <p class="text-[11px] text-neutral-400 text-center">
+                Updates in real-time as you type or adjust sliders.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Download State (Visible after watermarking) -->
+      <section id="download-section" class="hidden bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-sm max-w-2xl mx-auto">
+        <div class="w-20 h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-xs">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="max-w-md mx-auto space-y-2">
+          <h3 class="text-2xl font-bold font-display text-neutral-900 dark:text-neutral-50">
+            Watermark Added Successfully!
+          </h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            Your document has been watermarked with crisp vector precision.
+          </p>
+          <div class="pt-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300">
+              <i data-lucide="hard-drive" class="w-3.5 h-3.5 text-blue-500"></i>
+              <span id="result-size-badge">0 KB</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <button
+            type="button"
+            id="download-btn"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold text-sm shadow-lg shadow-blue-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download Watermarked PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="watermark-another-btn"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-bold text-sm transition-all cursor-pointer"
+          >
+            Watermark Another File
+          </button>
+        </div>
+      </section>
+
+      <!-- Features / Information Section -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            100% In-Browser Privacy
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Your PDF documents and image stamps are processed exclusively in client-side memory. Zero files are uploaded to any server.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            Vector Sharp Quality
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Text watermarks are rendered directly with native PDF vector fonts for crystal clarity at any zoom level or print resolution.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <i data-lucide="layers-3" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            Multi-Layer Watermarks
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Combine text banners with logo stamps, target specific page ranges, and configure independent rotation and transparency.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile Sticky Action Bar -->
+    <div id="sticky-action-bar" class="hidden lg:hidden fixed bottom-0 left-0 right-0 z-30 p-3 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 shadow-2xl">
+      <button
+        type="button"
+        id="sticky-apply-btn"
+        class="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold text-xs shadow-md shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <i data-lucide="stamp" class="w-4 h-4"></i>
+        <span>Add Watermark to PDF</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="w-full max-w-md bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-neutral-200 dark:border-neutral-800 text-center space-y-5">
+        <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto">
+          <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+        </div>
+
+        <div class="space-y-1.5">
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+            Applying Watermarks
+          </h3>
+          <p id="wm-progress-text" class="text-xs text-neutral-500">
+            Embedding watermark into PDF... Please wait
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="w-full bg-neutral-100 dark:bg-neutral-800 rounded-full h-2.5 overflow-hidden">
+            <div id="wm-progress-fill" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+          <div id="wm-progress-pct" class="text-xs font-mono font-bold text-blue-600 text-right">
+            0%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300">ToolStacker</span>
+          <span>•</span>
+          <span>Fast, Private, Client-Side Utilities</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <a href="/#tools-section" class="hover:text-blue-600 transition-colors">All Tools</a>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/watermark-pdf.js"></script>
+  </body>
+</html>

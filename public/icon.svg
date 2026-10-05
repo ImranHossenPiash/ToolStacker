@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#grad)"/>
+  <!-- Image compression icon symbol -->
+  <g fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round" transform="translate(64, 64) scale(0.75)">
+    <!-- Picture frame -->
+    <rect x="48" y="64" width="416" height="320" rx="32"/>
+    <!-- Mountain landscape -->
+    <polygon points="48,352 160,208 272,320 352,240 464,352" fill="rgba(255,255,255,0.2)"/>
+    <circle cx="160" cy="144" r="32" fill="#ffffff"/>
+    <!-- Compression arrows pointing inward -->
+    <path d="M256,16 L256,96 M224,64 L256,96 L288,64" stroke="#60a5fa" stroke-width="32"/>
+    <path d="M256,496 L256,416 M224,448 L256,416 L288,448" stroke="#60a5fa" stroke-width="32"/>
+  </g>
+</svg>

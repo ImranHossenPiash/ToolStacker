@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Sign PDF Online – Free & Private – ToolStacker</title>
+    <meta name="title" content="Sign PDF Online – Free & Private – ToolStacker" />
+    <meta name="description" content="Draw, type, or upload your signature to sign PDF documents online. 100% client-side, zero server uploads, free, no signup, no watermark." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: UI Fonts + Cursive Signature Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Alex+Brush&family=Caveat:wght@600&family=Dancing+Script:wght@700&family=Great+Vibes&family=Pacifico&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+              dancing: ['"Dancing Script"', 'cursive'],
+              vibes: ['"Great Vibes"', 'cursive'],
+              pacifico: ['"Pacifico"', 'cursive'],
+              caveat: ['"Caveat"', 'cursive'],
+              brush: ['"Alex Brush"', 'cursive'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF & Signature Libraries CDN -->
+    <!-- pdf-lib for embedding signature onto PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <!-- pdf.js for rendering PDF pages to canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- signature_pad for drawing signatures -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.1.7/signature_pad.umd.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your PDF and Signature Never Leave Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                PDF Studio
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- PWA Install Button -->
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Sign PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section (Upload & Information) -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 text-xs font-bold">
+            <i data-lucide="pen-tool" class="w-4 h-4 text-blue-500"></i>
+            <span>Draw, Type, or Upload • 100% In-Browser Privacy</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-50 leading-tight">
+            Sign PDF Online – <span class="text-blue-600 dark:text-blue-400">Free &amp; Private</span>
+          </h1>
+          <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            Draw, type, or upload your signature. Place anywhere on the document with drag-and-drop, resize, and rotation controls. No upload, no signup.
+          </p>
+        </div>
+
+        <!-- Large Upload Zone -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload PDF to sign"
+          class="relative flex flex-col items-center justify-center p-8 sm:p-14 rounded-3xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 bg-white dark:bg-neutral-900 transition-all text-center group cursor-pointer shadow-xs overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <input
+            type="file"
+            id="file-input"
+            accept=".pdf,application/pdf"
+            class="hidden"
+          />
+
+          <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform mb-4 shadow-xs pointer-events-none">
+            <i data-lucide="file-signature" class="w-8 h-8"></i>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 pointer-events-none">
+            Drag &amp; drop PDF here or click to browse
+          </h3>
+          <p class="mt-1.5 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-md pointer-events-none">
+            Supports single or multi-page documents • Place unlimited signatures • Ctrl+V to paste
+          </p>
+
+          <button
+            type="button"
+            id="browse-btn"
+            class="mt-5 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+          >
+            <i data-lucide="folder-open" class="w-4 h-4"></i>
+            <span>Select PDF Document</span>
+          </button>
+        </div>
+
+        <!-- Feature Badges Ribbon -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto pt-2">
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center shrink-0">
+              <i data-lucide="pen-tool" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">Draw &amp; Touch</div>
+              <div class="text-[11px] text-neutral-500 truncate">Smooth stylus/mouse</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center shrink-0">
+              <i data-lucide="type" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">Cursive Typing</div>
+              <div class="text-[11px] text-neutral-500 truncate">5 stylish font choices</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="save" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">Smart Save</div>
+              <div class="text-[11px] text-neutral-500 truncate">Reuse saved signatures</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center shrink-0">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">100% Private</div>
+              <div class="text-[11px] text-neutral-500 truncate">Zero server uploads</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace Section (Active when PDF is loaded) -->
+      <section id="workspace-section" class="hidden space-y-6">
+        
+        <!-- Header Controls Bar -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <!-- File Details -->
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 id="doc-name-display" class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 truncate">
+                document.pdf
+              </h3>
+              <p id="doc-details-display" class="text-xs text-neutral-500">
+                0 B • 0 pages
+              </p>
+            </div>
+          </div>
+
+          <!-- Document Actions -->
+          <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
+            <button
+              type="button"
+              id="change-doc-btn"
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-blue-400 text-neutral-700 dark:text-neutral-300 hover:text-blue-600 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="folder-open" class="w-3.5 h-3.5"></i>
+              <span>Change PDF</span>
+            </button>
+            <button
+              type="button"
+              id="reset-btn"
+              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-red-400 text-neutral-700 dark:text-neutral-300 hover:text-red-500 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Reset</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Saved Signatures Quick Access Ribbon -->
+        <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="bookmark" class="w-4 h-4 text-blue-500"></i>
+            <span class="text-xs font-bold text-neutral-700 dark:text-neutral-300">Saved Signatures:</span>
+          </div>
+          <div id="saved-signatures-list" class="flex flex-wrap items-center gap-2">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- PDF Toolbar (Page Navigation + Zoom + Add Signature) -->
+        <div class="p-3 sm:p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-wrap items-center justify-between gap-3 sticky top-20 z-20">
+          
+          <!-- Page Nav -->
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="prev-page-btn"
+              class="p-2 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+              title="Previous Page"
+            >
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            </button>
+
+            <span id="page-indicator" class="text-xs font-bold font-mono px-2 text-neutral-700 dark:text-neutral-300">
+              Page 1 of 1
+            </span>
+
+            <button
+              type="button"
+              id="next-page-btn"
+              class="p-2 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+              title="Next Page"
+            >
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Zoom Selector -->
+          <div class="flex items-center gap-2">
+            <i data-lucide="zoom-in" class="w-4 h-4 text-neutral-400"></i>
+            <select
+              id="zoom-select"
+              class="px-2.5 py-1.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-xs font-semibold focus:outline-none focus:border-blue-500"
+            >
+              <option value="0.75">75%</option>
+              <option value="1.0" selected>100%</option>
+              <option value="1.25">125%</option>
+              <option value="1.5">150%</option>
+            </select>
+          </div>
+
+          <!-- Main Actions -->
+          <div class="flex items-center gap-2 ml-auto">
+            <!-- Add Signature Button -->
+            <button
+              type="button"
+              id="open-sign-modal-btn"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 hover:bg-blue-100 text-xs font-bold transition-all cursor-pointer"
+            >
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>Add Signature</span>
+            </button>
+
+            <!-- Save & Download Signed PDF -->
+            <button
+              type="button"
+              id="save-pdf-btn"
+              class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-600/20 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <i data-lucide="check" class="w-4 h-4"></i>
+              <span>Save &amp; Download PDF</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Interactive PDF Viewport & Overlay Container -->
+        <div class="relative overflow-auto p-4 sm:p-8 bg-neutral-200/70 dark:bg-neutral-950/80 rounded-3xl border border-neutral-300 dark:border-neutral-800 flex justify-center min-h-[500px]">
+          
+          <div id="pdf-canvas-wrapper" class="relative shadow-2xl rounded-sm overflow-hidden select-none bg-white">
+            <!-- Rendered PDF Page -->
+            <canvas id="pdf-canvas" class="block"></canvas>
+
+            <!-- Interactive Signature Overlay Layer -->
+            <div id="signature-overlay" class="absolute inset-0 pointer-events-auto">
+              <!-- Draggable & Resizable signatures will be rendered here -->
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Download State Section -->
+      <section id="download-section" class="hidden max-w-xl mx-auto py-10 space-y-6 text-center">
+        <div class="w-20 h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/10">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-extrabold font-display text-neutral-900 dark:text-neutral-100">
+            Document Signed Successfully!
+          </h2>
+          <p class="text-sm text-neutral-500">
+            Your signatures have been embedded with lossless vector precision. Final file size: <span id="signed-doc-size" class="font-bold text-neutral-800 dark:text-neutral-200">0 B</span>
+          </p>
+        </div>
+
+        <!-- Download Action -->
+        <div class="flex justify-center">
+          <button
+            type="button"
+            id="download-signed-pdf-btn"
+            class="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition-all cursor-pointer"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download Signed PDF</span>
+          </button>
+        </div>
+
+        <div>
+          <button
+            type="button"
+            id="sign-another-btn"
+            class="text-xs text-neutral-500 hover:text-blue-600 underline cursor-pointer"
+          >
+            Sign Another Document
+          </button>
+        </div>
+
+        <p class="text-xs text-neutral-400">
+          🔒 100% In-Browser. Your signature and document were never transmitted over the network.
+        </p>
+      </section>
+
+    </main>
+
+    <!-- Sticky Bottom Bar (Mobile) -->
+    <div id="sticky-action-bar" class="hidden fixed bottom-0 inset-x-0 z-30 p-3 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 shadow-xl sm:hidden">
+      <button
+        type="button"
+        id="sticky-save-btn"
+        class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+      >
+        <i data-lucide="check" class="w-4 h-4"></i>
+        <span>Save &amp; Download PDF</span>
+      </button>
+    </div>
+
+    <!-- Signature Creation Modal -->
+    <div id="sign-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-xs p-4">
+      <div class="w-full max-w-xl bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-7 shadow-2xl border border-neutral-200 dark:border-neutral-800 space-y-5">
+        
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between pb-3 border-b border-neutral-100 dark:border-neutral-800">
+          <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+            <i data-lucide="pen-tool" class="w-4 h-4 text-blue-500"></i>
+            <span>Create Your Signature</span>
+          </h3>
+          <button
+            type="button"
+            id="close-sign-modal-btn"
+            class="p-1.5 rounded-lg text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+          >
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Mode Tabs -->
+        <div class="flex border-b border-neutral-200 dark:border-neutral-800 text-xs font-bold">
+          <button
+            type="button"
+            id="tab-draw"
+            class="flex-1 pb-2.5 text-center border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+          >
+            <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i>
+            <span>Draw</span>
+          </button>
+          <button
+            type="button"
+            id="tab-type"
+            class="flex-1 pb-2.5 text-center border-b-2 border-transparent text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+          >
+            <i data-lucide="type" class="w-3.5 h-3.5"></i>
+            <span>Type</span>
+          </button>
+          <button
+            type="button"
+            id="tab-upload"
+            class="flex-1 pb-2.5 text-center border-b-2 border-transparent text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+          >
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+            <span>Upload</span>
+          </button>
+        </div>
+
+        <!-- Mode 1: Draw Panel -->
+        <div id="panel-draw" class="space-y-4">
+          <!-- Canvas Container -->
+          <div class="relative w-full h-44 rounded-2xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-white overflow-hidden shadow-inner">
+            <canvas id="draw-canvas" class="w-full h-full cursor-crosshair touch-none"></canvas>
+            <span class="absolute bottom-2 left-3 text-[10px] text-neutral-400 pointer-events-none">
+              Sign with mouse, trackpad, or finger/stylus
+            </span>
+          </div>
+
+          <!-- Drawing Controls -->
+          <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
+            <!-- Pen Colors -->
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-neutral-500">Color:</span>
+              <label class="flex items-center gap-1 cursor-pointer">
+                <input type="radio" name="pen-color" value="#000000" checked class="sr-only" />
+                <span class="w-5 h-5 rounded-full bg-black border-2 border-neutral-300 ring-2 ring-transparent peer-checked:ring-blue-500"></span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer">
+                <input type="radio" name="pen-color" value="#1d4ed8" class="sr-only" />
+                <span class="w-5 h-5 rounded-full bg-blue-700 border-2 border-neutral-300"></span>
+              </label>
+              <label class="flex items-center gap-1 cursor-pointer">
+                <input type="radio" name="pen-color" value="#b91c1c" class="sr-only" />
+                <span class="w-5 h-5 rounded-full bg-red-700 border-2 border-neutral-300"></span>
+              </label>
+            </div>
+
+            <!-- Brush Size -->
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-neutral-500">Size:</span>
+              <input
+                type="range"
+                id="brush-size-slider"
+                min="1"
+                max="6"
+                value="2.5"
+                step="0.5"
+                class="w-20 accent-blue-600 cursor-pointer"
+              />
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-1.5 ml-auto">
+              <button
+                type="button"
+                id="undo-draw-btn"
+                class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+              >
+                Undo
+              </button>
+              <button
+                type="button"
+                id="clear-draw-btn"
+                class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 hover:text-red-500 transition-colors cursor-pointer"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mode 2: Type Panel -->
+        <div id="panel-type" class="hidden space-y-4">
+          <div class="space-y-1.5">
+            <label for="type-signature-input" class="block text-xs font-bold text-neutral-600 dark:text-neutral-300">
+              Type Your Full Name:
+            </label>
+            <input
+              type="text"
+              id="type-signature-input"
+              placeholder="e.g. John Doe"
+              value="John Doe"
+              class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-sm font-semibold focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="type-font-select" class="block text-xs font-bold text-neutral-600 dark:text-neutral-300">
+              Select Signature Font:
+            </label>
+            <select
+              id="type-font-select"
+              class="w-full px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-xs font-semibold focus:outline-none focus:border-blue-500"
+            >
+              <option value="Dancing Script" selected>Dancing Script</option>
+              <option value="Great Vibes">Great Vibes</option>
+              <option value="Pacifico">Pacifico</option>
+              <option value="Caveat">Caveat</option>
+              <option value="Alex Brush">Alex Brush</option>
+            </select>
+          </div>
+
+          <!-- Preview Canvas -->
+          <div class="w-full h-28 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 flex items-center justify-center overflow-hidden p-2">
+            <canvas id="type-preview-canvas" class="max-w-full max-h-full"></canvas>
+          </div>
+        </div>
+
+        <!-- Mode 3: Upload Panel -->
+        <div id="panel-upload" class="hidden space-y-4">
+          <div class="p-6 rounded-2xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 text-center space-y-2">
+            <i data-lucide="image-up" class="w-8 h-8 text-neutral-400 mx-auto"></i>
+            <p class="text-xs text-neutral-500">
+              Upload a scanned or photographed signature (PNG, JPG, SVG). Transparent PNG is ideal.
+            </p>
+            <input
+              type="file"
+              id="upload-signature-input"
+              accept="image/*"
+              class="block w-full text-xs text-neutral-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer pt-2"
+            />
+          </div>
+
+          <div class="flex items-center justify-center">
+            <img id="upload-preview-img" src="" alt="Uploaded Signature Preview" class="hidden max-h-24 object-contain rounded-xl border border-neutral-200 dark:border-neutral-800 p-2" />
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between gap-3">
+          <label class="flex items-center gap-2 cursor-pointer text-xs text-neutral-600 dark:text-neutral-400">
+            <input type="checkbox" id="save-to-storage-checkbox" checked class="rounded text-blue-600 focus:ring-blue-500 cursor-pointer" />
+            <span>Save to my local signatures library</span>
+          </label>
+
+          <button
+            type="button"
+            id="insert-signature-btn"
+            class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+          >
+            Insert to PDF
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="w-full max-w-md bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-neutral-200 dark:border-neutral-800 text-center space-y-5">
+        <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto">
+          <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+        </div>
+
+        <div class="space-y-1.5">
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+            Processing Document
+          </h3>
+          <p id="sign-progress-text" class="text-xs text-neutral-500">
+            Embedding signature into PDF... Please wait
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="w-full bg-neutral-100 dark:bg-neutral-800 rounded-full h-2.5 overflow-hidden">
+            <div id="sign-progress-fill" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+          <div id="sign-progress-pct" class="text-xs font-mono font-bold text-blue-600 text-right">
+            0%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300">ToolStacker</span>
+          <span>•</span>
+          <span>Fast, Private, Client-Side Utilities</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <a href="/#tools-section" class="hover:text-blue-600 transition-colors">All Tools</a>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/sign-pdf.js"></script>
+  </body>
+</html>

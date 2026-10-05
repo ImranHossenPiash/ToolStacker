@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Stamp PDF Online – Free & Private – ToolStacker</title>
+    <meta name="title" content="Stamp PDF Online – Free & Private – ToolStacker" />
+    <meta name="description" content="Add APPROVED, DRAFT, CONFIDENTIAL, or custom digital rubber stamps and logos to PDF documents. 100% client-side, free, and private." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF Libraries CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your PDF Never Leaves Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                PDF Stamps
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Stamp PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-800/80">
+            <i data-lucide="stamp" class="w-3.5 h-3.5"></i>
+            <span>Digital Rubber Stamps &amp; Badges</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+            Stamp PDF Online – Free &amp; Private
+          </h1>
+          <p class="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Add APPROVED, DRAFT, CONFIDENTIAL stamps. No upload, no signup.
+          </p>
+        </div>
+
+        <!-- Upload Dropzone Area -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload PDF file"
+          class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 dark:hover:border-blue-500 rounded-3xl p-8 sm:p-12 text-center bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-all cursor-pointer group"
+        >
+          <input
+            type="file"
+            id="file-input"
+            accept=".pdf,application/pdf"
+            class="hidden"
+          />
+          <div class="max-w-md mx-auto space-y-4 pointer-events-none">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <i data-lucide="stamp" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+            </div>
+            <div class="space-y-1">
+              <h2 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                Drag &amp; drop PDF here or click to browse
+              </h2>
+              <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+                Supports single PDF up to 200MB. Processed entirely inside your browser.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                id="browse-btn"
+                class="pointer-events-auto inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow transition-all cursor-pointer"
+              >
+                <i data-lucide="folder-open" class="w-4 h-4"></i>
+                <span>Choose PDF File</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Workspace (Hidden until file selected) -->
+      <section id="workspace" class="hidden space-y-6">
+        
+        <!-- File Header Card -->
+        <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4 min-w-0">
+            <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+              <i data-lucide="stamp" class="w-6 h-6"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 id="doc-name" class="font-bold text-neutral-900 dark:text-neutral-100 truncate text-base">
+                document.pdf
+              </h3>
+              <p id="doc-details" class="text-xs text-neutral-500 dark:text-neutral-400 font-mono mt-0.5">
+                0 MB • 0 pages
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              id="reset-btn"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors cursor-pointer"
+            >
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>Choose Another File</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Multi-Stamp Selector Bar -->
+        <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-3.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2 flex-wrap" id="stamp-chips-container">
+            <!-- Dynamically populated stamp chips -->
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="add-stamp-chip-btn"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-900 transition-colors cursor-pointer"
+              title="Add another stamp"
+            >
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>Add Stamp</span>
+            </button>
+
+            <button
+              type="button"
+              id="delete-current-stamp-btn"
+              class="hidden inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors cursor-pointer"
+              title="Remove this stamp"
+            >
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Two Column Workspace: Controls vs Live Preview -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- Column 1: Stamp Configuration Controls (5 cols) -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-6 space-y-6 shadow-sm">
+              
+              <!-- Stamp Type Selector Tabs -->
+              <div class="space-y-2">
+                <span class="block text-xs font-bold text-neutral-500 uppercase tracking-wider">Stamp Type</span>
+                <div class="p-1 rounded-2xl bg-neutral-100 dark:bg-neutral-800 flex gap-1">
+                  <button
+                    type="button"
+                    id="tab-preset"
+                    class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-white dark:bg-neutral-900 text-blue-600 dark:text-blue-400 shadow-xs transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <i data-lucide="stamp" class="w-3.5 h-3.5"></i>
+                    <span>Presets</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    id="tab-text"
+                    class="flex-1 py-2 px-3 rounded-xl text-xs font-bold text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <i data-lucide="type" class="w-3.5 h-3.5"></i>
+                    <span>Custom Text</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    id="tab-image"
+                    class="flex-1 py-2 px-3 rounded-xl text-xs font-bold text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                    <span>Upload Image</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Tab Panel 1: Preset Stamps -->
+              <div id="panel-preset" class="space-y-3">
+                <span class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                  Select Preset Stamp
+                </span>
+                <div id="preset-grid" class="grid grid-cols-2 gap-2.5">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+              <!-- Tab Panel 2: Custom Text -->
+              <div id="panel-text" class="hidden space-y-4">
+                <div class="space-y-1.5">
+                  <label for="custom-text-input" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Main Stamp Text
+                  </label>
+                  <input
+                    type="text"
+                    id="custom-text-input"
+                    value="APPROVED"
+                    placeholder="e.g. INTERNAL USE ONLY, PAID, VOID"
+                    class="w-full px-3.5 py-2 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  />
+                </div>
+
+                <div class="space-y-1.5">
+                  <label for="custom-subtext-input" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Sub-Text / Date Line <span class="font-normal text-neutral-400">(Optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="custom-subtext-input"
+                    placeholder="e.g. 01 OCT 2026 or NOTARY PUBLIC"
+                    class="w-full px-3.5 py-2 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  />
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="space-y-1.5">
+                    <label for="font-select" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                      Font Family
+                    </label>
+                    <select
+                      id="font-select"
+                      class="w-full px-3 py-2 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer"
+                    >
+                      <option value='"Impact", "Arial Black", sans-serif'>Impact / Heavy</option>
+                      <option value='"Helvetica", "Arial", sans-serif'>Helvetica / Arial</option>
+                      <option value='"Times New Roman", Times, serif'>Times Roman</option>
+                      <option value='"Courier New", Courier, monospace'>Courier / Typewriter</option>
+                      <option value='"Plus Jakarta Sans", sans-serif'>Modern Sans</option>
+                    </select>
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="border-select" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                      Border Style
+                    </label>
+                    <select
+                      id="border-select"
+                      class="w-full px-3 py-2 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer"
+                    >
+                      <option value="double">Double Box</option>
+                      <option value="solid">Solid Box</option>
+                      <option value="dashed">Dashed Box</option>
+                      <option value="none">No Border</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="space-y-2">
+                  <label class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Ink Color
+                  </label>
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="color"
+                      id="text-color-picker"
+                      value="#dc2626"
+                      class="w-8 h-8 rounded-lg cursor-pointer border border-neutral-300 dark:border-neutral-700 p-0.5 bg-white dark:bg-neutral-800"
+                    />
+                    <input
+                      type="text"
+                      id="text-color-hex"
+                      value="#DC2626"
+                      maxlength="7"
+                      class="w-24 px-2.5 py-1.5 text-xs font-mono font-bold rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 uppercase"
+                    />
+                    <div class="flex items-center gap-1.5 ml-auto">
+                      <button type="button" class="color-preset-btn w-6 h-6 rounded-full bg-emerald-600 hover:scale-110 transition-transform" data-color="#059669" title="Emerald"></button>
+                      <button type="button" class="color-preset-btn w-6 h-6 rounded-full bg-amber-600 hover:scale-110 transition-transform" data-color="#d97706" title="Amber"></button>
+                      <button type="button" class="color-preset-btn w-6 h-6 rounded-full bg-red-600 hover:scale-110 transition-transform" data-color="#dc2626" title="Red"></button>
+                      <button type="button" class="color-preset-btn w-6 h-6 rounded-full bg-blue-600 hover:scale-110 transition-transform" data-color="#2563eb" title="Blue"></button>
+                      <button type="button" class="color-preset-btn w-6 h-6 rounded-full bg-purple-600 hover:scale-110 transition-transform" data-color="#7c3aed" title="Violet"></button>
+                      <button type="button" class="color-preset-btn w-6 h-6 rounded-full bg-neutral-800 hover:scale-110 transition-transform" data-color="#1f2937" title="Black"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab Panel 3: Upload Image -->
+              <div id="panel-image" class="hidden space-y-4">
+                <input
+                  type="file"
+                  id="image-upload-input"
+                  accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                  class="hidden"
+                />
+                
+                <div
+                  id="image-drop-area"
+                  class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 rounded-2xl p-6 text-center cursor-pointer group bg-neutral-50 dark:bg-neutral-950 transition-colors"
+                >
+                  <div class="space-y-2 pointer-events-none">
+                    <div class="w-10 h-10 mx-auto rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                      <i data-lucide="upload" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200">
+                      Upload Logo or Stamp Image
+                    </div>
+                    <p class="text-[11px] text-neutral-400">
+                      PNG with transparency or SVG recommended (max 20MB)
+                    </p>
+                  </div>
+                </div>
+
+                <div id="image-preview-area" class="hidden p-4 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <img id="image-preview-img" src="" alt="Stamp preview" class="w-12 h-12 object-contain rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900" />
+                    <div class="min-w-0">
+                      <div id="image-file-name" class="text-xs font-bold truncate text-neutral-800 dark:text-neutral-200">logo.png</div>
+                      <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Ready to stamp</span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    id="remove-image-btn"
+                    class="p-2 rounded-xl text-neutral-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
+                    title="Remove image"
+                  >
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Stamp Customization Sliders -->
+              <div class="pt-4 border-t border-neutral-100 dark:border-neutral-800 space-y-5">
+                
+                <!-- Size Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    <span>Stamp Size</span>
+                    <span id="size-val" class="font-mono text-blue-600 dark:text-blue-400">100%</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="size-slider"
+                    min="50"
+                    max="200"
+                    step="5"
+                    value="100"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                  <div class="flex justify-between text-[10px] text-neutral-400 font-mono">
+                    <span>50%</span>
+                    <span>100%</span>
+                    <span>200%</span>
+                  </div>
+                </div>
+
+                <!-- Opacity Slider -->
+                <div class="space-y-1.5">
+                  <div class="flex justify-between text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    <span>Opacity</span>
+                    <span id="opacity-val" class="font-mono text-blue-600 dark:text-blue-400">85%</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="opacity-slider"
+                    min="30"
+                    max="100"
+                    step="5"
+                    value="85"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                  <div class="flex justify-between text-[10px] text-neutral-400 font-mono">
+                    <span>30%</span>
+                    <span>70%</span>
+                    <span>100%</span>
+                  </div>
+                </div>
+
+                <!-- Rotation Slider & Quick Presets -->
+                <div class="space-y-2">
+                  <div class="flex justify-between text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    <span>Rotation Angle</span>
+                    <span id="rotation-val" class="font-mono text-blue-600 dark:text-blue-400">-12°</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="rotation-slider"
+                    min="-45"
+                    max="45"
+                    step="1"
+                    value="-12"
+                    class="w-full accent-blue-600 cursor-pointer"
+                  />
+                  <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                    <button type="button" class="angle-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer" data-angle="-45">-45°</button>
+                    <button type="button" class="angle-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer" data-angle="-30">-30°</button>
+                    <button type="button" class="angle-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer" data-angle="-12">-12°</button>
+                    <button type="button" class="angle-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer" data-angle="0">0°</button>
+                    <button type="button" class="angle-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer" data-angle="15">+15°</button>
+                    <button type="button" class="angle-btn px-2 py-0.5 rounded-lg text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 cursor-pointer" data-angle="30">+30°</button>
+                  </div>
+                </div>
+
+                <!-- Position Grid & Custom -->
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    <span>Position</span>
+                    <span class="text-[10px] text-neutral-400 font-normal">Or drag stamp on preview</span>
+                  </div>
+                  
+                  <div id="pos-grid" class="grid grid-cols-3 gap-1.5 w-36 mx-auto sm:mx-0">
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="top-left" title="Top Left">↖</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="top-center" title="Top Center">↑</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border border-blue-600 bg-blue-600 text-white text-xs font-mono font-bold" data-pos="top-right" title="Top Right">↗</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="middle-left" title="Middle Left">←</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="center" title="Center">●</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="middle-right" title="Middle Right">→</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="bottom-left" title="Bottom Left">↙</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="bottom-center" title="Bottom Center">↓</button>
+                    <button type="button" class="pos-btn p-2 rounded-xl border text-neutral-700 dark:text-neutral-300 text-xs font-mono font-bold" data-pos="bottom-right" title="Bottom Right">↘</button>
+                  </div>
+
+                  <!-- Custom Coordinates Inputs (Shown when custom or dragged) -->
+                  <div id="custom-coords-container" class="grid grid-cols-2 gap-2 pt-1 text-xs">
+                    <div>
+                      <label for="coord-x-input" class="text-[10px] text-neutral-400 font-semibold uppercase">X Position (%)</label>
+                      <input
+                        type="number"
+                        id="coord-x-input"
+                        min="0"
+                        max="100"
+                        value="82"
+                        class="w-full px-2.5 py-1.5 text-xs rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 font-mono"
+                      />
+                    </div>
+                    <div>
+                      <label for="coord-y-input" class="text-[10px] text-neutral-400 font-semibold uppercase">Y Position (%)</label>
+                      <input
+                        type="number"
+                        id="coord-y-input"
+                        min="0"
+                        max="100"
+                        value="12"
+                        class="w-full px-2.5 py-1.5 text-xs rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 font-mono"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Page Range Section -->
+                <div class="space-y-2 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                  <span class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Apply to Pages
+                  </span>
+                  
+                  <div class="flex items-center gap-4 text-xs">
+                    <label class="flex items-center gap-2 cursor-pointer font-semibold">
+                      <input
+                        type="radio"
+                        id="range-all"
+                        name="page-range"
+                        value="all"
+                        checked
+                        class="accent-blue-600"
+                      />
+                      <span>All Pages</span>
+                    </label>
+
+                    <label class="flex items-center gap-2 cursor-pointer font-semibold">
+                      <input
+                        type="radio"
+                        id="range-specific"
+                        name="page-range"
+                        value="specific"
+                        class="accent-blue-600"
+                      />
+                      <span>Specific Pages</span>
+                    </label>
+                  </div>
+
+                  <div id="specific-pages-container" class="hidden space-y-1 pt-1">
+                    <input
+                      type="text"
+                      id="specific-pages-input"
+                      placeholder="e.g. 1, 3, 5-8"
+                      class="w-full px-3 py-2 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-mono"
+                    />
+                    <p class="text-[10px] text-neutral-400">
+                      Comma-separated pages or ranges (e.g., 1, 3, 5-7).
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Action Execution Buttons -->
+                <div class="pt-4 flex flex-col sm:flex-row items-center gap-3">
+                  <button
+                    type="button"
+                    id="add-stamp-btn"
+                    class="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  >
+                    <i data-lucide="stamp" class="w-4 h-4"></i>
+                    <span>Apply Stamp to PDF</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    id="add-more-stamps-btn"
+                    class="w-full sm:w-auto py-3.5 px-4 rounded-2xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-semibold text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                    title="Add an additional stamp layer"
+                  >
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>Add More</span>
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Column 2: Live Interactive Preview (7 cols) -->
+          <div class="lg:col-span-7 space-y-4">
+            
+            <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-5 shadow-sm space-y-4">
+              
+              <!-- Preview Header & Page Controls -->
+              <div class="flex items-center justify-between flex-wrap gap-2 pb-3 border-b border-neutral-100 dark:border-neutral-800">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <h4 class="font-bold text-sm text-neutral-900 dark:text-neutral-100">Live Preview</h4>
+                  <span class="text-[10px] text-neutral-400 font-normal hidden sm:inline">(Drag stamp to reposition)</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    id="prev-page-btn"
+                    disabled
+                    class="p-1.5 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    aria-label="Previous Page"
+                  >
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                  </button>
+
+                  <span id="page-indicator" class="text-xs font-bold font-mono text-neutral-700 dark:text-neutral-300 min-w-24 text-center">
+                    Page 1 of 1
+                  </span>
+
+                  <button
+                    type="button"
+                    id="next-page-btn"
+                    disabled
+                    class="p-1.5 rounded-xl border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    aria-label="Next Page"
+                  >
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Canvas and Overlay Area -->
+              <div class="overflow-auto max-h-[700px] flex items-center justify-center p-3 bg-neutral-100 dark:bg-neutral-950 rounded-2xl relative">
+                <div id="preview-container" class="relative inline-block shadow-lg rounded-sm overflow-hidden select-none">
+                  <!-- Underlying PDF Page Canvas -->
+                  <canvas id="pdf-canvas" class="block bg-white"></canvas>
+
+                  <!-- Real-time Draggable Stamp Overlay -->
+                  <div
+                    id="stamp-overlay"
+                    class="absolute cursor-grab active:cursor-grabbing hover:ring-2 hover:ring-blue-500/80 rounded-xs transition-shadow"
+                    style="transform-origin: center center;"
+                    title="Click and drag to position stamp"
+                  ></div>
+
+                  <!-- Loading indicator inside preview -->
+                  <div
+                    id="preview-loading"
+                    class="hidden absolute inset-0 bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xs flex items-center justify-center"
+                  >
+                    <div class="flex flex-col items-center gap-2">
+                      <div class="w-8 h-8 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"></div>
+                      <span class="text-xs font-semibold text-neutral-600 dark:text-neutral-300">Rendering preview...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center text-[11px] text-neutral-400">
+                💡 Tip: Click and drag the stamp directly on the page preview to position it anywhere.
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Download State Section (Hidden until execution finished) -->
+      <section id="download-section" class="hidden max-w-2xl mx-auto py-8 text-center space-y-6">
+        <div class="w-20 h-20 mx-auto rounded-3xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-lg border border-emerald-200 dark:border-emerald-800">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="space-y-2">
+          <h2 id="result-success-msg" class="text-2xl sm:text-3xl font-extrabold text-neutral-900 dark:text-neutral-50 font-display">
+            ✅ Stamp added!
+          </h2>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            Digital stamps have been permanently embedded with crisp vector accuracy and 100% privacy.
+          </p>
+          <div>
+            <span id="result-file-badge" class="inline-block px-3 py-1 rounded-full text-xs font-mono font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300">
+              0 MB → 0 MB • 0 pages
+            </span>
+          </div>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            type="button"
+            id="download-btn"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2.5 cursor-pointer active:scale-98"
+          >
+            <i data-lucide="download" class="w-5 h-5"></i>
+            <span>Download Stamped PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="stamp-another-btn"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-2xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-semibold text-sm transition-colors cursor-pointer"
+          >
+            <span>Stamp Another PDF</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- SEO / Features Info Section -->
+      <section class="mt-16 pt-12 border-t border-neutral-200 dark:border-neutral-800 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">100% In-Browser Privacy</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Your PDF documents and stamp images never leave your computer. All rendering, vector embedding, and compression happen directly inside your web browser memory.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <i data-lucide="move" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Live Drag &amp; Drop Positioning</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Switch between 9 standard alignment presets or simply drag the stamp overlay directly on top of the document canvas to place it exactly where needed.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="layers" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Multiple Stamps &amp; Ranges</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Apply multiple stamps (e.g. APPROVED on page 1 and CONFIDENTIAL on page 2) with selective page ranges or across all document pages simultaneously.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Sticky Mobile Action Bar -->
+    <div
+      id="sticky-action-bar"
+      class="hidden md:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 z-30 shadow-xl"
+    >
+      <button
+        type="button"
+        id="sticky-add-stamp-btn"
+        class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+      >
+        <i data-lucide="stamp" class="w-4 h-4"></i>
+        <span>Apply Stamp</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div
+      id="processing-modal"
+      class="hidden fixed inset-0 z-50 bg-neutral-950/70 backdrop-blur-xs flex items-center justify-center p-4"
+    >
+      <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-8 max-w-sm w-full shadow-2xl text-center space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center animate-spin">
+          <i data-lucide="loader-2" class="w-8 h-8"></i>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-lg text-neutral-900 dark:text-neutral-100 font-display">
+            Stamping PDF
+          </h3>
+          <p id="stamp-progress-text" class="text-xs text-neutral-500 dark:text-neutral-400">
+            Embedding stamps into pages...
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-2">
+          <div class="w-full h-2.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+            <div
+              id="stamp-progress-fill"
+              class="h-full bg-blue-600 rounded-full transition-all duration-200 w-0"
+            ></div>
+          </div>
+          <div class="flex justify-between text-[11px] font-mono text-neutral-400">
+            <span>Progress</span>
+            <span id="stamp-progress-pct">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-neutral-500 dark:text-neutral-400 space-y-2">
+        <p>&copy; 2026 ToolStacker. Free, fast, private in-browser document tools.</p>
+        <div class="flex justify-center gap-4">
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+          <span>•</span>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+          <span>•</span>
+          <a href="/" class="hover:text-blue-600 transition-colors">All Tools</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="/assets/js/stamp-pdf.js"></script>
+    <script>
+      // Initialize Lucide icons
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+      // Theme toggle support
+      const themeBtn = document.querySelector('[data-theme-toggle]');
+      if (themeBtn) {
+        const updateThemeUI = (isDark) => {
+          document.documentElement.classList.toggle('dark', isDark);
+          const sunIcon = themeBtn.querySelector('.theme-icon-sun');
+          const moonIcon = themeBtn.querySelector('.theme-icon-moon');
+          if (sunIcon && moonIcon) {
+            sunIcon.classList.toggle('hidden', !isDark);
+            moonIcon.classList.toggle('hidden', isDark);
+          }
+        };
+
+        const isDark = localStorage.getItem('theme') === 'dark' || 
+          (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        updateThemeUI(isDark);
+
+        themeBtn.addEventListener('click', () => {
+          const currentlyDark = document.documentElement.classList.contains('dark');
+          const nextDark = !currentlyDark;
+          localStorage.setItem('theme', nextDark ? 'dark' : 'light');
+          updateThemeUI(nextDark);
+        });
+      }
+    </script>
+  </body>
+</html>

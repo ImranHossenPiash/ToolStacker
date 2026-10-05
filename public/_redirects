@@ -1,0 +1,26 @@
+# ToolStacker Clean URL Redirects for Netlify & Cloudflare Pages
+/jpg-to-pdf              /tools/image-to-pdf.html       200
+/png-to-pdf              /tools/image-to-pdf.html       200
+/pdf-to-image            /tools/pdf-image-converter.html 200
+/pdf-metadata            /tools/edit-pdf-metadata.html   200
+/image-tools             /image-tools.html              200
+/image-compressor        /image-compressor.html         200
+/image-converter         /image-converter.html          200
+/merge-pdf               /merge-pdf.html                200
+/split-pdf               /split-pdf.html                200
+/compress-pdf            /compress-pdf.html             200
+/pdf-image-converter     /pdf-image-converter.html      200
+/image-to-pdf            /image-to-pdf.html             200
+/sign-pdf                /sign-pdf.html                 200
+/protect-unlock-pdf      /protect-unlock-pdf.html       200
+/watermark-pdf           /watermark-pdf.html            200
+/rotate-pdf              /rotate-pdf.html               200
+/crop-pdf                /crop-pdf.html                 200
+/reorder-pdf             /reorder-pdf.html              200
+/flatten-pdf             /flatten-pdf.html              200
+/grayscale-pdf           /grayscale-pdf.html            200
+/page-numbers-pdf        /page-numbers-pdf.html         200
+/edit-pdf-metadata       /edit-pdf-metadata.html        200
+/stamp-pdf               /stamp-pdf.html                200
+/invoice-generator       /invoice-generator.html        200
+/tools/:name             /tools/:name.html              200

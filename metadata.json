@@ -1,0 +1,6 @@
+{
+  "name": "ToolStacker",
+  "description": "ToolStacker – Free online client-side utility tools suite featuring Image-to-Text OCR, Chronological Age Calculator, Discount Calculator, QR Code Generator, and developer utilities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

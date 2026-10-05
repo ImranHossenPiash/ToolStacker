@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Compress PDF Online – Reduce File Size Free – ToolStacker</title>
+    <meta name="title" content="Compress PDF Online – Reduce File Size Free – ToolStacker" />
+    <meta name="description" content="Shrink PDF file size by up to 90% while maintaining crisp quality. 100% client-side, zero server uploads, free, no signup, no watermark." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF Libraries CDN -->
+    <!-- pdf-lib for document manipulation & metadata stripping -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <!-- pdf.js for rendering and rasterization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your PDF Never Leaves Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                PDF Studio
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: Language Switcher, PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- PWA Install Button -->
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Compress PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section (Upload & Information) -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 text-xs font-bold">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
+            <span>100% In-Browser • Up to 90% Smaller • Free &amp; Private</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-50 leading-tight">
+            Compress PDF Online – <span class="text-blue-600 dark:text-blue-400">Reduce File Size Free</span>
+          </h1>
+          <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            Shrink PDFs by up to 90% without losing quality. No upload, no signup. All image optimization and metadata stripping occur directly inside your browser.
+          </p>
+        </div>
+
+        <!-- Large Upload Zone -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload PDF to compress"
+          class="relative flex flex-col items-center justify-center p-8 sm:p-14 rounded-3xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 bg-white dark:bg-neutral-900 transition-all text-center group cursor-pointer shadow-xs overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <!-- Hidden standard file input -->
+          <input
+            type="file"
+            id="file-input"
+            accept=".pdf,application/pdf"
+            class="hidden"
+          />
+
+          <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform mb-4 shadow-xs pointer-events-none">
+            <i data-lucide="file-down" class="w-8 h-8"></i>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 pointer-events-none">
+            Drag &amp; drop PDF here or click to browse
+          </h3>
+          <p class="mt-1.5 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-md pointer-events-none">
+            Supports PDF files up to 200MB • Live side-by-side preview • Ctrl+V to paste
+          </p>
+
+          <button
+            type="button"
+            id="browse-btn"
+            class="mt-5 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+          >
+            <i data-lucide="folder-open" class="w-4 h-4"></i>
+            <span>Select PDF File</span>
+          </button>
+        </div>
+
+        <!-- Feature Badges Ribbon -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto pt-2">
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center shrink-0">
+              <i data-lucide="gauge" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">3 Smart Levels</div>
+              <div class="text-[11px] text-neutral-500 truncate">Low, Medium, High</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">Live Preview</div>
+              <div class="text-[11px] text-neutral-500 truncate">Side-by-side comparison</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center shrink-0">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">Smart Analysis</div>
+              <div class="text-[11px] text-neutral-500 truncate">Automatic detection</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center shrink-0">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">100% In-Browser</div>
+              <div class="text-[11px] text-neutral-500 truncate">Zero server uploads</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace Section (Active when PDF is loaded) -->
+      <section id="workspace-section" class="hidden space-y-6">
+        
+        <!-- File Summary Bar -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 id="file-name-display" class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 truncate">
+                document.pdf
+              </h3>
+              <p id="file-details-display" class="text-xs text-neutral-500">
+                0 B • 0 pages
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+            <button
+              type="button"
+              id="change-file-btn"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-blue-400 text-neutral-700 dark:text-neutral-300 hover:text-blue-600 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="folder-open" class="w-3.5 h-3.5"></i>
+              <span>Change PDF</span>
+            </button>
+            <button
+              type="button"
+              id="reset-btn"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-red-400 text-neutral-700 dark:text-neutral-300 hover:text-red-500 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Reset</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Smart Suggestion Banner -->
+        <div id="smart-suggestion-banner" class="hidden p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 flex items-center gap-3 text-xs text-amber-800 dark:text-amber-300">
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-600 shrink-0"></i>
+          <span id="smart-suggestion-text" class="flex-1">Smart suggestion loading...</span>
+        </div>
+
+        <!-- Compression Level Selector Cards -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="text-xs font-bold uppercase tracking-wider text-neutral-500">
+              Select Compression Level
+            </label>
+            <span class="text-xs text-neutral-400">
+              Click a preset to preview
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <!-- Card 1: Low -->
+            <div
+              data-compression-level="low"
+              class="p-4 rounded-2xl border-2 transition-all cursor-pointer bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-700 shadow-2xs group"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center shrink-0">
+                  <i data-lucide="printer" class="w-5 h-5"></i>
+                </div>
+                <div class="w-5 h-5 rounded-full border-2 border-neutral-300 dark:border-neutral-600 flex items-center justify-center shrink-0">
+                  <div class="radio-dot w-2.5 h-2.5 rounded-full bg-blue-600 hidden"></div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="text-sm font-bold text-neutral-900 dark:text-neutral-100 flex items-center justify-between">
+                  <span>Low (Print Quality)</span>
+                  <span class="text-xs font-semibold text-blue-600 dark:text-blue-400">~50% smaller</span>
+                </div>
+                <p class="text-xs text-neutral-500 mt-1 leading-relaxed">
+                  Best for high-res printing and document archival. Maximum sharpness.
+                </p>
+              </div>
+            </div>
+
+            <!-- Card 2: Medium (Recommended) -->
+            <div
+              data-compression-level="medium"
+              class="p-4 rounded-2xl border-2 transition-all cursor-pointer bg-blue-50/60 dark:bg-blue-950/30 border-blue-600 ring-2 ring-blue-500/20 shadow-xs group"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0">
+                  <i data-lucide="scale" class="w-5 h-5"></i>
+                </div>
+                <div class="w-5 h-5 rounded-full border-2 border-blue-600 flex items-center justify-center shrink-0">
+                  <div class="radio-dot w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="text-sm font-bold text-neutral-900 dark:text-neutral-100 flex items-center justify-between">
+                  <span>Medium (Balanced)</span>
+                  <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400">~70% smaller</span>
+                </div>
+                <p class="text-xs text-neutral-500 mt-1 leading-relaxed">
+                  Recommended. Perfect balance of clear readability and reduced file size.
+                </p>
+              </div>
+            </div>
+
+            <!-- Card 3: High -->
+            <div
+              data-compression-level="high"
+              class="p-4 rounded-2xl border-2 transition-all cursor-pointer bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-700 shadow-2xs group"
+            >
+              <div class="flex items-start justify-between gap-2">
+                <div class="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center shrink-0">
+                  <i data-lucide="mail" class="w-5 h-5"></i>
+                </div>
+                <div class="w-5 h-5 rounded-full border-2 border-neutral-300 dark:border-neutral-600 flex items-center justify-center shrink-0">
+                  <div class="radio-dot w-2.5 h-2.5 rounded-full bg-blue-600 hidden"></div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <div class="text-sm font-bold text-neutral-900 dark:text-neutral-100 flex items-center justify-between">
+                  <span>High (Email Friendly)</span>
+                  <span class="text-xs font-semibold text-purple-600 dark:text-purple-400">~90% smaller</span>
+                </div>
+                <p class="text-xs text-neutral-500 mt-1 leading-relaxed">
+                  Maximum size reduction. Ideal for email size limits and mobile viewing.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Size Prediction Ribbon -->
+        <div class="p-4 rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm font-semibold">
+          <div class="flex items-center gap-2">
+            <span class="text-neutral-500">Original Size:</span>
+            <span id="estimate-original-size" class="font-bold text-neutral-900 dark:text-neutral-100">0 B</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="arrow-right" class="w-4 h-4 text-neutral-400"></i>
+            <span class="text-neutral-500">Estimated Output:</span>
+            <span id="estimate-target-size" class="font-bold text-emerald-600 dark:text-emerald-400">0 B</span>
+            <span id="estimate-reduction-pct" class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+              ~68% smaller
+            </span>
+          </div>
+        </div>
+
+        <!-- Live Comparison Preview Section -->
+        <div class="space-y-3">
+          <!-- Preview Toolbar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+            <!-- Page Selector Navigation -->
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-neutral-500 uppercase tracking-wider">Preview Page:</span>
+              <div class="flex items-center gap-1">
+                <button
+                  type="button"
+                  id="prev-page-btn"
+                  class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 cursor-pointer disabled:opacity-30 disabled:pointer-events-none"
+                  title="Previous Page"
+                >
+                  <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <select
+                  id="preview-page-select"
+                  class="px-2.5 py-1 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-xs font-semibold focus:outline-none focus:border-blue-500"
+                >
+                  <option value="1">Page 1</option>
+                </select>
+                <button
+                  type="button"
+                  id="next-page-btn"
+                  class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 cursor-pointer disabled:opacity-30 disabled:pointer-events-none"
+                  title="Next Page"
+                >
+                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Zoom Slider -->
+            <div class="flex items-center gap-3">
+              <i data-lucide="zoom-in" class="w-4 h-4 text-neutral-400"></i>
+              <input
+                type="range"
+                id="zoom-slider"
+                min="50"
+                max="200"
+                value="100"
+                step="10"
+                class="w-28 sm:w-36 accent-blue-600 cursor-pointer"
+              />
+              <span id="zoom-val-display" class="text-xs font-mono font-bold text-neutral-500 w-10">
+                100%
+              </span>
+            </div>
+          </div>
+
+          <!-- Side-by-Side Comparison Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Left: Original Page -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-col items-center">
+              <div class="w-full flex items-center justify-between pb-2 mb-3 border-b border-neutral-100 dark:border-neutral-800 text-xs font-bold text-neutral-500">
+                <span>Original Page</span>
+                <span class="px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 font-mono text-[10px]">100% Quality</span>
+              </div>
+              <div class="w-full h-[400px] overflow-auto flex items-center justify-center bg-neutral-100/70 dark:bg-neutral-950/60 rounded-xl p-2 border border-neutral-200 dark:border-neutral-800">
+                <canvas id="original-canvas" class="max-w-full max-h-full object-contain shadow-md rounded transition-transform"></canvas>
+              </div>
+            </div>
+
+            <!-- Right: Compressed Page Preview -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-col items-center">
+              <div class="w-full flex items-center justify-between pb-2 mb-3 border-b border-neutral-100 dark:border-neutral-800 text-xs font-bold text-neutral-500">
+                <span>Compressed Preview</span>
+                <span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-mono text-[10px]">Simulated</span>
+              </div>
+              <div class="w-full h-[400px] overflow-auto flex items-center justify-center bg-neutral-100/70 dark:bg-neutral-950/60 rounded-xl p-2 border border-neutral-200 dark:border-neutral-800">
+                <canvas id="compressed-canvas" class="max-w-full max-h-full object-contain shadow-md rounded transition-transform"></canvas>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Main Action Row -->
+        <div class="flex items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+          <p class="text-xs text-neutral-500">
+            Metadata will be stripped and embedded images downscaled according to the selected preset.
+          </p>
+
+          <button
+            type="button"
+            id="compress-btn"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+          >
+            <i data-lucide="file-down" class="w-4 h-4"></i>
+            <span>Compress PDF</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- Download State Section -->
+      <section id="download-section" class="hidden max-w-2xl mx-auto py-10 text-center space-y-6">
+        <div class="w-20 h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/10">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="space-y-2">
+          <h2 id="download-success-text" class="text-2xl sm:text-3xl font-extrabold font-display text-neutral-900 dark:text-neutral-100">
+            PDF Compressed Successfully!
+          </h2>
+          <div id="download-size-comparison" class="text-base sm:text-lg flex items-center justify-center">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Download Action Buttons -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button
+            type="button"
+            id="download-compressed-btn"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition-all cursor-pointer"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download Compressed PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="try-another-level-btn"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold text-neutral-700 dark:text-neutral-300 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 transition-colors cursor-pointer"
+          >
+            <i data-lucide="sliders" class="w-4 h-4"></i>
+            <span>Try Another Level</span>
+          </button>
+        </div>
+
+        <div class="pt-2">
+          <button
+            type="button"
+            id="compress-another-btn"
+            class="text-xs text-neutral-500 hover:text-blue-600 transition-colors underline cursor-pointer"
+          >
+            Compress Another PDF Document
+          </button>
+        </div>
+
+        <p class="text-xs text-neutral-400">
+          🔒 100% In-Browser Execution. Your PDF document was never transmitted over the internet.
+        </p>
+      </section>
+
+    </main>
+
+    <!-- Sticky Bottom Bar (Mobile) -->
+    <div id="sticky-action-bar" class="hidden fixed bottom-0 inset-x-0 z-30 p-3 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 shadow-xl sm:hidden">
+      <button
+        type="button"
+        id="sticky-compress-btn"
+        class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2"
+      >
+        <i data-lucide="file-down" class="w-4 h-4"></i>
+        <span>Compress PDF</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="w-full max-w-md bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-neutral-200 dark:border-neutral-800 text-center space-y-5">
+        <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto">
+          <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+        </div>
+
+        <div class="space-y-1.5">
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+            Compressing PDF
+          </h3>
+          <p id="compress-progress-text" class="text-xs text-neutral-500">
+            Downscaling images and stripping metadata... Please wait
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="w-full bg-neutral-100 dark:bg-neutral-800 rounded-full h-2.5 overflow-hidden">
+            <div id="compress-progress-fill" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+          <div id="compress-progress-pct" class="text-xs font-mono font-bold text-blue-600 text-right">
+            0%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300">ToolStacker</span>
+          <span>•</span>
+          <span>Fast, Private, Client-Side Utilities</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <a href="/#tools-section" class="hover:text-blue-600 transition-colors">All Tools</a>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/compress-pdf.js"></script>
+  </body>
+</html>

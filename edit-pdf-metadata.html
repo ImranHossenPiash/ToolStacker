@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Edit PDF Metadata – Free & Private – ToolStacker</title>
+    <meta name="title" content="Edit PDF Metadata – Free & Private – ToolStacker" />
+    <meta name="description" content="View and edit PDF properties (title, author, subject, keywords). Remove personal metadata before sharing. 100% client-side, free, and private." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF Libraries CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your PDF Never Leaves Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                PDF Metadata
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Edit PDF Metadata</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800/80">
+            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+            <span>Privacy-First Document Properties</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+            Edit PDF Metadata – Free &amp; Private
+          </h1>
+          <p class="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            View and edit PDF properties. Remove personal info. No upload, no signup.
+          </p>
+        </div>
+
+        <!-- Upload Dropzone Area -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload PDF file"
+          class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 dark:hover:border-blue-500 rounded-3xl p-8 sm:p-12 text-center bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-all cursor-pointer group"
+        >
+          <input
+            type="file"
+            id="file-input"
+            accept=".pdf,application/pdf"
+            class="hidden"
+          />
+          <div class="max-w-md mx-auto space-y-4 pointer-events-none">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <i data-lucide="tags" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+            </div>
+            <div class="space-y-1">
+              <h2 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                Drag &amp; drop PDF here or click to browse
+              </h2>
+              <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+                Supports single PDF up to 200MB. Processed entirely inside your browser.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                id="browse-btn"
+                class="pointer-events-auto inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow transition-all cursor-pointer"
+              >
+                <i data-lucide="folder-open" class="w-4 h-4"></i>
+                <span>Choose PDF File</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Workspace (Hidden until file selected) -->
+      <section id="workspace" class="hidden space-y-6">
+        
+        <!-- File Header Card -->
+        <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4 min-w-0">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 id="doc-name" class="font-bold text-neutral-900 dark:text-neutral-100 truncate text-base">
+                document.pdf
+              </h3>
+              <p id="doc-details" class="text-xs text-neutral-500 dark:text-neutral-400 font-mono mt-0.5">
+                0 MB • 0 pages
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              id="reset-btn"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors cursor-pointer"
+            >
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>Choose Another File</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Password Protected Warning -->
+        <div id="protected-warning" class="hidden rounded-2xl border border-rose-200 dark:border-rose-900 bg-rose-50 dark:bg-rose-950/40 p-5 text-rose-800 dark:text-rose-200 flex items-start gap-3">
+          <i data-lucide="shield-alert" class="w-6 h-6 shrink-0 text-rose-600 mt-0.5"></i>
+          <div class="space-y-1">
+            <h4 class="font-bold text-sm">Protected PDF Document</h4>
+            <p class="text-xs opacity-90">
+              This document is encrypted or password-protected. Please unlock it using our 
+              <a href="/tools/protect-unlock-pdf.html" class="underline font-semibold hover:text-rose-900 dark:hover:text-rose-100">Unlock PDF tool</a> before modifying metadata.
+            </p>
+          </div>
+        </div>
+
+        <!-- No Metadata Notice -->
+        <div id="no-metadata-info" class="hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50 p-4 text-neutral-600 dark:text-neutral-400 flex items-start gap-3">
+          <i data-lucide="info" class="w-5 h-5 shrink-0 text-neutral-400 mt-0.5"></i>
+          <div class="text-xs">
+            <span class="font-semibold text-neutral-800 dark:text-neutral-200">Notice:</span> This PDF currently has no document metadata or properties set. You can use the form below to add them.
+          </div>
+        </div>
+
+        <!-- Privacy Notice Box -->
+        <div class="rounded-2xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 p-5 text-amber-900 dark:text-amber-200 flex items-start gap-3.5 shadow-sm">
+          <div class="w-8 h-8 rounded-xl bg-amber-200 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 flex items-center justify-center shrink-0">
+            <i data-lucide="lightbulb" class="w-4 h-4"></i>
+          </div>
+          <div class="space-y-1 text-xs">
+            <h4 class="font-bold text-amber-950 dark:text-amber-100 text-sm">Privacy Advisory</h4>
+            <p class="leading-relaxed">
+              💡 Metadata can contain personal information (such as author names, software used, editing history, and system paths). Consider removing it before sharing sensitive documents.
+            </p>
+          </div>
+        </div>
+
+        <!-- Two Column Grid: Current Metadata vs Edit Form -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          
+          <!-- Column 1: Current Metadata Display (Read-Only) -->
+          <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-6 space-y-6 shadow-sm">
+            <div class="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800 pb-4">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-sm text-neutral-900 dark:text-neutral-100">Current Metadata</h3>
+                  <p class="text-[11px] text-neutral-500">Read-only view of existing PDF properties</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+                Original
+              </span>
+            </div>
+
+            <div class="space-y-4 text-xs">
+              <div class="bg-neutral-50 dark:bg-neutral-950/60 rounded-xl p-3.5 border border-neutral-100 dark:border-neutral-800/80 space-y-1">
+                <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Title</span>
+                <div id="disp-title" class="font-bold text-neutral-800 dark:text-neutral-100 text-xs break-all">(none)</div>
+              </div>
+
+              <div class="bg-neutral-50 dark:bg-neutral-950/60 rounded-xl p-3.5 border border-neutral-100 dark:border-neutral-800/80 space-y-1">
+                <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Author</span>
+                <div id="disp-author" class="font-bold text-neutral-800 dark:text-neutral-100 text-xs break-all">(none)</div>
+              </div>
+
+              <div class="bg-neutral-50 dark:bg-neutral-950/60 rounded-xl p-3.5 border border-neutral-100 dark:border-neutral-800/80 space-y-1">
+                <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Subject</span>
+                <div id="disp-subject" class="font-bold text-neutral-800 dark:text-neutral-100 text-xs break-all">(none)</div>
+              </div>
+
+              <div class="bg-neutral-50 dark:bg-neutral-950/60 rounded-xl p-3.5 border border-neutral-100 dark:border-neutral-800/80 space-y-1">
+                <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Keywords</span>
+                <div id="disp-keywords" class="font-bold text-neutral-800 dark:text-neutral-100 text-xs break-all">(none)</div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="bg-neutral-50 dark:bg-neutral-950/60 rounded-xl p-3.5 border border-neutral-100 dark:border-neutral-800/80 space-y-1">
+                  <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Creator (Application)</span>
+                  <div id="disp-creator" class="font-bold text-neutral-800 dark:text-neutral-100 text-xs break-all">(none)</div>
+                </div>
+
+                <div class="bg-neutral-50 dark:bg-neutral-950/60 rounded-xl p-3.5 border border-neutral-100 dark:border-neutral-800/80 space-y-1">
+                  <span class="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Producer</span>
+                  <div id="disp-producer" class="font-bold text-neutral-800 dark:text-neutral-100 text-xs break-all">(none)</div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                <div class="space-y-1">
+                  <span class="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">Creation Date</span>
+                  <div id="disp-creation-date" class="text-xs text-neutral-600 dark:text-neutral-400 font-mono">(none)</div>
+                </div>
+                <div class="space-y-1">
+                  <span class="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">Modification Date</span>
+                  <div id="disp-modification-date" class="text-xs text-neutral-600 dark:text-neutral-400 font-mono">(none)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Edit Form -->
+          <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-6 space-y-6 shadow-sm">
+            <div class="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800 pb-4">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                  <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-sm text-neutral-900 dark:text-neutral-100">Edit Properties</h3>
+                  <p class="text-[11px] text-neutral-500">Modify or strip document metadata fields</p>
+                </div>
+              </div>
+
+              <!-- Strip All Metadata Button -->
+              <button
+                type="button"
+                id="strip-all-btn"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-900 transition-colors cursor-pointer"
+                title="Clear all fields to strip metadata"
+              >
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>Remove All Metadata</span>
+              </button>
+            </div>
+
+            <!-- Form Inputs -->
+            <form id="metadata-form" class="space-y-4" onsubmit="return false;">
+              <div class="space-y-1.5">
+                <label for="input-title" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                  Document Title
+                </label>
+                <input
+                  type="text"
+                  id="input-title"
+                  placeholder="e.g. Annual Financial Report 2026"
+                  class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+                />
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="input-author" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                  Author / Organization
+                </label>
+                <input
+                  type="text"
+                  id="input-author"
+                  placeholder="e.g. Jane Doe or Acumen Corp"
+                  class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+                />
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="input-subject" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                  Subject / Summary
+                </label>
+                <input
+                  type="text"
+                  id="input-subject"
+                  placeholder="e.g. Quarterly performance evaluation and forecasts"
+                  class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+                />
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="input-keywords" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center justify-between">
+                  <span>Keywords / Tags</span>
+                  <span class="text-[10px] text-neutral-400 font-normal">Comma-separated</span>
+                </label>
+                <input
+                  type="text"
+                  id="input-keywords"
+                  placeholder="tag1, tag2, tag3"
+                  class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+                />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="space-y-1.5">
+                  <label for="input-creator" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Creator (App / Tool)
+                  </label>
+                  <input
+                    type="text"
+                    id="input-creator"
+                    placeholder="e.g. Adobe InDesign / Microsoft Word"
+                    class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+                  />
+                </div>
+
+                <div class="space-y-1.5">
+                  <label for="input-producer" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                    Producer
+                  </label>
+                  <input
+                    type="text"
+                    id="input-producer"
+                    placeholder="e.g. macOS Quartz PDFContext"
+                    class="w-full px-3.5 py-2.5 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+                  />
+                </div>
+              </div>
+
+              <!-- Read-only date preview fields -->
+              <div class="pt-3 border-t border-neutral-100 dark:border-neutral-800 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-neutral-500">
+                <div>
+                  <span class="font-semibold block text-neutral-400">Creation Date:</span>
+                  <span class="italic">Preserved from original document</span>
+                </div>
+                <div>
+                  <span class="font-semibold block text-neutral-400">Modification Date:</span>
+                  <span class="italic text-blue-600 dark:text-blue-400">Auto-updates on save</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="pt-4 flex flex-col sm:flex-row items-center gap-3">
+                <button
+                  type="button"
+                  id="save-btn"
+                  class="w-full sm:flex-1 py-3 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                >
+                  <i data-lucide="check" class="w-4 h-4"></i>
+                  <span>Save Changes</span>
+                </button>
+
+                <button
+                  type="button"
+                  id="cancel-btn"
+                  class="w-full sm:w-auto py-3 px-5 rounded-2xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-semibold text-xs transition-colors cursor-pointer"
+                >
+                  <span>Cancel</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Before / After Comparison Live Diff -->
+        <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-6 space-y-4 shadow-sm">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <i data-lucide="git-compare" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm text-neutral-900 dark:text-neutral-100">Before &amp; After Comparison</h3>
+                <p class="text-[11px] text-neutral-500">Live preview of changes that will be applied to the PDF dictionary</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="diff-table-container">
+            <!-- Dynamically populated table -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Download State Section (Hidden until save completed) -->
+      <section id="download-section" class="hidden max-w-2xl mx-auto py-8 text-center space-y-6">
+        <div class="w-20 h-20 mx-auto rounded-3xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-lg border border-emerald-200 dark:border-emerald-800">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="space-y-2">
+          <h2 id="result-success-msg" class="text-2xl sm:text-3xl font-extrabold text-neutral-900 dark:text-neutral-50 font-display">
+            ✅ Metadata updated!
+          </h2>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            Your PDF properties have been rewritten and verified with 100% client-side privacy.
+          </p>
+          <div>
+            <span id="result-file-badge" class="inline-block px-3 py-1 rounded-full text-xs font-mono font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300">
+              0 MB • 0 pages
+            </span>
+          </div>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            type="button"
+            id="download-btn"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2.5 cursor-pointer active:scale-98"
+          >
+            <i data-lucide="download" class="w-5 h-5"></i>
+            <span>Download PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="edit-another-btn"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-2xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-semibold text-sm transition-colors cursor-pointer"
+          >
+            <span>Edit Another PDF</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- SEO / Features Info Section -->
+      <section class="mt-16 pt-12 border-t border-neutral-200 dark:border-neutral-800 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">100% Client-Side Privacy</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Your PDF documents are never uploaded to any remote server or third-party cloud. All metadata extraction and modification happens strictly inside your web browser.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+            <i data-lucide="eraser" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Strip Personal Metadata</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Easily cleanse author identities, company names, creation dates, and editing software traces before publishing documents to the public web or sharing externally.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="zap" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Instant Live Preview</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Inspect original properties side-by-side with an interactive comparison diff table so you know exactly which attributes are added, modified, or removed.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Sticky Mobile Action Bar -->
+    <div
+      id="sticky-action-bar"
+      class="hidden md:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 z-30 shadow-xl"
+    >
+      <button
+        type="button"
+        id="sticky-save-btn"
+        class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+      >
+        <i data-lucide="check" class="w-4 h-4"></i>
+        <span>Save Changes</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div
+      id="processing-modal"
+      class="hidden fixed inset-0 z-50 bg-neutral-950/70 backdrop-blur-xs flex items-center justify-center p-4"
+    >
+      <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-8 max-w-sm w-full shadow-2xl text-center space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center animate-spin">
+          <i data-lucide="loader-2" class="w-8 h-8"></i>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-lg text-neutral-900 dark:text-neutral-100 font-display">
+            Processing PDF
+          </h3>
+          <p id="meta-progress-text" class="text-xs text-neutral-500 dark:text-neutral-400">
+            Updating PDF metadata dictionary...
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-2">
+          <div class="w-full h-2.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+            <div
+              id="meta-progress-fill"
+              class="h-full bg-blue-600 rounded-full transition-all duration-200 w-0"
+            ></div>
+          </div>
+          <div class="flex justify-between text-[11px] font-mono text-neutral-400">
+            <span>Progress</span>
+            <span id="meta-progress-pct">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-neutral-500 dark:text-neutral-400 space-y-2">
+        <p>&copy; 2026 ToolStacker. Free, fast, private in-browser document tools.</p>
+        <div class="flex justify-center gap-4">
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+          <span>•</span>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+          <span>•</span>
+          <a href="/" class="hover:text-blue-600 transition-colors">All Tools</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="/assets/js/edit-pdf-metadata.js"></script>
+    <script>
+      // Initialize Lucide icons
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+      // Theme toggle support
+      const themeBtn = document.querySelector('[data-theme-toggle]');
+      if (themeBtn) {
+        const updateThemeUI = (isDark) => {
+          document.documentElement.classList.toggle('dark', isDark);
+          const sunIcon = themeBtn.querySelector('.theme-icon-sun');
+          const moonIcon = themeBtn.querySelector('.theme-icon-moon');
+          if (sunIcon && moonIcon) {
+            sunIcon.classList.toggle('hidden', !isDark);
+            moonIcon.classList.toggle('hidden', isDark);
+          }
+        };
+
+        const isDark = localStorage.getItem('theme') === 'dark' || 
+          (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        updateThemeUI(isDark);
+
+        themeBtn.addEventListener('click', () => {
+          const currentlyDark = document.documentElement.classList.contains('dark');
+          const nextDark = !currentlyDark;
+          localStorage.setItem('theme', nextDark ? 'dark' : 'light');
+          updateThemeUI(nextDark);
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "id": "/",
+  "name": "ToolStacker - Image Compressor & Utilities",
+  "short_name": "ToolStacker",
+  "description": "Compress JPEG, PNG, WebP, AVIF images online without losing quality. 100% client-side, free, and unlimited.",
+  "start_url": "/tools/image-compressor.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "categories": ["utilities", "productivity", "photo"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

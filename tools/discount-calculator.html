@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO & Social Meta Tags -->
+    <title>Free Discount & Sale Tax Calculator – Calculate Savings | ToolStacker</title>
+    <meta name="title" content="Free Discount & Sale Tax Calculator – Calculate Savings | ToolStacker" />
+    <meta name="description" content="Calculate final sale prices, exact percentage savings, stacked promo coupons, and sales tax instantly. Free, private, and works offline in your browser." />
+    <meta name="keywords" content="discount calculator, sale price calculator, percent off calculator, calculate savings, sales tax calculator, stacked discount" />
+
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Free Discount & Sale Tax Calculator | ToolStacker" />
+    <meta property="og:description" content="Calculate sale price, total savings, and sales tax instantly with our free interactive discount calculator." />
+    <meta property="og:site_name" content="ToolStacker" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Free Discount & Sale Tax Calculator | ToolStacker" />
+    <meta name="twitter:description" content="Calculate sale prices and percentage discounts in real-time with zero server latency." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Discount & Sale Tax Calculator",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "All",
+          "description": "Calculate final prices, savings, stacked coupon codes, and sales tax with live visual feedback.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do you calculate a percentage discount?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "To calculate a discount: multiply the original price by the discount percentage divided by 100 to get your savings. Then subtract the savings from the original price to find the final price."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do stacked or double discounts work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Stacked discounts are applied sequentially, not added together. For instance, a $100 item with 20% off becomes $80. An extra 10% coupon is then applied to $80, resulting in a final price of $72 (a total of 28% off, rather than 30%)."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Navigation Bar -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                Calculator
+              </span>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 hidden sm:block">Sale & Tax Calculator</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation: Streamlined & Categorized Dropdown -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+
+          <!-- Categorized Tools Dropdown -->
+          <div class="relative">
+            <button
+              type="button"
+              id="tools-menu-btn"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-all cursor-pointer"
+            >
+              <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
+              <span>Tools</span>
+              <i data-lucide="chevron-down" data-chevron class="w-4 h-4 transition-transform duration-200 text-neutral-400"></i>
+            </button>
+
+            <!-- Dropdown Menu Box -->
+            <div
+              id="tools-dropdown-menu"
+              class="absolute left-1/2 -translate-x-1/2 mt-2 w-80 sm:w-96 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl shadow-neutral-900/10 p-4 space-y-4 opacity-0 invisible -translate-y-2 pointer-events-none transition-all duration-200 z-50"
+              role="menu"
+            >
+              <!-- Calculators Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+                  <span>Calculators</span>
+                  <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-semibold lowercase">3 tools</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/discount-calculator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl bg-blue-50/60 dark:bg-blue-950/50 hover:bg-blue-100/60 dark:hover:bg-blue-900/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <i data-lucide="badge-percent" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                        <span>Discount Calculator</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300">Active</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Calculate sale savings, coupons & taxes</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/age-calculator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="calendar-heart" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Age Calculator</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300">New</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Exact chronological age & milestones</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/unit-converter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="scale" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Unit Converter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Metric & imperial conversions</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Text & OCR Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  <span>Text & OCR</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/image-to-text.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="scan-text" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Image to Text (OCR)
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Extract text from images in browser</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/word-counter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Word Counter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Word, character & reading statistics</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Utilities & Developer Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>Utilities & Developer</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/qr-code-generator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="qr-code" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        QR Code Generator
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Custom high-res downloadable QR codes</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/json-formatter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="code-2" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        JSON Formatter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Validate, format & minify JSON data</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- All Tools Footer link inside dropdown -->
+              <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                <a
+                  href="/#tools-section"
+                  class="flex items-center justify-between px-2 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors"
+                >
+                  <span>Explore all 7 tools</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            title="Toggle light/dark mode"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 theme-icon-sun text-amber-400 hidden"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700"></i>
+          </button>
+
+          <!-- Mobile Menu Trigger -->
+          <button
+            type="button"
+            id="mobile-menu-btn"
+            class="md:hidden p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            aria-label="Open mobile navigation menu"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu-drawer" class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 pt-3 pb-6 space-y-3">
+        <a href="/" class="block px-3 py-2 rounded-lg text-sm font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+          Home
+        </a>
+        <a href="/#tools-section" class="block px-3 py-2 rounded-lg text-sm font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+          All Tools
+        </a>
+
+        <!-- Calculators Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+            <span>Calculators</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/discount-calculator.html" class="block px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">
+              Discount Calculator
+            </a>
+            <a href="/tools/age-calculator.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Age Calculator
+            </a>
+            <a href="/tools/unit-converter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Unit Converter
+            </a>
+          </div>
+        </div>
+
+        <!-- Text & OCR Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+            <span>Text & OCR</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/image-to-text.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Image to Text (OCR)
+            </a>
+            <a href="/tools/word-counter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Word Counter
+            </a>
+          </div>
+        </div>
+
+        <!-- Utilities & Dev Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span>Utilities & Dev</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/qr-code-generator.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              QR Code Generator
+            </a>
+            <a href="/tools/json-formatter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              JSON Formatter
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 py-10 sm:py-14 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <!-- Header -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600">Home</a>
+          <span>/</span>
+          <a href="/#tools-section" class="hover:text-blue-600">Calculators</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100">Discount Calculator</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-100">
+              Discount & Sales Tax Calculator
+            </h1>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1 max-w-2xl">
+              Calculate exact savings, final discounted prices, stacked coupons, and sales tax with live visual feedback.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="currency-select" class="text-xs font-semibold text-neutral-500">Currency:</label>
+            <select
+              id="currency-select"
+              class="px-2.5 py-1.5 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-xs font-bold"
+            >
+              <option value="$">$ USD</option>
+              <option value="€">€ EUR</option>
+              <option value="£">£ GBP</option>
+              <option value="¥">¥ JPY</option>
+              <option value="₹">₹ INR</option>
+              <option value="C$">C$ CAD</option>
+              <option value="A$">A$ AUD</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Functional Tool Card -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Left: Inputs Form -->
+        <div class="lg:col-span-7 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
+          
+          <!-- Original Price -->
+          <div class="space-y-2">
+            <label for="original-price" class="block text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
+              Original Price
+            </label>
+            <div class="relative rounded-xl border border-neutral-300 dark:border-neutral-700 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 overflow-hidden bg-neutral-50/50 dark:bg-neutral-950">
+              <span id="currency-symbol-1" class="absolute left-4 top-3 text-base font-bold text-neutral-400">
+                $
+              </span>
+              <input
+                type="number"
+                id="original-price"
+                step="0.01"
+                min="0"
+                value="99.99"
+                class="w-full pl-10 pr-4 py-3 bg-transparent text-lg font-bold text-neutral-900 dark:text-neutral-100 focus:outline-hidden"
+              />
+            </div>
+          </div>
+
+          <!-- Primary Discount -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <label for="discount-percent" class="text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
+                Discount Percentage
+              </label>
+              <div class="flex items-center gap-1 font-mono text-sm font-bold text-blue-600 dark:text-blue-400">
+                <input
+                  type="number"
+                  id="discount-percent-input"
+                  min="0"
+                  max="100"
+                  value="25"
+                  class="w-14 px-2 py-0.5 text-right border border-neutral-300 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-neutral-800 text-xs font-bold"
+                />
+                <span>%</span>
+              </div>
+            </div>
+
+            <!-- Slider -->
+            <input
+              type="range"
+              id="discount-slider"
+              min="0"
+              max="100"
+              value="25"
+              class="w-full accent-blue-600 cursor-pointer"
+            />
+
+            <!-- Preset percentage buttons -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <button type="button" class="preset-btn px-2.5 py-1 text-xs font-semibold rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100" data-pct="10">10%</button>
+              <button type="button" class="preset-btn px-2.5 py-1 text-xs font-semibold rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100" data-pct="15">15%</button>
+              <button type="button" class="preset-btn px-2.5 py-1 text-xs font-semibold rounded-lg border border-neutral-200 dark:border-neutral-700 bg-blue-50 text-blue-600 border-blue-200 font-bold" data-pct="25">25%</button>
+              <button type="button" class="preset-btn px-2.5 py-1 text-xs font-semibold rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100" data-pct="30">30%</button>
+              <button type="button" class="preset-btn px-2.5 py-1 text-xs font-semibold rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100" data-pct="50">50%</button>
+              <button type="button" class="preset-btn px-2.5 py-1 text-xs font-semibold rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100" data-pct="70">70%</button>
+            </div>
+          </div>
+
+          <!-- Stacked / Additional Discount -->
+          <div class="pt-4 border-t border-neutral-100 dark:border-neutral-800 space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="enable-stacked-discount" class="rounded text-blue-600 accent-blue-600 w-4 h-4" />
+                <span class="text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
+                  Additional Stacked Coupon
+                </span>
+              </label>
+              <span class="text-[11px] text-neutral-500">(e.g., extra 10% VIP code)</span>
+            </div>
+
+            <div id="stacked-discount-container" class="hidden space-y-2 pl-6 border-l-2 border-blue-500">
+              <div class="flex items-center gap-2">
+                <input
+                  type="number"
+                  id="stacked-discount-input"
+                  min="0"
+                  max="100"
+                  value="10"
+                  class="w-20 px-3 py-1.5 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-neutral-800 text-sm font-bold"
+                />
+                <span class="text-xs font-semibold text-neutral-600 dark:text-neutral-400">% extra off the discounted price</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sales Tax -->
+          <div class="pt-4 border-t border-neutral-100 dark:border-neutral-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <label for="tax-percent" class="text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
+                Sales Tax Rate
+              </label>
+              <div class="flex items-center gap-1 font-mono text-sm font-bold text-neutral-700 dark:text-neutral-300">
+                <input
+                  type="number"
+                  id="tax-percent"
+                  step="0.1"
+                  min="0"
+                  max="50"
+                  value="8.25"
+                  class="w-16 px-2 py-0.5 text-right border border-neutral-300 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-neutral-800 text-xs font-bold"
+                />
+                <span>%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Real-Time Results Summary -->
+        <div class="lg:col-span-5 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+              Calculation Breakdown
+            </span>
+
+            <!-- Final Big Price -->
+            <div class="mt-4 p-5 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border border-emerald-200 dark:border-emerald-900/60">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
+                Final Price To Pay
+              </span>
+              <div class="text-3xl sm:text-4xl font-extrabold font-display text-emerald-700 dark:text-emerald-400 mt-1">
+                <span id="final-currency-symbol">$</span><span id="final-price-display">81.18</span>
+              </div>
+              <p class="text-xs text-emerald-600 dark:text-emerald-400/80 mt-1">
+                Includes discounts & applied sales tax
+              </p>
+            </div>
+
+            <!-- Savings details list -->
+            <div class="mt-6 space-y-3 text-sm">
+              <div class="flex justify-between items-center py-2 border-b border-neutral-100 dark:border-neutral-800">
+                <span class="text-neutral-600 dark:text-neutral-400">Original Price:</span>
+                <span class="font-bold font-mono text-neutral-900 dark:text-neutral-100" id="res-original">$99.99</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-neutral-100 dark:border-neutral-800">
+                <span class="text-neutral-600 dark:text-neutral-400">Total Discount Saved:</span>
+                <span class="font-bold font-mono text-emerald-600" id="res-savings">-$25.00 (25%)</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-neutral-100 dark:border-neutral-800">
+                <span class="text-neutral-600 dark:text-neutral-400">Price Before Tax:</span>
+                <span class="font-bold font-mono text-neutral-900 dark:text-neutral-100" id="res-subtotal">$74.99</span>
+              </div>
+
+              <div class="flex justify-between items-center py-2 border-b border-neutral-100 dark:border-neutral-800">
+                <span class="text-neutral-600 dark:text-neutral-400">Estimated Sales Tax:</span>
+                <span class="font-bold font-mono text-neutral-900 dark:text-neutral-100" id="res-tax">+$6.19 (8.25%)</span>
+              </div>
+            </div>
+
+            <!-- Visual Bar -->
+            <div class="mt-6 space-y-1.5">
+              <div class="flex justify-between text-[11px] font-semibold text-neutral-500">
+                <span>Final Price vs Savings</span>
+                <span id="percent-savings-pill" class="text-emerald-600 font-bold">25% Saved</span>
+              </div>
+              <div class="w-full h-3 bg-neutral-100 dark:bg-neutral-800 rounded-full overflow-hidden flex">
+                <div id="bar-price" class="bg-blue-600 h-full transition-all duration-300" style="width: 75%"></div>
+                <div id="bar-savings" class="bg-emerald-500 h-full transition-all duration-300" style="width: 25%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Copy summary button -->
+          <div class="pt-4 border-t border-neutral-100 dark:border-neutral-800">
+            <button
+              type="button"
+              id="copy-summary-btn"
+              class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-neutral-900 dark:text-neutral-100 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+            >
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span>Copy Breakdown Summary</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEO-Friendly Content Section -->
+      <section class="border-t border-neutral-200 dark:border-neutral-800 pt-12 space-y-12">
+        
+        <!-- Explanation Article -->
+        <article class="space-y-4">
+          <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            Formula & Guide
+          </div>
+          <h2 class="text-2xl font-bold font-display text-neutral-900 dark:text-neutral-100">
+            How to Calculate Discount Percentages & Sales Tax
+          </h2>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-3xl">
+            Calculating the true savings during shopping sales, Black Friday promotions, or retail markdowns involves two straightforward steps: calculating the markdown value and then computing the tax on the discounted subtotal.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+              <h3 class="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-2">Discount Formula</h3>
+              <p class="font-mono text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 p-2 rounded-lg mb-2">
+                Savings = Original Price × (Discount % ÷ 100)
+              </p>
+              <p class="text-xs text-neutral-600 dark:text-neutral-400">
+                Example: A $120 jacket with a 25% discount gives $120 × 0.25 = $30 in total savings. The discounted subtotal is $90.
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+              <h3 class="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-2">Sales Tax Formula</h3>
+              <p class="font-mono text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 p-2 rounded-lg mb-2">
+                Total Tax = Discounted Subtotal × (Tax Rate % ÷ 100)
+              </p>
+              <p class="text-xs text-neutral-600 dark:text-neutral-400">
+                Tax is calculated on the sale price ($90), not the original MSRP. At an 8% tax rate: $90 × 0.08 = $7.20 tax. Final price = $97.20.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- FAQ Section -->
+        <article class="space-y-4">
+          <h2 class="text-2xl font-bold font-display text-neutral-900 dark:text-neutral-100">
+            Frequently Asked Questions
+          </h2>
+          <div class="space-y-3">
+            <details class="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group">
+              <summary class="font-semibold text-sm cursor-pointer list-none flex items-center justify-between">
+                <span>How do stacked or double discounts work?</span>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-400 group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="text-xs text-neutral-600 dark:text-neutral-400 mt-3 leading-relaxed">
+                Stacked discounts are applied consecutively. For example, if an item is 20% off and you have an additional 10% coupon, the 10% is deducted from the already-discounted price, not the original price. This results in an effective 28% total discount rather than a combined 30%.
+              </p>
+            </details>
+
+            <details class="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group">
+              <summary class="font-semibold text-sm cursor-pointer list-none flex items-center justify-between">
+                <span>Is sales tax calculated before or after discounts?</span>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-400 group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="text-xs text-neutral-600 dark:text-neutral-400 mt-3 leading-relaxed">
+                In most jurisdictions, sales tax is computed on the final discounted transaction price paid by the customer. However, manufacturer rebates or gift cards may have distinct local tax rules.
+              </p>
+            </details>
+          </div>
+        </article>
+
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8 text-xs">
+          <!-- Column 1: Brand -->
+          <div class="space-y-3 col-span-2 md:col-span-1">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <span class="text-base font-bold font-display text-neutral-900 dark:text-neutral-100">
+                Tool<span class="text-blue-600">Stacker</span>
+              </span>
+            </div>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Calculate final prices, savings, stacked coupons, and sales tax with live breakdown.
+            </p>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Quick Links
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/blogs.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blogs</a></li>
+              <li><a href="/privacy.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+              <li><a href="/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Popular Tools -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Popular Tools
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/discount-calculator.html" class="hover:text-blue-600">Discount Calculator</a></li>
+              <li><a href="/tools/qr-code-generator.html" class="hover:text-blue-600">QR Code Generator</a></li>
+              <li><a href="/tools/image-to-text.html" class="hover:text-blue-600">Image to Text (OCR)</a></li>
+              <li><a href="/tools/word-counter.html" class="hover:text-blue-600">Word Counter</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Developer & Units -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Developer & Units
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/json-formatter.html" class="hover:text-blue-600">JSON Formatter</a></li>
+              <li><a href="/tools/unit-converter.html" class="hover:text-blue-600">Universal Unit Converter</a></li>
+              <li><a href="/tools/age-calculator.html" class="hover:text-blue-600">Age Calculator</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 5: Privacy -->
+          <div class="col-span-2 md:col-span-1">
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              100% In-Browser
+            </h4>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Real-time arithmetic evaluated on your device without server communication.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+          <p>© 2026 ToolStacker Suite • Client-Side Discount & Sales Tax Calculator</p>
+          <div class="flex items-center gap-4">
+            <a href="/blogs.html" class="hover:text-blue-600 transition-colors">Blogs</a>
+            <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Interactive Calculator Script -->
+    <script type="module">
+      import { initTheme, showToast } from '/js/main.js';
+
+      let currency = '$';
+
+      const originalPriceInput = document.getElementById('original-price');
+      const discountPercentInput = document.getElementById('discount-percent-input');
+      const discountSlider = document.getElementById('discount-slider');
+      const enableStackedCheckbox = document.getElementById('enable-stacked-discount');
+      const stackedContainer = document.getElementById('stacked-discount-container');
+      const stackedInput = document.getElementById('stacked-discount-input');
+      const taxPercentInput = document.getElementById('tax-percent');
+      const currencySelect = document.getElementById('currency-select');
+
+      const finalPriceDisplay = document.getElementById('final-price-display');
+      const resOriginal = document.getElementById('res-original');
+      const resSavings = document.getElementById('res-savings');
+      const resSubtotal = document.getElementById('res-subtotal');
+      const resTax = document.getElementById('res-tax');
+      const barPrice = document.getElementById('bar-price');
+      const barSavings = document.getElementById('bar-savings');
+      const percentSavingsPill = document.getElementById('percent-savings-pill');
+
+      function calculate() {
+        const orig = Math.max(0, parseFloat(originalPriceInput.value) || 0);
+        const discPct = Math.min(100, Math.max(0, parseFloat(discountPercentInput.value) || 0));
+        const hasStacked = enableStackedCheckbox.checked;
+        const stackedPct = hasStacked ? Math.min(100, Math.max(0, parseFloat(stackedInput.value) || 0)) : 0;
+        const taxPct = Math.max(0, parseFloat(taxPercentInput.value) || 0);
+
+        // First discount
+        let discountedPrice = orig * (1 - discPct / 100);
+
+        // Stacked discount
+        if (hasStacked && stackedPct > 0) {
+          discountedPrice = discountedPrice * (1 - stackedPct / 100);
+        }
+
+        const totalSavings = orig - discountedPrice;
+        const effectiveDiscPct = orig > 0 ? (totalSavings / orig) * 100 : 0;
+        const taxAmount = discountedPrice * (taxPct / 100);
+        const finalPrice = discountedPrice + taxAmount;
+
+        // Render UI
+        finalPriceDisplay.textContent = finalPrice.toFixed(2);
+        resOriginal.textContent = `${currency}${orig.toFixed(2)}`;
+        resSavings.textContent = `-${currency}${totalSavings.toFixed(2)} (${effectiveDiscPct.toFixed(1)}%)`;
+        resSubtotal.textContent = `${currency}${discountedPrice.toFixed(2)}`;
+        resTax.textContent = `+${currency}${taxAmount.toFixed(2)} (${taxPct}%)`;
+
+        // Progress bar
+        const savingsRatio = orig > 0 ? (totalSavings / orig) * 100 : 0;
+        barSavings.style.width = `${Math.min(100, savingsRatio)}%`;
+        barPrice.style.width = `${Math.max(0, 100 - savingsRatio)}%`;
+        percentSavingsPill.textContent = `${effectiveDiscPct.toFixed(0)}% Saved`;
+      }
+
+      // Sync slider and input
+      discountSlider.addEventListener('input', (e) => {
+        discountPercentInput.value = e.target.value;
+        calculate();
+      });
+
+      discountPercentInput.addEventListener('input', (e) => {
+        discountSlider.value = e.target.value;
+        calculate();
+      });
+
+      originalPriceInput.addEventListener('input', calculate);
+      taxPercentInput.addEventListener('input', calculate);
+      stackedInput.addEventListener('input', calculate);
+
+      enableStackedCheckbox.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          stackedContainer.classList.remove('hidden');
+        } else {
+          stackedContainer.classList.add('hidden');
+        }
+        calculate();
+      });
+
+      // Preset pills
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-pct');
+          discountPercentInput.value = val;
+          discountSlider.value = val;
+          calculate();
+        });
+      });
+
+      // Currency change
+      currencySelect.addEventListener('change', (e) => {
+        currency = e.target.value;
+        document.getElementById('currency-symbol-1').textContent = currency;
+        document.getElementById('final-currency-symbol').textContent = currency;
+        calculate();
+      });
+
+      // Copy summary
+      document.getElementById('copy-summary-btn').addEventListener('click', async () => {
+        const summary = `Price Breakdown:\nOriginal: ${resOriginal.textContent}\nSavings: ${resSavings.textContent}\nTax: ${resTax.textContent}\nFinal Price: ${currency}${finalPriceDisplay.textContent}`;
+        try {
+          await navigator.clipboard.writeText(summary);
+          showToast('Pricing breakdown copied to clipboard!');
+        } catch (e) {
+          showToast('Failed to copy', 'error');
+        }
+      });
+
+      // Initial run
+      calculate();
+    </script>
+  </body>
+</html>

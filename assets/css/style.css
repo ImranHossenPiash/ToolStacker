@@ -1,0 +1,82 @@
+/* ToolStacker Image Compressor Styles */
+
+/* Ensure minimum touch hit area of 44px on mobile buttons and inputs */
+@media (max-width: 640px) {
+  button, input[type="button"], input[type="submit"], input[type="reset"], select, .touch-target {
+    min-height: 44px;
+  }
+}
+
+/* Custom styled range slider */
+input[type="range"] {
+  accent-color: #2563eb;
+}
+
+/* Before / After comparison slider container */
+.compare-container {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.compare-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  border-right: 2px solid #ffffff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.compare-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  background-color: #2563eb;
+  color: white;
+  border: 2px solid white;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+/* Modal zoom styling */
+.zoom-viewport {
+  overflow: auto;
+  cursor: grab;
+  user-select: none;
+}
+.zoom-viewport:active {
+  cursor: grabbing;
+}
+
+/* Checkerboard background for transparent PNG / WebP preview */
+.transparency-grid {
+  background-color: #f1f5f9;
+  background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%),
+                    linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, #e2e8f0 75%),
+                    linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+.dark .transparency-grid {
+  background-color: #0f172a;
+  background-image: linear-gradient(45deg, #1e293b 25%, transparent 25%),
+                    linear-gradient(-45deg, #1e293b 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, #1e293b 75%),
+                    linear-gradient(-45deg, transparent 75%, #1e293b 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}

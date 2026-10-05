@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Contact Us – ToolStacker</title>
+    <meta name="title" content="Contact Us – ToolStacker" />
+    <meta name="description" content="Get in touch with the ToolStacker team. Send feedback, suggest new client-side tools, or report issues." />
+    <meta name="keywords" content="contact toolstacker, suggest tool, feature request, bug report" />
+    <meta name="author" content="ToolStacker" />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://toolstacker.app/contact.html" />
+    <meta property="og:title" content="Contact Us – ToolStacker" />
+    <meta property="og:description" content="Have a question, feedback, or tool suggestion? We would love to hear from you." />
+    <meta property="og:site_name" content="ToolStacker" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            colors: {
+              brand: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Navigation Bar -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                Contact
+              </span>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 hidden sm:block">Feedback & Support</p>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="flex items-center gap-2 sm:gap-4">
+          <a href="/" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Home
+          </a>
+          <a href="/blogs.html" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Blogs
+          </a>
+          <a href="/privacy.html" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/contact.html" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 transition-colors">
+            Contact
+          </a>
+
+          <!-- Theme Toggle -->
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+            class="p-2 rounded-xl text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+          >
+            <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
+            <i data-lucide="sun" class="w-4 h-4 block dark:hidden"></i>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800 mb-4">
+          <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+          We Value Your Thoughts
+        </span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-neutral-900 dark:text-neutral-50 mb-3">
+          Get in Touch
+        </h1>
+        <p class="text-neutral-600 dark:text-neutral-400 text-sm sm:text-base leading-relaxed">
+          Have an idea for a new client-side tool? Encountered a bug, or want to contribute? Reach out to us directly or fill out the form below.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Left Column: Contact Cards -->
+        <div class="lg:col-span-5 space-y-4">
+          <!-- Email Card -->
+          <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
+              <i data-lucide="mail" class="w-5 h-5"></i>
+            </div>
+            <h2 class="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1">Direct Support Email</h2>
+            <p class="text-xs text-neutral-500 mb-3">Questions, technical suggestions, and security audits:</p>
+            <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 border border-neutral-200 dark:border-neutral-700">
+              <span class="font-mono text-xs font-semibold text-neutral-800 dark:text-neutral-200">support@toolstacker.dev</span>
+              <button
+                type="button"
+                id="copy-email-btn"
+                class="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors cursor-pointer"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Feature Requests Card -->
+          <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+              <i data-lucide="sparkles" class="w-5 h-5"></i>
+            </div>
+            <h2 class="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1">Suggest a New Tool</h2>
+            <p class="text-xs text-neutral-500 leading-relaxed mb-3">
+              We constantly expand our free client-side library. If there's an offline calculator, converter, or text tool you need, let us know!
+            </p>
+            <div class="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> 100% Free & Open-Web Philosophy
+            </div>
+          </div>
+
+          <!-- Response Commitment -->
+          <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <h2 class="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1">Quick Response Guarantee</h2>
+            <p class="text-xs text-neutral-500 leading-relaxed">
+              We typically review and reply to all inquiries and feedback within 24 to 48 hours.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Form -->
+        <div class="lg:col-span-7">
+          <div class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 sm:p-8 shadow-xs">
+            <h2 class="text-xl font-bold font-display text-neutral-900 dark:text-neutral-100 mb-1">
+              Send us a Message
+            </h2>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 mb-6">
+              Fill out the fields below and our team will get back to you.
+            </p>
+
+            <!-- Success Alert (Hidden Initially) -->
+            <div id="form-success-banner" class="hidden mb-6 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs">
+              <div class="flex items-start gap-3">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i>
+                <div>
+                  <h3 class="font-bold text-sm">Message Sent Successfully!</h3>
+                  <p class="mt-1">Thank you for contacting ToolStacker. We have received your message and will review your feedback shortly.</p>
+                  <button type="button" id="reset-form-btn" class="mt-3 font-semibold underline text-emerald-700 dark:text-emerald-400">
+                    Send another message
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form id="contact-form" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-name" class="block text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-1.5">
+                    Your Name <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="contact-name"
+                    required
+                    placeholder="Jane Doe"
+                    class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label for="contact-email" class="block text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-1.5">
+                    Email Address <span class="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="contact-email"
+                    required
+                    placeholder="jane@example.com"
+                    class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="contact-topic" class="block text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-1.5">
+                  Subject / Topic <span class="text-red-500">*</span>
+                </label>
+                <select
+                  id="contact-topic"
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="feature">Suggest a New Tool / Feature Request</option>
+                  <option value="bug">Report a Bug / Issue</option>
+                  <option value="feedback">General Feedback & Praise</option>
+                  <option value="privacy">Privacy & Security Audit</option>
+                  <option value="other">Other Inquiry</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="contact-message" class="block text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-1.5">
+                  Message <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  required
+                  rows="5"
+                  placeholder="Share details regarding your question, suggestion, or experience..."
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 resize-y"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                id="submit-btn"
+                class="w-full py-3 px-6 rounded-xl font-bold text-sm text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+              >
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Submit Message</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer with Quick Links -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
+          
+          <!-- Column 1: Brand -->
+          <div class="space-y-3 col-span-2 md:col-span-1">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <span class="text-base font-bold font-display text-neutral-900 dark:text-neutral-100">
+                Tool<span class="text-blue-600">Stacker</span>
+              </span>
+            </div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Open client-side utility suite designed for speed, privacy, and simplicity.
+            </p>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Quick Links
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/blogs.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blogs</a></li>
+              <li><a href="/privacy.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+              <li><a href="/contact.html" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Popular Tools -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Popular Tools
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/qr-code-generator.html" class="hover:text-blue-600">QR Code Generator</a></li>
+              <li><a href="/tools/image-to-text.html" class="hover:text-blue-600">Image to Text (OCR)</a></li>
+              <li><a href="/tools/discount-calculator.html" class="hover:text-blue-600">Discount Calculator</a></li>
+              <li><a href="/tools/word-counter.html" class="hover:text-blue-600">Word Counter</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Developer & Units -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Developer & Units
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/json-formatter.html" class="hover:text-blue-600">JSON Formatter</a></li>
+              <li><a href="/tools/unit-converter.html" class="hover:text-blue-600">Universal Unit Converter</a></li>
+              <li><a href="/tools/age-calculator.html" class="hover:text-blue-600">Age Calculator</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 5: Privacy & Tech -->
+          <div class="col-span-2 md:col-span-1">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Privacy & Tech
+            </h4>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Built with pure client-side JavaScript, Tailwind CSS, and WebAssembly. No server telemetry or tracking cookies.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+          <p>© 2026 ToolStacker Suite • Client-Side Open Web Utility</p>
+          <div class="flex items-center gap-4">
+            <a href="/blogs.html" class="hover:text-blue-600 transition-colors">Blogs</a>
+            <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Theme Toggle Logic
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const storedTheme = localStorage.getItem('theme');
+      
+      if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+      }
+
+      // Copy email
+      const copyEmailBtn = document.getElementById('copy-email-btn');
+      if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText('support@toolstacker.dev').then(() => {
+            copyEmailBtn.textContent = 'Copied!';
+            setTimeout(() => {
+              copyEmailBtn.textContent = 'Copy';
+            }, 2000);
+          });
+        });
+      }
+
+      // Contact Form Handling
+      const contactForm = document.getElementById('contact-form');
+      const successBanner = document.getElementById('form-success-banner');
+      const resetBtn = document.getElementById('reset-form-btn');
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const submitBtn = document.getElementById('submit-btn');
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">⌛</span> Sending...';
+
+          setTimeout(() => {
+            contactForm.classList.add('hidden');
+            successBanner.classList.remove('hidden');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span>Submit Message</span>';
+            if (window.lucide) lucide.createIcons();
+          }, 600);
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          contactForm.reset();
+          successBanner.classList.add('hidden');
+          contactForm.classList.remove('hidden');
+        });
+      }
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    </script>
+  </body>
+</html>

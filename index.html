@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>ToolStacker – Free Online Client-Side Utility Tools Suite</title>
+    <meta name="title" content="ToolStacker – Free Online Client-Side Utility Tools Suite" />
+    <meta name="description" content="Discover fast, private, client-side online tools including Image-to-Text OCR, Discount Calculator, Word Counter, and QR Code Generator without server uploads." />
+    <meta name="keywords" content="image to text, ocr, discount calculator, word counter, qr code generator, online tools, client-side utilities" />
+    <meta name="author" content="ToolStacker" />
+
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://toolstacker.app/" />
+    <meta property="og:title" content="ToolStacker – Free Online Client-Side Utility Tools Suite" />
+    <meta property="og:description" content="Fast, private, in-browser utility tools. Extract text from images, calculate sale discounts, analyze text word counts, and more." />
+    <meta property="og:site_name" content="ToolStacker" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ToolStacker – Free Online Client-Side Utility Tools Suite" />
+    <meta name="twitter:description" content="Fast, private, in-browser utility tools. Zero cloud server uploads, pure client-side execution." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            colors: {
+              brand: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ToolStacker",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "description": "Multi-page suite of private, client-side utility tools including OCR Image-to-Text, Discount & Sales Tax Calculator, Word Counter, and QR Code Generator.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Navigation Bar -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                100% Client-Side
+              </span>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 hidden sm:block">Private Browser Utilities</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation: Streamlined & Categorized Dropdown -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+
+          <!-- Categorized Tools Dropdown -->
+          <div class="relative">
+            <button
+              type="button"
+              id="tools-menu-btn"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-neutral-700 dark:text-neutral-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-neutral-100/80 dark:hover:bg-neutral-800/80 transition-all cursor-pointer"
+            >
+              <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
+              <span>Tools</span>
+              <i data-lucide="chevron-down" data-chevron class="w-4 h-4 transition-transform duration-200 text-neutral-400"></i>
+            </button>
+
+            <!-- Dropdown Menu Box -->
+            <div
+              id="tools-dropdown-menu"
+              class="absolute left-1/2 -translate-x-1/2 mt-2 w-80 sm:w-96 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl shadow-neutral-900/10 p-4 space-y-4 opacity-0 invisible -translate-y-2 pointer-events-none transition-all duration-200 z-50"
+              role="menu"
+            >
+              <!-- Calculators Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+                  <span>Calculators</span>
+                  <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-semibold lowercase">3 tools</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/discount-calculator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="badge-percent" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Discount Calculator
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Calculate sale savings, coupons & taxes</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/age-calculator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="calendar-heart" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Age Calculator</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300">New</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Exact chronological age & milestones</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/unit-converter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="scale" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Unit Converter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Metric & imperial conversions</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Text & OCR Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  <span>Text & OCR</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/image-to-text.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="scan-text" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Image to Text (OCR)
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Extract text from images in browser</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/word-counter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Word Counter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Word, character & reading statistics</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Image Tools Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="image" class="w-3.5 h-3.5 text-blue-500"></i>
+                  <span>Image Tools</span>
+                  <a href="/image-tools.html" class="ml-auto text-[10px] text-blue-600 dark:text-blue-400 hover:underline">View All</a>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/image-compressor.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="image-down" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Image Compressor</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Compress JPEG, PNG, WebP, AVIF</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/image-converter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Image Format Converter</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300">New</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Convert JPG, PNG, WebP, AVIF, HEIC</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- PDF Tools Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-rose-500"></i>
+                  <span>PDF & Documents</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/merge-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="files" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Merge PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Combine multiple PDFs & images</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/split-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="scissors" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Split PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Extract pages or split ranges</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/compress-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="file-down" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Compress PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Reduce file size up to 90%</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/pdf-image-converter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>PDF ↔ Image</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">PDF to PNG/JPG &amp; Image to PDF</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/sign-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="pen-tool" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Sign PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Draw, type, or upload signature</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/protect-unlock-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Protect / Unlock</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Add password or remove security</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/watermark-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600 dark:text-cyan-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="stamp" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Watermark PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Add text or image stamps</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/rotate-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Rotate PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Rotate individual or all pages</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/crop-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="crop" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Crop PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Remove margins &amp; trim pages</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/reorder-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="arrow-down-up" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Reorder / Remove Pages</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Drag-and-drop arrange &amp; delete</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/flatten-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="stamp" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Flatten PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Lock forms &amp; annotations permanent</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/grayscale-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="sun-dim" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Grayscale PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Convert color to black &amp; white</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/page-numbers-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="hash" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Add Page Numbers</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Custom position &amp; numbering formats</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/edit-pdf-metadata.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="tags" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Edit PDF Metadata</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">View, edit, or strip PDF properties</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/stamp-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="stamp" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Stamp PDF</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Preset &amp; custom digital rubber stamps</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/invoice-generator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="file-check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Invoice Generator</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">5 professional templates, PDF export</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/image-to-pdf.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="camera" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Image to PDF</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-300">New</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Convert JPG, PNG, WebP to PDF</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Utilities & Developer Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>Utilities & Developer</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/qr-code-generator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="qr-code" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        QR Code Generator
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Custom high-res downloadable QR codes</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/json-formatter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="code-2" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        JSON Formatter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Validate, format & minify JSON data</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- All Tools Footer link inside dropdown -->
+              <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                <a
+                  href="/#tools-section"
+                  class="flex items-center justify-between px-2 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors"
+                >
+                  <span>Explore all 7 tools</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Right Actions: Theme Toggle & Mobile Menu -->
+        <div class="flex items-center gap-2">
+          <!-- Theme Toggle Button -->
+          <button
+            type="button"
+            id="theme-toggle-btn"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            title="Toggle light/dark mode"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 theme-icon-sun text-amber-400 hidden"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700"></i>
+          </button>
+
+          <!-- Mobile Menu Trigger -->
+          <button
+            type="button"
+            id="mobile-menu-btn"
+            class="md:hidden p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            aria-label="Open mobile navigation menu"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu-drawer" class="hidden md:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs">
+      <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-white dark:bg-neutral-900 shadow-2xl p-6 flex flex-col justify-between border-l border-neutral-200 dark:border-neutral-800">
+        <div>
+          <div class="flex items-center justify-between pb-6 border-b border-neutral-100 dark:border-neutral-800">
+            <span class="text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+              Tool<span class="text-blue-600">Stacker</span>
+            </span>
+            <button id="mobile-menu-close" type="button" class="p-1 rounded-lg text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200" aria-label="Close menu">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <nav class="mt-4 flex flex-col space-y-4 text-sm font-medium overflow-y-auto max-h-[calc(100vh-180px)] pr-1">
+            <a href="/#tools-section" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 font-semibold flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i> All Tools
+            </a>
+            <a href="/profile.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 font-semibold flex items-center gap-2">
+              <i data-lucide="bookmark" class="w-4 h-4 text-blue-600"></i> My Profile &amp; Saved Works
+            </a>
+
+            <!-- Calculators Category -->
+            <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+                <span>Calculators</span>
+              </div>
+              <div class="space-y-1.5 pl-2">
+                <a href="/tools/discount-calculator.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 flex items-center gap-2 text-xs">
+                  <i data-lucide="badge-percent" class="w-3.5 h-3.5 text-emerald-600"></i> Discount Calculator
+                </a>
+                <a href="/tools/age-calculator.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 flex items-center gap-2 text-xs">
+                  <i data-lucide="calendar-heart" class="w-3.5 h-3.5 text-blue-600"></i> Age Calculator
+                </a>
+                <a href="/tools/unit-converter.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 flex items-center gap-2 text-xs">
+                  <i data-lucide="scale" class="w-3.5 h-3.5 text-teal-600"></i> Unit Converter
+                </a>
+              </div>
+            </div>
+
+            <!-- Text & OCR Category -->
+            <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+                <span>Text & OCR</span>
+              </div>
+              <div class="space-y-1.5 pl-2">
+                <a href="/tools/image-to-text.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 flex items-center gap-2 text-xs">
+                  <i data-lucide="scan-text" class="w-3.5 h-3.5 text-blue-600"></i> Image to Text (OCR)
+                </a>
+                <a href="/tools/word-counter.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 flex items-center gap-2 text-xs">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-600"></i> Word Counter
+                </a>
+              </div>
+            </div>
+
+            <!-- Utilities & Developer Category -->
+            <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-2 flex items-center gap-1.5">
+                <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+                <span>Utilities & Dev</span>
+              </div>
+              <div class="space-y-1.5 pl-2">
+                <a href="/tools/qr-code-generator.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 flex items-center gap-2 text-xs">
+                  <i data-lucide="qr-code" class="w-3.5 h-3.5 text-amber-600"></i> QR Code Generator
+                </a>
+                <a href="/tools/json-formatter.html" class="text-neutral-700 dark:text-neutral-300 hover:text-blue-600 py-1 flex items-center gap-2 text-xs">
+                  <i data-lucide="code-2" class="w-3.5 h-3.5 text-violet-600"></i> JSON Formatter
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <div class="pt-6 border-t border-neutral-100 dark:border-neutral-800 text-xs text-neutral-500">
+          <p>100% Client-Side In-Browser Execution</p>
+          <p class="mt-1">Zero Server Storage • Pure Privacy</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <!-- Hero Section -->
+      <section class="relative overflow-hidden py-16 sm:py-24 border-b border-neutral-200/80 dark:border-neutral-800 bg-gradient-to-b from-white to-neutral-50 dark:from-neutral-900 dark:to-neutral-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900/60 shadow-2xs mb-6">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
+            <span>Pure Client-Side Utilities • Zero Server Tracking</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-50 max-w-4xl mx-auto leading-tight">
+            Everyday Online Tools, <br class="hidden sm:inline" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600">
+              Zero Server Uploads.
+            </span>
+          </h1>
+
+          <p class="mt-6 text-base sm:text-lg text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+            Free, lightning-fast utilities crafted for developers, students, and professionals. All data processing occurs directly in your browser's memory using modern WebAssembly and JavaScript.
+          </p>
+
+          <!-- Interactive Live Search Bar in Hero -->
+          <div class="mt-10 max-w-2xl mx-auto">
+            <div class="relative flex items-center shadow-lg shadow-neutral-200/50 dark:shadow-neutral-950/50 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all p-1.5">
+              <div class="pl-3.5 pr-2 text-neutral-400 flex items-center">
+                <i data-lucide="search" class="w-5 h-5"></i>
+              </div>
+              <input
+                type="text"
+                id="tool-search-input"
+                placeholder="Search tools (e.g., OCR, discount, word count, QR)..."
+                class="w-full py-2.5 px-2 bg-transparent text-sm sm:text-base text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 focus:outline-hidden"
+              />
+              <div class="hidden sm:flex items-center gap-1 pr-3">
+                <kbd class="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-mono text-neutral-500 shadow-2xs">
+                  /
+                </kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats Ribbon -->
+          <div class="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+            <div class="flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
+              <span>100% Free Forever</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="lock" class="w-4 h-4 text-blue-500"></i>
+              <span>Private & Secure</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+              <span>Instant Local Computation</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="ban" class="w-4 h-4 text-rose-500"></i>
+              <span>No Sign-up Required</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tools Directory Grid Section -->
+      <section id="tools-section" class="py-14 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header & Filter Pills -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-8 border-b border-neutral-200 dark:border-neutral-800">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 font-display">
+              Available Online Utilities
+            </h2>
+            <p id="tools-count-display" class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+              Showing all tools
+            </p>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              data-category-filter="all"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border bg-blue-600 text-white border-blue-600 transition-all cursor-pointer shadow-2xs"
+            >
+              All Tools
+            </button>
+            <button
+              type="button"
+              data-category-filter="text"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 transition-all cursor-pointer shadow-2xs"
+            >
+              Text & OCR
+            </button>
+            <button
+              type="button"
+              data-category-filter="calculators"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 transition-all cursor-pointer shadow-2xs"
+            >
+              Calculators
+            </button>
+            <button
+              type="button"
+              data-category-filter="image-tools"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 transition-all cursor-pointer shadow-2xs"
+            >
+              Image Tools
+            </button>
+            <button
+              type="button"
+              data-category-filter="pdf"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 transition-all cursor-pointer shadow-2xs"
+            >
+              PDF &amp; Docs
+            </button>
+            <button
+              type="button"
+              data-category-filter="utilities"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 transition-all cursor-pointer shadow-2xs"
+            >
+              Utilities
+            </button>
+            <button
+              type="button"
+              data-category-filter="developer"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 transition-all cursor-pointer shadow-2xs"
+            >
+              Developer
+            </button>
+          </div>
+        </div>
+
+        <!-- Tool Cards Grid (Populated dynamically via main.js) -->
+        <div id="tools-grid" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Rendered by JavaScript -->
+        </div>
+
+        <!-- Empty Search State -->
+        <div id="tools-empty-state" class="hidden mt-12 text-center py-16 px-4 rounded-2xl border-2 border-dashed border-neutral-300 dark:border-neutral-800">
+          <div class="w-16 h-16 rounded-2xl bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto mb-4 text-neutral-400">
+            <i data-lucide="search-x" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-1">
+            No utility tools matched your search
+          </h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 max-w-sm mx-auto mb-5">
+            Try adjusting your search query or reset the filter to view all available tools.
+          </p>
+          <button
+            type="button"
+            id="reset-search-btn"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 hover:bg-neutral-800 transition-colors"
+          >
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            Reset Search & Filters
+          </button>
+        </div>
+      </section>
+
+      <!-- Architecture Highlights Section -->
+      <section class="py-16 bg-neutral-100/70 dark:bg-neutral-900/40 border-t border-neutral-200 dark:border-neutral-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="text-2xl sm:text-3xl font-bold font-display text-neutral-900 dark:text-neutral-100">
+              Why Use Client-Side Utilities?
+            </h2>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-2">
+              Unlike traditional SaaS utility websites that upload your files to remote servers, our entire suite runs directly in your browser.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center mb-4">
+                <i data-lucide="lock" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+                Absolute Data Privacy
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Confidential financial receipts, legal scans, passwords, and sensitive text never cross the network. Your files stay on your machine.
+              </p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+              <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center mb-4">
+                <i data-lucide="zap" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+                Zero Cloud Latency
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Calculations and formatting occur instantaneously. No queueing, rate limits, or waiting for third-party cloud AI APIs to respond.
+              </p>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 flex items-center justify-center mb-4">
+                <i data-lucide="wifi-off" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+                Works Offline
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Once loaded, tools function without an active internet connection. Perfect for on-the-go productivity without cellular data.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
+          <div class="space-y-3 col-span-2 md:col-span-1">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <span class="text-base font-bold font-display text-neutral-900 dark:text-neutral-100">
+                Tool<span class="text-blue-600">Stacker</span>
+              </span>
+            </div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Open client-side utility suite designed for speed, privacy, and simplicity.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Quick Links
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/blogs.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blogs</a></li>
+              <li><a href="/privacy.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+              <li><a href="/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Popular Tools
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/image-to-text.html" class="hover:text-blue-600">Image to Text (OCR)</a></li>
+              <li><a href="/tools/discount-calculator.html" class="hover:text-blue-600">Discount Calculator</a></li>
+              <li><a href="/tools/word-counter.html" class="hover:text-blue-600">Word Counter</a></li>
+              <li><a href="/tools/qr-code-generator.html" class="hover:text-blue-600">QR Code Generator</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Developer & Units
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/json-formatter.html" class="hover:text-blue-600">JSON Formatter</a></li>
+              <li><a href="/tools/unit-converter.html" class="hover:text-blue-600">Universal Unit Converter</a></li>
+              <li><a href="/tools/age-calculator.html" class="hover:text-blue-600">Age Calculator</a></li>
+            </ul>
+          </div>
+
+          <div class="col-span-2 md:col-span-1">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Privacy & Tech
+            </h4>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Built with pure client-side JavaScript, Tailwind CSS via CDN, and Tesseract.js WebAssembly. No server telemetry or tracking cookies.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+          <p>© 2026 ToolStacker Suite • Client-Side Open Web Utility</p>
+          <div class="flex items-center gap-4 flex-wrap">
+            <a href="/about.html" class="hover:text-blue-600 transition-colors">About Us</a>
+            <a href="/blogs.html" class="hover:text-blue-600 transition-colors">Blogs</a>
+            <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="/terms.html" class="hover:text-blue-600 transition-colors">Terms of Service</a>
+            <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Main Module Script -->
+    <script type="module">
+      import { initToolGrid, TOOLS_DATA } from '/js/main.js';
+      
+      // Initialize Tool Grid on homepage
+      initToolGrid(TOOLS_DATA);
+    </script>
+  </body>
+</html>

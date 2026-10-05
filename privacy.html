@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Privacy Policy – ToolStacker</title>
+    <meta name="title" content="Privacy Policy – ToolStacker" />
+    <meta name="description" content="ToolStacker Privacy Policy: 100% client-side execution, zero server file uploads, no tracking cookies, and complete local privacy." />
+    <meta name="keywords" content="toolstacker privacy policy, client side privacy, zero data collection, no server upload tools" />
+    <meta name="author" content="ToolStacker" />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://toolstacker.app/privacy.html" />
+    <meta property="og:title" content="Privacy Policy – ToolStacker" />
+    <meta property="og:description" content="Zero data collection, 100% in-browser client-side computation. Your data never leaves your device." />
+    <meta property="og:site_name" content="ToolStacker" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            colors: {
+              brand: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Navigation Bar -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                Privacy
+              </span>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 hidden sm:block">Zero Data Collection Guarantee</p>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="flex items-center gap-2 sm:gap-4">
+          <a href="/" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Home
+          </a>
+          <a href="/blogs.html" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Blogs
+          </a>
+          <a href="/privacy.html" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 transition-colors">
+            Privacy Policy
+          </a>
+          <a href="/contact.html" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Contact
+          </a>
+
+          <!-- Theme Toggle -->
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+            class="p-2 rounded-xl text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+          >
+            <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
+            <i data-lucide="sun" class="w-4 h-4 block dark:hidden"></i>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <!-- Header -->
+      <div class="mb-10 pb-8 border-b border-neutral-200 dark:border-neutral-800">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 mb-4">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+          100% In-Browser Privacy
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-neutral-900 dark:text-neutral-50 mb-3">
+          Privacy Policy
+        </h1>
+        <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+          Last Updated: September 2026 • Effective Immediately
+        </p>
+      </div>
+
+      <!-- Quick Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+        <div class="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+          <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3">
+            <i data-lucide="cloud-off" class="w-4 h-4"></i>
+          </div>
+          <h2 class="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-1">Zero Server Uploads</h2>
+          <p class="text-xs text-neutral-500 leading-relaxed">Your photos, texts, passwords, and documents are computed inside your browser RAM only.</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-3">
+            <i data-lucide="cookie" class="w-4 h-4"></i>
+          </div>
+          <h2 class="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-1">No Tracking Cookies</h2>
+          <p class="text-xs text-neutral-500 leading-relaxed">We do not set tracking cookies, behavioral ad pixels, or digital fingerprinting mechanisms.</p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+          <div class="w-8 h-8 rounded-lg bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400 flex items-center justify-center mb-3">
+            <i data-lucide="database-zap" class="w-4 h-4"></i>
+          </div>
+          <h2 class="text-sm font-bold text-neutral-900 dark:text-neutral-100 mb-1">No Remote Storage</h2>
+          <p class="text-xs text-neutral-500 leading-relaxed">We maintain no remote database of user inputs. Closing the browser tab destroys all memory.</p>
+        </div>
+      </div>
+
+      <!-- Policy Sections -->
+      <div class="space-y-8 text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed">
+        
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+            1. Core Architectural Commitment
+          </h2>
+          <p>
+            At <strong>ToolStacker</strong>, privacy is not an afterthought or marketing disclaimer—it is the foundational technical architecture of our software. Every single tool available on this site (including OCR Image to Text, QR Code Generator, JSON Formatter, Word Counter, and Calculators) operates exclusively on <strong>client-side technology</strong>.
+          </p>
+          <p>
+            When you interact with any tool, JavaScript running within your local browser engine processes your files, images, numbers, and text. No data is ever transmitted, streamed, or uploaded to an external server or cloud database.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+            2. Personal Information We Do NOT Collect
+          </h2>
+          <p>Because ToolStacker does not require accounts, sign-ups, or credit cards, we do not collect or store:</p>
+          <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+            <li>Your name, email address, physical address, or phone number.</li>
+            <li>Images, scans, or text documents processed in the OCR utility.</li>
+            <li>QR code URLs, contact vCards, Wi-Fi credentials, or plain text messages.</li>
+            <li>Financial calculations, discounts, unit values, or sensitive JSON structures.</li>
+            <li>IP logs, browsing history, or behavioral interaction records.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+            3. Local Storage Usage
+          </h2>
+          <p>
+            ToolStacker utilizes your browser’s standard <code class="px-1.5 py-0.5 rounded bg-neutral-200 dark:bg-neutral-800 text-xs font-mono text-neutral-800 dark:text-neutral-200">localStorage</code> API solely to store your cosmetic theme preference (<code class="text-xs font-mono">theme = 'dark' | 'light'</code>). This data resides entirely on your device and can be cleared at any time through your browser settings.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+            4. Third-Party Content Delivery Networks (CDNs)
+          </h2>
+          <p>
+            Our web pages load static visual libraries (such as Google Fonts, Tailwind CSS, Lucide icons, and the open-source QR engine) via trusted global Content Delivery Networks. These CDNs serve cached asset files to speed up page delivery. We do not integrate third-party ad networks, telemetry SDKs, or social media trackers.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+            5. Security & Isolation
+          </h2>
+          <p>
+            By isolating data processing entirely within the browser's sandbox, your data is inherently protected from transmission interception (Man-in-the-Middle attacks) and centralized data breaches. You can even run ToolStacker offline once the page and WebAssembly assets are cached in your browser.
+          </p>
+        </section>
+
+        <section class="space-y-3">
+          <h2 class="text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+            6. Contact Us About Privacy
+          </h2>
+          <p>
+            If you have questions regarding our client-side architecture, code auditability, or privacy policies, please reach out via our <a href="/contact.html" class="text-blue-600 dark:text-blue-400 font-semibold underline">Contact Page</a> or email us directly at <span class="font-mono text-xs font-semibold">support@toolstacker.dev</span>.
+          </p>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer with Quick Links -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
+          
+          <!-- Column 1: Brand -->
+          <div class="space-y-3 col-span-2 md:col-span-1">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <span class="text-base font-bold font-display text-neutral-900 dark:text-neutral-100">
+                Tool<span class="text-blue-600">Stacker</span>
+              </span>
+            </div>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Open client-side utility suite designed for speed, privacy, and simplicity.
+            </p>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Quick Links
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/blogs.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blogs</a></li>
+              <li><a href="/privacy.html" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Privacy Policy</a></li>
+              <li><a href="/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Popular Tools -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Popular Tools
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/qr-code-generator.html" class="hover:text-blue-600">QR Code Generator</a></li>
+              <li><a href="/tools/image-to-text.html" class="hover:text-blue-600">Image to Text (OCR)</a></li>
+              <li><a href="/tools/discount-calculator.html" class="hover:text-blue-600">Discount Calculator</a></li>
+              <li><a href="/tools/word-counter.html" class="hover:text-blue-600">Word Counter</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Developer & Units -->
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Developer & Units
+            </h4>
+            <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/json-formatter.html" class="hover:text-blue-600">JSON Formatter</a></li>
+              <li><a href="/tools/unit-converter.html" class="hover:text-blue-600">Universal Unit Converter</a></li>
+              <li><a href="/tools/age-calculator.html" class="hover:text-blue-600">Age Calculator</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 5: Privacy & Tech -->
+          <div class="col-span-2 md:col-span-1">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Privacy & Tech
+            </h4>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Built with pure client-side JavaScript, Tailwind CSS, and WebAssembly. No server telemetry or tracking cookies.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+          <p>© 2026 ToolStacker Suite • Client-Side Open Web Utility</p>
+          <div class="flex items-center gap-4">
+            <a href="/blogs.html" class="hover:text-blue-600 transition-colors">Blogs</a>
+            <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Theme Toggle Logic
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const storedTheme = localStorage.getItem('theme');
+      
+      if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+      }
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    </script>
+  </body>
+</html>

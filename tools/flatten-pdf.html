@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Flatten PDF Online – Free & Private – ToolStacker</title>
+    <meta name="title" content="Flatten PDF Online – Free & Private – ToolStacker" />
+    <meta name="description" content="Make interactive PDF form fields and annotations permanent with 100% client-side processing. Free, no signup, zero file upload." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF Libraries CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your PDF Never Leaves Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                PDF Studio
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Flatten PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-xs font-bold">
+            <i data-lucide="stamp" class="w-4 h-4 text-amber-600"></i>
+            <span>Make Form Fields &amp; Annotations Permanent • 100% In-Browser Privacy</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-50 leading-tight">
+            Flatten PDF Online – <span class="text-amber-600 dark:text-amber-500">Free &amp; Private</span>
+          </h1>
+          <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            Make form fields and annotations permanent. Prevent tampering, lock completed values, and ensure consistent rendering across all PDF viewers. No upload, no signup.
+          </p>
+        </div>
+
+        <!-- Large Upload Zone -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload PDF to flatten"
+          class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-amber-500 dark:hover:border-amber-500 rounded-3xl p-8 sm:p-14 text-center cursor-pointer transition-all duration-200 bg-white/60 dark:bg-neutral-900/60 hover:bg-amber-50/40 dark:hover:bg-amber-950/20 backdrop-blur-sm group focus:outline-none focus:ring-4 focus:ring-amber-500/20"
+        >
+          <input type="file" id="file-input" accept=".pdf,application/pdf" class="hidden" />
+          <div class="max-w-md mx-auto space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xs">
+              <i data-lucide="layers" class="w-8 h-8"></i>
+            </div>
+            <div class="space-y-1.5">
+              <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                Drag &amp; drop PDF here or click to browse
+              </h3>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400">
+                Supports single PDF files up to 200MB. Processed 100% locally.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                id="browse-btn"
+                class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold shadow-md shadow-amber-600/20 transition-all cursor-pointer"
+              >
+                Choose PDF File
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace Section (Visible after PDF loaded) -->
+      <section id="workspace" class="hidden space-y-6">
+        
+        <!-- File Info Bar -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-check" class="w-6 h-6"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 id="doc-name" class="font-bold text-sm text-neutral-900 dark:text-neutral-100 truncate">
+                document.pdf
+              </h3>
+              <p id="doc-details" class="text-xs text-neutral-500 font-mono mt-0.5">
+                0 KB • 0 pages
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 transition-colors cursor-pointer self-start sm:self-auto"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+            <span>Choose Another File</span>
+          </button>
+        </div>
+
+        <!-- Detection Summary Banner -->
+        <div id="detection-summary" class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <i data-lucide="search" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+                Interactive Elements Scan
+              </div>
+              <div id="detection-text" class="text-sm font-medium text-neutral-800 dark:text-neutral-200 mt-0.5">
+                Scanning document...
+              </div>
+            </div>
+          </div>
+
+          <div id="detection-status-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 self-start sm:self-auto flex items-center gap-1">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            <span>Ready</span>
+          </div>
+        </div>
+
+        <!-- Warning: Already Flattened / No Elements (Bug Prevention) -->
+        <div id="no-elements-warning" class="hidden rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 p-4 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-3">
+          <i data-lucide="alert-circle" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+          <div class="space-y-1">
+            <p class="font-bold text-sm">This PDF has no form fields or annotations to flatten.</p>
+            <p class="text-amber-700 dark:text-amber-400">
+              It appears to already be flattened. You can still process it if you wish to enforce locked stream dictionaries or strip legacy interactive tags.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2-Column Layout: Left Controls, Right Preview -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left Column: Flatten Options & Irreversible Warning -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <!-- Flatten Options Card -->
+            <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-5">
+              <div class="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800 pb-3">
+                <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                  <i data-lucide="sliders-horizontal" class="w-4 h-4 text-amber-600"></i>
+                  <span>Flatten Options</span>
+                </h3>
+                <span class="text-[11px] font-mono text-neutral-500">Custom Selection</span>
+              </div>
+
+              <!-- Options List -->
+              <div class="space-y-3.5">
+                
+                <!-- Option 1: Flatten All -->
+                <label class="flex items-start gap-3 p-3.5 rounded-2xl border-2 border-neutral-200 dark:border-neutral-800 hover:border-amber-400 dark:hover:border-amber-500 bg-neutral-50/50 dark:bg-neutral-800/40 transition-colors cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    id="opt-flatten-all"
+                    checked
+                    class="w-4 h-4 mt-0.5 rounded text-amber-600 focus:ring-amber-500 cursor-pointer"
+                  />
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <span class="font-bold text-xs text-neutral-900 dark:text-neutral-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                        Flatten All Elements
+                      </span>
+                      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
+                        Recommended
+                      </span>
+                    </div>
+                    <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1">
+                      Lock both form fields and all annotations into static page graphics simultaneously.
+                    </p>
+                  </div>
+                </label>
+
+                <!-- Option 2: Flatten Form Fields -->
+                <label class="flex items-start gap-3 p-3.5 rounded-2xl border border-neutral-200 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-500 bg-white dark:bg-neutral-900 transition-colors cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    id="opt-flatten-fields"
+                    checked
+                    class="w-4 h-4 mt-0.5 rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  />
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <span class="font-bold text-xs text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        Flatten Form Fields
+                      </span>
+                      <span id="badge-fields-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                        0 detected
+                      </span>
+                    </div>
+                    <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1">
+                      Converts text boxes, checkboxes, radio buttons, and dropdowns into non-editable vector content.
+                    </p>
+                  </div>
+                </label>
+
+                <!-- Option 3: Flatten Annotations -->
+                <label class="flex items-start gap-3 p-3.5 rounded-2xl border border-neutral-200 dark:border-neutral-800 hover:border-purple-400 dark:hover:border-purple-500 bg-white dark:bg-neutral-900 transition-colors cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    id="opt-flatten-annots"
+                    checked
+                    class="w-4 h-4 mt-0.5 rounded text-purple-600 focus:ring-purple-500 cursor-pointer"
+                  />
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between">
+                      <span class="font-bold text-xs text-neutral-900 dark:text-neutral-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                        Flatten Annotations
+                      </span>
+                      <span id="badge-annots-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                        0 detected
+                      </span>
+                    </div>
+                    <p class="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1">
+                      Bakes comments, highlights, underlines, sticky notes, and stamps permanently into the page.
+                    </p>
+                  </div>
+                </label>
+
+              </div>
+            </div>
+
+            <!-- Warning Box (Irreversible notice) -->
+            <div class="rounded-3xl bg-amber-500/10 border-2 border-amber-500/40 p-5 space-y-3">
+              <div class="flex items-center gap-2.5 text-amber-700 dark:text-amber-400 font-bold text-sm">
+                <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-600 shrink-0"></i>
+                <span>Permanent &amp; Irreversible Action</span>
+              </div>
+              <p class="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                ⚠️ <strong class="text-neutral-900 dark:text-neutral-100">This action is irreversible.</strong> Once flattened, form fields and annotations cannot be edited, filled out, or removed. A new copy will be generated—your original PDF file remains safe and untouched on your computer.
+              </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-5 shadow-xs flex flex-col sm:flex-row items-center gap-3">
+              <button
+                type="button"
+                id="cancel-btn"
+                class="w-full sm:w-auto px-5 py-3 rounded-2xl border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-bold text-xs transition-colors cursor-pointer text-center"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                id="flatten-btn"
+                class="w-full flex-1 py-3.5 px-6 rounded-2xl bg-amber-600 hover:bg-amber-700 active:scale-[0.99] text-white font-bold text-sm shadow-lg shadow-amber-600/25 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <i data-lucide="stamp" class="w-4 h-4"></i>
+                <span>Flatten PDF</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Interactive Live Preview with Overlays -->
+          <div class="lg:col-span-7 space-y-4">
+            
+            <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+              
+              <!-- Preview Header & Navigator -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-100 dark:border-neutral-800 pb-3">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-neutral-900 dark:text-neutral-100">
+                    Live Document Preview
+                  </span>
+                  <span id="preview-page-annot-count" class="text-[11px] text-neutral-500 font-mono">
+                    Page 1
+                  </span>
+                </div>
+
+                <!-- Page Switcher & Overlay Toggle -->
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    id="toggle-overlays-btn"
+                    class="px-2.5 py-1.5 rounded-xl text-xs font-semibold text-blue-600 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors flex items-center gap-1.5 cursor-pointer"
+                    title="Toggle visual highlight overlay boxes"
+                  >
+                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                    <span>Highlights</span>
+                  </button>
+
+                  <div class="h-4 w-px bg-neutral-200 dark:bg-neutral-800 mx-1"></div>
+
+                  <button
+                    type="button"
+                    id="prev-page-btn"
+                    disabled
+                    class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                    title="Previous page"
+                  >
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                  </button>
+
+                  <span id="page-indicator" class="text-xs font-mono font-bold text-neutral-700 dark:text-neutral-300 px-1">
+                    Page 1 of 1
+                  </span>
+
+                  <button
+                    type="button"
+                    id="next-page-btn"
+                    disabled
+                    class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                    title="Next page"
+                  >
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Preview Canvas Area with Overlays -->
+              <div
+                id="preview-wrapper"
+                class="relative min-h-[420px] bg-neutral-100/70 dark:bg-neutral-950/80 rounded-2xl p-4 flex items-center justify-center overflow-auto border border-neutral-200/80 dark:border-neutral-800"
+              >
+                <!-- Loading Spinner -->
+                <div id="preview-spinner" class="hidden absolute inset-0 z-20 flex items-center justify-center bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xs rounded-2xl">
+                  <i data-lucide="loader-2" class="w-8 h-8 text-amber-500 animate-spin"></i>
+                </div>
+
+                <!-- Canvas & Overlay Container -->
+                <div class="relative shadow-md rounded-md overflow-hidden bg-white select-none">
+                  <canvas id="preview-canvas" class="block max-w-full h-auto"></canvas>
+                  <!-- Visual Interactive Highlight Boxes Container -->
+                  <div id="preview-overlay-container" class="absolute inset-0 pointer-events-none"></div>
+                </div>
+              </div>
+
+              <!-- Preview Legend -->
+              <div class="flex flex-wrap items-center justify-center gap-4 text-[11px] text-neutral-500 pt-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-sm border-2 border-blue-500 bg-blue-500/20"></span>
+                  <span>Form Fields (Blue)</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-sm border-2 border-amber-500 bg-amber-500/20"></span>
+                  <span>Annotations / Comments (Amber)</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-sm border-2 border-dashed border-neutral-400"></span>
+                  <span>Skipped (Dashed)</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Download State (Visible after flattening applied) -->
+      <section id="download-section" class="hidden bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-sm max-w-2xl mx-auto">
+        <div class="w-20 h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-xs">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="max-w-md mx-auto space-y-2">
+          <h3 id="result-success-msg" class="text-2xl font-bold font-display text-neutral-900 dark:text-neutral-50">
+            Flattened successfully!
+          </h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            Form fields and annotations are permanently embedded into the page stream. All content is locked and ready for distribution or archiving.
+          </p>
+
+          <!-- Before / After File Size Comparison -->
+          <div class="pt-4 flex items-center justify-center gap-3">
+            <div class="px-3.5 py-2 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-xs font-mono">
+              <span class="text-neutral-400 text-[10px] block">Before</span>
+              <span id="result-before-size" class="font-bold text-neutral-700 dark:text-neutral-200">0 KB</span>
+            </div>
+            
+            <i data-lucide="arrow-right" class="w-4 h-4 text-neutral-400"></i>
+
+            <div class="px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-xs font-mono border border-emerald-200 dark:border-emerald-800">
+              <span class="text-emerald-600 dark:text-emerald-400 text-[10px] block font-bold">Flattened</span>
+              <span id="result-after-size" class="font-bold text-emerald-700 dark:text-emerald-300">0 KB</span>
+            </div>
+
+            <span id="result-savings-badge" class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+              Smaller
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <button
+            type="button"
+            id="download-btn"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-amber-600 hover:bg-amber-700 active:scale-[0.99] text-white font-bold text-sm shadow-lg shadow-amber-600/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download Flattened PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="flatten-another-btn"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-bold text-sm transition-all cursor-pointer"
+          >
+            Flatten Another PDF
+          </button>
+        </div>
+      </section>
+
+      <!-- Feature Highlights Section -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <i data-lucide="lock" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            Tamper-Proof Forms
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Convert fillable inputs into permanent graphics. Prevents accidental edits or tampering when submitting signed tax, legal, or financial contracts.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <i data-lucide="monitor" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            Universal Compatibility
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Ensures annotations and form entries render identically on any device, mobile viewer, web browser, or legacy PDF reader.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            100% In-Browser Privacy
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            All PDF operations run locally in your browser memory using `pdf-lib`. No files are ever uploaded or transmitted to any server.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile Sticky Action Bar -->
+    <div id="sticky-action-bar" class="hidden lg:hidden fixed bottom-0 left-0 right-0 z-30 p-3 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 shadow-2xl">
+      <button
+        type="button"
+        id="sticky-flatten-btn"
+        class="w-full py-3.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 active:scale-[0.99] text-white font-bold text-xs shadow-md shadow-amber-600/25 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <i data-lucide="stamp" class="w-4 h-4"></i>
+        <span>Flatten PDF</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="w-full max-w-md bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-neutral-200 dark:border-neutral-800 text-center space-y-5">
+        <div class="w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto">
+          <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+        </div>
+
+        <div class="space-y-1.5">
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+            Flattening Document
+          </h3>
+          <p id="flatten-progress-text" class="text-xs text-neutral-500">
+            Baking form fields and annotations... Please wait
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="w-full bg-neutral-100 dark:bg-neutral-800 rounded-full h-2.5 overflow-hidden">
+            <div id="flatten-progress-fill" class="bg-amber-600 h-2.5 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+          <div id="flatten-progress-pct" class="text-xs font-mono font-bold text-amber-600 text-right">
+            0%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300">ToolStacker</span>
+          <span>•</span>
+          <span>Fast, Private, Client-Side Utilities</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <a href="/#tools-section" class="hover:text-blue-600 transition-colors">All Tools</a>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/flatten-pdf.js"></script>
+  </body>
+</html>

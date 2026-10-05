@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>My Profile & Saved Works – ToolStacker</title>
+    <meta name="title" content="My Profile & Saved Works – ToolStacker" />
+    <meta name="description" content="Manage your ToolStacker profile, view your saved QR codes, OCR text extractions, and calculations with cloud sync." />
+    <meta name="keywords" content="toolstacker profile, saved qr codes, saved ocr text, account, cloud backup" />
+    <meta name="author" content="ToolStacker" />
+
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="My Profile & Saved Works – ToolStacker" />
+    <meta property="og:description" content="Access your saved QR codes, OCR text extracts, and history across all your devices." />
+    <meta property="og:site_name" content="ToolStacker" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- QR Code Styling Library for live preview of saved QR codes -->
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Navigation Bar -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                User Profile
+              </span>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 hidden sm:block">Cloud Sync &amp; Saved Utilities</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+          <a href="/tools/qr-code-generator.html" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            QR Generator
+          </a>
+          <a href="/tools/image-to-text.html" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Image to Text OCR
+          </a>
+        </nav>
+
+        <!-- Right Side Controls & Profile Auth Widget -->
+        <div class="flex items-center gap-2">
+          <!-- Auth / Profile Button in Header -->
+          <div id="header-auth-container" class="flex items-center gap-2">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+          <!-- Dark / Light Mode Toggle Button -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle dark mode"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      
+      <!-- USER PROFILE HEADER BANNER -->
+      <section id="profile-hero-card" class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm relative overflow-hidden transition-all">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
+          
+          <!-- User Details / Avatar -->
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+            <div id="user-avatar-wrap" class="relative">
+              <div id="user-avatar-placeholder" class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-display text-3xl font-extrabold flex items-center justify-center shadow-md">
+                G
+              </div>
+              <img id="user-avatar-img" src="" alt="Avatar" class="w-20 h-20 rounded-2xl object-cover shadow-md hidden border-2 border-white dark:border-neutral-800" />
+              <span id="account-status-dot" class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-neutral-400 border-2 border-white dark:border-neutral-900 flex items-center justify-center text-white text-[10px]" title="Guest Mode">
+                <i data-lucide="user" class="w-3 h-3"></i>
+              </span>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <h1 id="user-display-name" class="text-2xl font-bold font-display text-neutral-900 dark:text-neutral-100">
+                  Guest User
+                </h1>
+                <span id="user-badge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700">
+                  No Account (Local Storage Only)
+                </span>
+              </div>
+              <p id="user-email" class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+                Sign in with Google to enable permanent cloud backup and access your works from any device.
+              </p>
+              <div class="flex items-center justify-center sm:justify-start gap-3 pt-1 text-xs text-neutral-400">
+                <span id="user-stats-summary" class="flex items-center gap-1 font-medium">
+                  <i data-lucide="layers" class="w-3.5 h-3.5 text-blue-500"></i>
+                  <span id="stat-total-count">0 items saved</span>
+                </span>
+                <span>•</span>
+                <span id="storage-type-label" class="flex items-center gap-1">
+                  <i data-lucide="hard-drive" class="w-3.5 h-3.5 text-amber-500"></i>
+                  Browser Storage
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Auth Actions -->
+          <div class="flex flex-col sm:flex-row items-center gap-2.5 shrink-0 w-full sm:w-auto">
+            <button
+              type="button"
+              id="btn-google-login"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+              </svg>
+              <span>Sign In with Google</span>
+            </button>
+
+            <button
+              type="button"
+              id="btn-sign-out"
+              class="hidden w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 text-xs font-semibold transition-all cursor-pointer"
+            >
+              <i data-lucide="log-out" class="w-3.5 h-3.5 text-neutral-500"></i>
+              <span>Sign Out</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Sync Local Items Notification Banner (Shows when logged in and local items exist) -->
+        <div id="migration-banner" class="hidden mt-6 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2.5 text-amber-900 dark:text-amber-200">
+            <i data-lucide="refresh-cw" class="w-4 h-4 text-amber-600 shrink-0"></i>
+            <span>You have unsaved local items from your guest session. Would you like to sync them to your cloud account?</span>
+          </div>
+          <button
+            type="button"
+            id="btn-sync-guest-items"
+            class="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shrink-0 cursor-pointer shadow-2xs"
+          >
+            Sync to Cloud Account
+          </button>
+        </div>
+      </section>
+
+      <!-- SAVED WORKS DASHBOARD -->
+      <section class="space-y-6">
+        
+        <!-- Controls Bar: Filter Tabs & Search & New Item CTA -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          
+          <!-- Category Filter Tabs -->
+          <div class="flex items-center gap-1 p-1 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-x-auto text-xs font-bold">
+            <button type="button" data-filter="all" class="filter-tab active-filter px-3.5 py-2 rounded-xl bg-blue-600 text-white shadow-xs transition-all cursor-pointer whitespace-nowrap">
+              All Works (<span id="count-all">0</span>)
+            </button>
+            <button type="button" data-filter="qr" class="filter-tab px-3.5 py-2 rounded-xl text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all cursor-pointer whitespace-nowrap">
+              QR Codes (<span id="count-qr">0</span>)
+            </button>
+            <button type="button" data-filter="ocr" class="filter-tab px-3.5 py-2 rounded-xl text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all cursor-pointer whitespace-nowrap">
+              OCR Extracts (<span id="count-ocr">0</span>)
+            </button>
+            <button type="button" data-filter="calc" class="filter-tab px-3.5 py-2 rounded-xl text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all cursor-pointer whitespace-nowrap">
+              Calculators (<span id="count-calc">0</span>)
+            </button>
+          </div>
+
+          <!-- Search & Create Shortcuts -->
+          <div class="flex items-center gap-2">
+            <div class="relative flex-1 sm:w-64">
+              <i data-lucide="search" class="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Search saved works..."
+                class="w-full pl-9 pr-3.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+            
+            <a
+              href="/tools/qr-code-generator.html"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900 text-xs font-bold transition-all whitespace-nowrap"
+            >
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>New Work</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Saved Works Cards Grid -->
+        <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden p-12 text-center bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl space-y-4">
+          <div class="w-16 h-16 rounded-2xl bg-neutral-100 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-500 mx-auto flex items-center justify-center">
+            <i data-lucide="folder-open" class="w-8 h-8"></i>
+          </div>
+          <div class="space-y-1 max-w-sm mx-auto">
+            <h3 class="text-base font-bold text-neutral-800 dark:text-neutral-200">No Saved Items Found</h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400">
+              Generate a custom QR code or extract text with our OCR tool, then click "Save to Profile" to store it here!
+            </p>
+          </div>
+          <div class="flex items-center justify-center gap-2 pt-2 flex-wrap">
+            <a href="/tools/qr-code-generator.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-xs hover:bg-blue-700 transition-colors">
+              <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+              <span>Create QR Code</span>
+            </a>
+            <a href="/tools/image-to-text.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-200 font-bold text-xs hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+              <i data-lucide="scan-text" class="w-3.5 h-3.5"></i>
+              <span>Extract OCR Text</span>
+            </a>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 text-xs text-neutral-500 transition-colors">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p>© 2026 ToolStacker Suite • Private Client-Side Tools with Cloud Sync</p>
+        <div class="flex items-center gap-4">
+          <a href="/" class="hover:text-blue-600 transition-colors">All Tools</a>
+          <a href="/blogs.html" class="hover:text-blue-600 transition-colors">Blogs</a>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Profile Module Script -->
+    <script type="module">
+      import { 
+        auth, 
+        signInWithGoogle, 
+        signOutUser, 
+        getSavedWorks, 
+        deleteSavedWork, 
+        syncGuestItemsToCloud,
+        getGuestSavedItems 
+      } from '/js/firebase.js';
+      import { onAuthStateChanged } from 'firebase/auth';
+
+      let currentWorks = [];
+      let activeFilter = 'all';
+      let searchQuery = '';
+
+      // Initialize Lucide icons
+      function refreshIcons() {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      }
+
+      // Format Date
+      function formatDate(ts) {
+        if (!ts) return 'Just now';
+        try {
+          if (ts.toDate) {
+            return ts.toDate().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+          }
+          const d = new Date(ts);
+          return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        } catch (e) {
+          return 'Recent';
+        }
+      }
+
+      // Render Works Grid
+      function renderWorks() {
+        const grid = document.getElementById('works-grid');
+        const emptyState = document.getElementById('empty-state');
+        grid.innerHTML = '';
+
+        // Filter items
+        const filtered = currentWorks.filter(item => {
+          const matchesCategory = activeFilter === 'all' || item.type === activeFilter;
+          const matchesSearch = !searchQuery || 
+            (item.title && item.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (item.content && item.content.toLowerCase().includes(searchQuery.toLowerCase()));
+          return matchesCategory && matchesSearch;
+        });
+
+        // Update counts
+        document.getElementById('count-all').textContent = currentWorks.length;
+        document.getElementById('count-qr').textContent = currentWorks.filter(i => i.type === 'qr').length;
+        document.getElementById('count-ocr').textContent = currentWorks.filter(i => i.type === 'ocr').length;
+        document.getElementById('count-calc').textContent = currentWorks.filter(i => i.type === 'calc' || i.type === 'note').length;
+        document.getElementById('stat-total-count').textContent = `${currentWorks.length} items saved`;
+
+        if (filtered.length === 0) {
+          emptyState.classList.remove('hidden');
+          return;
+        } else {
+          emptyState.classList.add('hidden');
+        }
+
+        filtered.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-4';
+
+          const typeColors = {
+            qr: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border-blue-200 dark:border-blue-800',
+            ocr: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800',
+            calc: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
+            note: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800'
+          };
+          const badgeClass = typeColors[item.type] || typeColors.note;
+          const typeLabel = item.type === 'qr' ? 'QR Code' : item.type === 'ocr' ? 'OCR Extract' : 'Calculation';
+
+          let previewHtml = '';
+          if (item.type === 'qr') {
+            const qrCanvasId = `qr-preview-${item.id}`;
+            previewHtml = `
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-800">
+                <div id="${qrCanvasId}" class="w-16 h-16 shrink-0 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-neutral-200 dark:border-neutral-700"></div>
+                <div class="text-xs truncate space-y-0.5">
+                  <span class="text-[10px] uppercase font-bold text-neutral-400">Content / URL</span>
+                  <p class="font-mono text-neutral-800 dark:text-neutral-200 truncate max-w-[200px]" title="${item.content}">
+                    ${item.content}
+                  </p>
+                </div>
+              </div>
+            `;
+          } else {
+            previewHtml = `
+              <div class="p-3 rounded-xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-800 max-h-24 overflow-hidden text-xs text-neutral-700 dark:text-neutral-300 font-sans leading-relaxed whitespace-pre-wrap select-all">
+                ${item.content.slice(0, 200)}${item.content.length > 200 ? '...' : ''}
+              </div>
+            `;
+          }
+
+          card.innerHTML = `
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${badgeClass}">
+                  ${typeLabel}
+                </span>
+                <span class="text-[11px] text-neutral-400">
+                  ${formatDate(item.createdAt)}
+                </span>
+              </div>
+              <h3 class="font-bold text-sm text-neutral-900 dark:text-neutral-100 truncate" title="${item.title}">
+                ${item.title}
+              </h3>
+              ${previewHtml}
+            </div>
+
+            <div class="pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between gap-2">
+              <div class="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  data-action="copy"
+                  data-id="${item.id}"
+                  class="p-2 rounded-lg text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                  title="Copy content"
+                >
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                </button>
+                <button
+                  type="button"
+                  data-action="download"
+                  data-id="${item.id}"
+                  class="p-2 rounded-lg text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                  title="Download"
+                >
+                  <i data-lucide="download" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                data-action="delete"
+                data-id="${item.id}"
+                class="p-2 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-950/50 transition-colors cursor-pointer"
+                title="Delete item"
+              >
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          `;
+
+          grid.appendChild(card);
+
+          // If QR code, render thumbnail
+          if (item.type === 'qr' && window.QRCodeStyling) {
+            setTimeout(() => {
+              const container = document.getElementById(`qr-preview-${item.id}`);
+              if (container) {
+                try {
+                  const qr = new window.QRCodeStyling({
+                    width: 64,
+                    height: 64,
+                    data: item.content,
+                    dotsOptions: { color: "#000000", type: "rounded" },
+                    backgroundOptions: { color: "#ffffff" }
+                  });
+                  qr.append(container);
+                } catch (e) {
+                  container.innerHTML = '<span class="text-[9px] text-neutral-400 font-mono">QR</span>';
+                }
+              }
+            }, 50);
+          }
+        });
+
+        refreshIcons();
+
+        // Attach action handlers
+        grid.querySelectorAll('[data-action]').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            const action = btn.getAttribute('data-action');
+            const id = btn.getAttribute('data-id');
+            const item = currentWorks.find(w => w.id === id);
+            if (!item) return;
+
+            if (action === 'copy') {
+              navigator.clipboard.writeText(item.content);
+              btn.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-emerald-500"></i>';
+              refreshIcons();
+              setTimeout(() => {
+                btn.innerHTML = '<i data-lucide="copy" class="w-4 h-4"></i>';
+                refreshIcons();
+              }, 1500);
+            } else if (action === 'download') {
+              const blob = new Blob([item.content], { type: 'text/plain' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `${item.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
+              a.click();
+              URL.revokeObjectURL(url);
+            } else if (action === 'delete') {
+              if (confirm(`Are you sure you want to delete "${item.title}"?`)) {
+                await deleteSavedWork(id);
+                currentWorks = currentWorks.filter(w => w.id !== id);
+                renderWorks();
+              }
+            }
+          });
+        });
+      }
+
+      // Load all items
+      async function loadWorks() {
+        try {
+          currentWorks = await getSavedWorks();
+          renderWorks();
+        } catch (error) {
+          console.error('Failed to load works:', error);
+        }
+      }
+
+      // Listen for auth state
+      onAuthStateChanged(auth, async (user) => {
+        const avatarPlaceholder = document.getElementById('user-avatar-placeholder');
+        const avatarImg = document.getElementById('user-avatar-img');
+        const displayName = document.getElementById('user-display-name');
+        const userEmail = document.getElementById('user-email');
+        const userBadge = document.getElementById('user-badge');
+        const storageLabel = document.getElementById('storage-type-label');
+        const btnLogin = document.getElementById('btn-google-login');
+        const btnSignOut = document.getElementById('btn-sign-out');
+        const migrationBanner = document.getElementById('migration-banner');
+        const headerAuth = document.getElementById('header-auth-container');
+
+        if (user) {
+          // Logged In State
+          displayName.textContent = user.displayName || 'ToolStacker User';
+          userEmail.textContent = user.email || '';
+          userBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1';
+          userBadge.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Google Verified Account';
+          storageLabel.innerHTML = '<i data-lucide="cloud" class="w-3.5 h-3.5 text-blue-500"></i> Cloud Synced (Firestore)';
+          
+          if (user.photoURL) {
+            avatarImg.src = user.photoURL;
+            avatarImg.classList.remove('hidden');
+            avatarPlaceholder.classList.add('hidden');
+          } else {
+            avatarPlaceholder.textContent = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
+            avatarPlaceholder.classList.remove('hidden');
+            avatarImg.classList.add('hidden');
+          }
+
+          btnLogin.classList.add('hidden');
+          btnSignOut.classList.remove('hidden');
+
+          // Header widget
+          headerAuth.innerHTML = `
+            <a href="/profile.html" class="flex items-center gap-2 p-1.5 pr-3 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
+              ${user.photoURL ? `<img src="${user.photoURL}" class="w-6 h-6 rounded-full object-cover" />` : `<div class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold">${(user.displayName||'U').charAt(0)}</div>`}
+              <span class="text-xs font-semibold text-neutral-800 dark:text-neutral-200 truncate max-w-[100px]">${user.displayName || 'Profile'}</span>
+            </a>
+          `;
+
+          // Check if guest items exist to offer migration
+          const guestItems = getGuestSavedItems();
+          if (guestItems && guestItems.length > 0) {
+            migrationBanner.classList.remove('hidden');
+          } else {
+            migrationBanner.classList.add('hidden');
+          }
+        } else {
+          // Guest State
+          displayName.textContent = 'Guest User';
+          userEmail.textContent = 'Sign in with Google to enable permanent cloud backup and access your works from any device.';
+          userBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-700';
+          userBadge.textContent = 'Guest Mode (Browser Storage)';
+          storageLabel.innerHTML = '<i data-lucide="hard-drive" class="w-3.5 h-3.5 text-amber-500"></i> Browser Storage';
+          
+          avatarPlaceholder.textContent = 'G';
+          avatarPlaceholder.classList.remove('hidden');
+          avatarImg.classList.add('hidden');
+
+          btnLogin.classList.remove('hidden');
+          btnSignOut.classList.add('hidden');
+          migrationBanner.classList.add('hidden');
+
+          // Header widget for guest
+          headerAuth.innerHTML = `
+            <button type="button" id="header-login-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs cursor-pointer">
+              <i data-lucide="user" class="w-3.5 h-3.5"></i>
+              <span>Sign In</span>
+            </button>
+          `;
+          document.getElementById('header-login-btn')?.addEventListener('click', async () => {
+            await signInWithGoogle();
+          });
+        }
+
+        refreshIcons();
+        await loadWorks();
+      });
+
+      // Sign In Button
+      document.getElementById('btn-google-login').addEventListener('click', async () => {
+        try {
+          await signInWithGoogle();
+        } catch (e) {
+          console.error('Sign-in failed:', e);
+        }
+      });
+
+      // Sign Out Button
+      document.getElementById('btn-sign-out').addEventListener('click', async () => {
+        try {
+          await signOutUser();
+        } catch (e) {
+          console.error('Sign-out failed:', e);
+        }
+      });
+
+      // Sync Guest Items Button
+      document.getElementById('btn-sync-guest-items').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-sync-guest-items');
+        btn.textContent = 'Syncing...';
+        btn.disabled = true;
+        const count = await syncGuestItemsToCloud();
+        document.getElementById('migration-banner').classList.add('hidden');
+        await loadWorks();
+      });
+
+      // Category Tabs
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.filter-tab').forEach(t => {
+            t.className = 'filter-tab px-3.5 py-2 rounded-xl text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all cursor-pointer whitespace-nowrap';
+          });
+          tab.className = 'filter-tab active-filter px-3.5 py-2 rounded-xl bg-blue-600 text-white shadow-xs transition-all cursor-pointer whitespace-nowrap';
+          activeFilter = tab.getAttribute('data-filter');
+          renderWorks();
+        });
+      });
+
+      // Search Input
+      document.getElementById('search-input').addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim();
+        renderWorks();
+      });
+
+      // Dark Mode Toggle
+      const themeToggleBtns = document.querySelectorAll('[data-theme-toggle]');
+      themeToggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark');
+          localStorage.setItem('toolstacker_theme', isDark ? 'dark' : 'light');
+        });
+      });
+
+      refreshIcons();
+    </script>
+  </body>
+</html>

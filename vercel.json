@@ -1,0 +1,12 @@
+{
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/jpg-to-pdf", "destination": "/tools/image-to-pdf.html" },
+    { "source": "/png-to-pdf", "destination": "/tools/image-to-pdf.html" },
+    { "source": "/pdf-to-image", "destination": "/tools/pdf-image-converter.html" },
+    { "source": "/pdf-metadata", "destination": "/tools/edit-pdf-metadata.html" }
+  ]
+}

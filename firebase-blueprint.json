@@ -1,0 +1,99 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile document storing basic account information",
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "User's public display name",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User's email address",
+          "maxLength": 150
+        },
+        "photoURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "User's avatar URL",
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user registered"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the profile was last updated"
+        }
+      },
+      "required": ["displayName", "email", "createdAt", "updatedAt"]
+    },
+    "SavedItem": {
+      "title": "SavedItem",
+      "description": "A saved work created by the user (e.g., QR Code, OCR text, calculation result, notes)",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the saved work",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the owner who created this item",
+          "maxLength": 128
+        },
+        "type": {
+          "type": "string",
+          "description": "Category of work (e.g. qr, ocr, calc, note)",
+          "enum": ["qr", "ocr", "calc", "note"],
+          "maxLength": 20
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or label for the saved work",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "content": {
+          "type": "string",
+          "description": "Primary content, text, or payload string",
+          "maxLength": 500000
+        },
+        "summary": {
+          "type": "string",
+          "description": "Optional short summary or preview text",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last modified timestamp"
+        }
+      },
+      "required": ["id", "userId", "type", "title", "content", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private user profile collection where only the owning user can access their data"
+    },
+    "/users/{userId}/savedItems/{itemId}": {
+      "schema": "SavedItem",
+      "description": "Subcollection containing user's saved QR codes, OCR extractions, and calculations"
+    }
+  }
+}

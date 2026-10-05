@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Convert PDF to Grayscale – Free & Private – ToolStacker</title>
+    <meta name="title" content="Convert PDF to Grayscale – Free & Private – ToolStacker" />
+    <meta name="description" content="Convert color PDF documents to black and white grayscale. Reduces file size by 20-40% with live side-by-side comparison. 100% client-side, zero upload." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF & ZIP Libraries CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-neutral-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your PDF Never Leaves Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-neutral-200 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200 border border-neutral-300 dark:border-neutral-700">
+                PDF Studio
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Grayscale PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 text-xs font-bold">
+            <i data-lucide="sun-dim" class="w-4 h-4 text-neutral-600 dark:text-neutral-400"></i>
+            <span>Color to Black &amp; White • Reduces File Size 20-40% • 100% Private</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-50 leading-tight">
+            Convert PDF to Grayscale – <span class="text-neutral-600 dark:text-neutral-300">Free &amp; Private</span>
+          </h1>
+          <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            Make PDF black and white. Reduces file size, saves printer ink, and creates professional monochrome documents. No upload, no signup.
+          </p>
+        </div>
+
+        <!-- Large Upload Zone -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload PDF to convert to grayscale"
+          class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-neutral-500 dark:hover:border-neutral-400 rounded-3xl p-8 sm:p-14 text-center cursor-pointer transition-all duration-200 bg-white/60 dark:bg-neutral-900/60 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/30 backdrop-blur-sm group focus:outline-none focus:ring-4 focus:ring-neutral-500/20"
+        >
+          <input type="file" id="file-input" accept=".pdf,application/pdf" multiple class="hidden" />
+          <div class="max-w-md mx-auto space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform shadow-xs">
+              <i data-lucide="contrast" class="w-8 h-8"></i>
+            </div>
+            <div class="space-y-1.5">
+              <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                Drag &amp; drop PDF here or click to browse
+              </h3>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400">
+                Supports single or multiple PDFs up to 200MB each. Processed 100% locally.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                id="browse-btn"
+                class="px-5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-neutral-900 text-xs font-bold shadow-md transition-all cursor-pointer"
+              >
+                Choose PDF File(s)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace Section (Visible after PDF loaded) -->
+      <section id="workspace" class="hidden space-y-6">
+        
+        <!-- Batch File Tabs (Visible when multiple PDFs uploaded) -->
+        <div id="batch-tab-bar" class="hidden flex items-center gap-2 overflow-x-auto pb-2 border-b border-neutral-200 dark:border-neutral-800">
+          <!-- Dynamically populated buttons for switching active document -->
+        </div>
+
+        <!-- File Info Bar -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 id="doc-name" class="font-bold text-sm text-neutral-900 dark:text-neutral-100 truncate">
+                document.pdf
+              </h3>
+              <p id="doc-details" class="text-xs text-neutral-500 font-mono mt-0.5">
+                0 KB • 0 pages
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 transition-colors cursor-pointer self-start sm:self-auto"
+          >
+            <i data-lucide="x" class="w-4 h-4"></i>
+            <span>Choose Another File</span>
+          </button>
+        </div>
+
+        <!-- Info / Savings Estimate Box -->
+        <div class="rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+              <i data-lucide="trending-down" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <span class="font-bold text-neutral-800 dark:text-neutral-200">File Size Reduction Estimate:</span>
+              <span class="text-neutral-500 dark:text-neutral-400 ml-1">Grayscale conversion typically reduces file size by 20–40%.</span>
+            </div>
+          </div>
+          <span id="savings-estimate-badge" class="px-2.5 py-1 rounded-full text-xs font-bold font-mono bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 self-start sm:self-auto">
+            ~30% smaller
+          </span>
+        </div>
+
+        <!-- Already Grayscale Warning Banner (Bug Prevention) -->
+        <div id="already-grayscale-badge" class="hidden rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 p-4 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-3">
+          <i data-lucide="info" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+          <div>
+            <p class="font-bold text-sm">This PDF appears to be already grayscale.</p>
+            <p class="text-amber-700 dark:text-amber-400 mt-0.5">
+              No significant color saturation was detected on this page. You can still convert it to standardize color profiles or optimize encoding.
+            </p>
+          </div>
+        </div>
+
+        <!-- Preview Toolbar -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 shadow-xs flex flex-wrap items-center justify-between gap-4">
+          
+          <!-- Left: View Mode Toggle -->
+          <div class="flex items-center gap-1.5 bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl">
+            <button
+              type="button"
+              id="btn-mode-split"
+              class="px-3 py-1.5 rounded-lg text-xs font-bold bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <i data-lucide="columns" class="w-3.5 h-3.5"></i>
+              <span>Side-by-Side</span>
+            </button>
+
+            <button
+              type="button"
+              id="btn-mode-original"
+              class="px-3 py-1.5 rounded-lg text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+              <span>Original Color</span>
+            </button>
+
+            <button
+              type="button"
+              id="btn-mode-grayscale"
+              class="px-3 py-1.5 rounded-lg text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <i data-lucide="sun-dim" class="w-3.5 h-3.5"></i>
+              <span>Grayscale</span>
+            </button>
+          </div>
+
+          <!-- Middle: Zoom Slider -->
+          <div class="flex items-center gap-2">
+            <i data-lucide="zoom-in" class="w-4 h-4 text-neutral-400"></i>
+            <span class="text-xs font-medium text-neutral-500">Zoom:</span>
+            <input
+              type="range"
+              id="zoom-slider"
+              min="50"
+              max="200"
+              value="100"
+              step="10"
+              class="w-24 sm:w-32 accent-neutral-900 dark:accent-white cursor-pointer"
+            />
+            <span id="zoom-value" class="text-xs font-mono font-bold w-10 text-neutral-700 dark:text-neutral-300">100%</span>
+          </div>
+
+          <!-- Right: Page Navigator -->
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="prev-page-btn"
+              disabled
+              class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+              title="Previous page"
+            >
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            </button>
+
+            <span id="page-indicator" class="text-xs font-mono font-bold text-neutral-700 dark:text-neutral-300 px-1">
+              Page 1 of 1
+            </span>
+
+            <button
+              type="button"
+              id="next-page-btn"
+              disabled
+              class="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+              title="Next page"
+            >
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Preview Area: Side-by-Side Comparison Container -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-5 sm:p-6 shadow-xs relative">
+          
+          <!-- Loading Spinner -->
+          <div id="preview-spinner" class="hidden absolute inset-0 z-20 flex items-center justify-center bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xs rounded-3xl">
+            <i data-lucide="loader-2" class="w-8 h-8 text-neutral-700 dark:text-neutral-300 animate-spin"></i>
+          </div>
+
+          <div
+            id="preview-container"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start overflow-auto min-h-[460px] p-2"
+          >
+            
+            <!-- Left: Original Color Page -->
+            <div id="original-canvas-wrapper" class="flex flex-col items-center space-y-2">
+              <div class="flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <span>Original Color</span>
+              </div>
+              <div class="relative bg-white shadow-md rounded-lg overflow-hidden border border-neutral-200 max-w-full">
+                <canvas id="canvas-original" class="block max-w-full h-auto transition-transform"></canvas>
+              </div>
+            </div>
+
+            <!-- Right: Grayscale Version -->
+            <div id="grayscale-canvas-wrapper" class="flex flex-col items-center space-y-2">
+              <div class="flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold bg-neutral-900 text-white dark:bg-white dark:text-neutral-900">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>Grayscale (Black &amp; White)</span>
+              </div>
+              <div class="relative bg-white shadow-md rounded-lg overflow-hidden border border-neutral-200 max-w-full">
+                <canvas id="canvas-grayscale" class="block max-w-full h-auto transition-transform"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Action Buttons Bar -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-5 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-neutral-500">
+            Converts all pages to pure monochrome grayscale using high-fidelity luminance weights (0.299R + 0.587G + 0.114B).
+          </p>
+
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <button
+              type="button"
+              id="cancel-btn"
+              class="w-full sm:w-auto px-5 py-3 rounded-2xl border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-bold text-xs transition-colors cursor-pointer text-center"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              id="convert-btn"
+              class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-neutral-900 font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+            >
+              <i data-lucide="sun-dim" class="w-4 h-4"></i>
+              <span>Convert to Grayscale</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Download State (Visible after conversion applied) -->
+      <section id="download-section" class="hidden bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-sm max-w-2xl mx-auto">
+        <div class="w-20 h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-xs">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="max-w-md mx-auto space-y-2">
+          <h3 id="result-success-msg" class="text-2xl font-bold font-display text-neutral-900 dark:text-neutral-50">
+            Converted to grayscale successfully!
+          </h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            All color inks have been removed and replaced with standard monochrome shades. Your document is printer-friendly and compressed.
+          </p>
+
+          <!-- Before / After File Size Comparison -->
+          <div class="pt-4 flex items-center justify-center gap-3">
+            <div class="px-3.5 py-2 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-xs font-mono">
+              <span class="text-neutral-400 text-[10px] block">Original</span>
+              <span id="result-before-size" class="font-bold text-neutral-700 dark:text-neutral-200">0 KB</span>
+            </div>
+            
+            <i data-lucide="arrow-right" class="w-4 h-4 text-neutral-400"></i>
+
+            <div class="px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-xs font-mono border border-emerald-200 dark:border-emerald-800">
+              <span class="text-emerald-600 dark:text-emerald-400 text-[10px] block font-bold">Grayscale</span>
+              <span id="result-after-size" class="font-bold text-emerald-700 dark:text-emerald-300">0 KB</span>
+            </div>
+
+            <span id="result-savings-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+              Smaller
+            </span>
+          </div>
+        </div>
+
+        <!-- Download Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <button
+            type="button"
+            id="download-btn"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-neutral-900 font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download Grayscale PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="download-zip-btn"
+            class="hidden w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+          >
+            <i data-lucide="archive" class="w-4 h-4"></i>
+            <span>Download All (ZIP)</span>
+          </button>
+
+          <button
+            type="button"
+            id="convert-another-btn"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 font-bold text-sm transition-all cursor-pointer"
+          >
+            Convert Another PDF
+          </button>
+        </div>
+
+        <!-- Batch Results Breakdown (if multiple files) -->
+        <div id="batch-results-list" class="pt-4"></div>
+      </section>
+
+      <!-- Feature Highlights Section -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center">
+            <i data-lucide="printer" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            Printer-Friendly Monochrome
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Eliminates expensive color ink consumption and prevents weird color halftone dots on black-and-white office laser printers.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="file-archive" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            Significant Size Reduction
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Discarding RGB chrominance channels and applying modern grayscale compression typically shrinks file size by 20% to 40%.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 shadow-xs space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h4 class="font-bold text-base text-neutral-900 dark:text-neutral-100">
+            100% In-Browser Privacy
+          </h4>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Processed entirely inside client RAM. Your sensitive documents, statements, and tax files never touch an external server.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile Sticky Action Bar -->
+    <div id="sticky-action-bar" class="hidden lg:hidden fixed bottom-0 left-0 right-0 z-30 p-3 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 shadow-2xl">
+      <button
+        type="button"
+        id="sticky-convert-btn"
+        class="w-full py-3.5 px-4 rounded-xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold text-xs shadow-md flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <i data-lucide="sun-dim" class="w-4 h-4"></i>
+        <span>Convert to Grayscale</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="w-full max-w-md bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-neutral-200 dark:border-neutral-800 text-center space-y-5">
+        <div class="w-16 h-16 rounded-2xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center mx-auto">
+          <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+        </div>
+
+        <div class="space-y-1.5">
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+            Converting to Grayscale
+          </h3>
+          <p id="grayscale-progress-text" class="text-xs text-neutral-500">
+            Applying luminance filter... Please wait
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="w-full bg-neutral-100 dark:bg-neutral-800 rounded-full h-2.5 overflow-hidden">
+            <div id="grayscale-progress-fill" class="bg-neutral-900 dark:bg-white h-2.5 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+          <div id="grayscale-progress-pct" class="text-xs font-mono font-bold text-neutral-800 dark:text-neutral-200 text-right">
+            0%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300">ToolStacker</span>
+          <span>•</span>
+          <span>Fast, Private, Client-Side Utilities</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <a href="/#tools-section" class="hover:text-blue-600 transition-colors">All Tools</a>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/grayscale-pdf.js"></script>
+  </body>
+</html>

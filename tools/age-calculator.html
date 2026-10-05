@@ -1,0 +1,1652 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO & Social Meta Tags -->
+    <title>Age Calculation Calculator - Calculate Your Age Online accurately</title>
+    <meta name="title" content="Age Calculation Calculator - Calculate Your Age Online accurately" />
+    <meta name="description" content="Use our precise chronological age calculation calculator to calculate age using date of birth. Find your exact net age in years, months, and days online instantly." />
+    <meta name="keywords" content="Age Calculator, Calculate Your Age Online, Chronological Age Calculator, Age Calculation Calculator, Calculate Age Using Date of Birth, Count Age By Date of Birth, Age Calculator in Years Months and Days, Calculator Net Age, Age Finder Online, How Old Am I Calculator" />
+
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Age Calculation Calculator - Calculate Your Age Online accurately" />
+    <meta property="og:description" content="Use our precise chronological age calculation calculator to calculate age using date of birth. Find your exact net age in years, months, and days online instantly." />
+    <meta property="og:site_name" content="ToolStacker" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Age Calculation Calculator - Calculate Your Age Online accurately" />
+    <meta name="twitter:description" content="Use our precise chronological age calculation calculator to calculate age using date of birth. Find your exact net age in years, months, and days online instantly." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Age Calculation Calculator - Calculate Your Age Online accurately",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "description": "Use our precise chronological age calculation calculator to calculate age using date of birth. Find your exact net age in years, months, and days online instantly.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do you figure out your exact age accurately?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "To figure out your exact chronological age accurately, subtract your date of birth from today's date (or any specified target date) using Gregorian calendar date-math. Our online age calculator compares your birth day, month, and year against the target date, automatically borrowing exact calendar days (28, 29, 30, or 31) from preceding months to deliver 100% precision in years, months, days, hours, and minutes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is age calculated during leap years?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Leap years contain 366 days instead of 365, adding February 29th. Our chronological age calculator automatically verifies leap year conditions (years divisible by 4, except century years not divisible by 400). When borrowing days for calculation or tracking birthdays, it dynamically accounts for whether February had 28 or 29 days, eliminating off-by-one errors."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does the date to date age calculator work for future or past dates?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The date to date age calculator allows you to customize the 'Age at the Date of' field. Simply select any historical date (e.g., to determine age at college graduation or marriage) or any future milestone date (e.g., retirement day or 50th jubilee) to compute the exact net age between those two calendar dates instantly."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I calculate my current age on mobile devices?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, our age calculation calculator is fully mobile-friendly and responsive. You can use your smartphone or tablet's native date picker or dropdown selectors to calculate your age on iOS, Android, and all modern mobile web browsers with zero lag and 100% client-side privacy."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Navigation Bar -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                100% Client-Side
+              </span>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 hidden sm:block">Private Browser Utilities</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation: Streamlined & Categorized Dropdown -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+
+          <!-- Categorized Tools Dropdown -->
+          <div class="relative">
+            <button
+              type="button"
+              id="tools-menu-btn"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-all cursor-pointer"
+            >
+              <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
+              <span>Tools</span>
+              <i data-lucide="chevron-down" data-chevron class="w-4 h-4 transition-transform duration-200 text-neutral-400"></i>
+            </button>
+
+            <!-- Dropdown Menu Box -->
+            <div
+              id="tools-dropdown-menu"
+              class="absolute left-1/2 -translate-x-1/2 mt-2 w-80 sm:w-96 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl shadow-neutral-900/10 p-4 space-y-4 opacity-0 invisible -translate-y-2 pointer-events-none transition-all duration-200 z-50"
+              role="menu"
+            >
+              <!-- Calculators Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+                  <span>Calculators</span>
+                  <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-semibold lowercase">3 tools</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/discount-calculator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="badge-percent" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Discount Calculator
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Calculate sale savings, coupons & taxes</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/age-calculator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl bg-blue-50/60 dark:bg-blue-950/50 hover:bg-blue-100/60 dark:hover:bg-blue-900/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <i data-lucide="calendar-heart" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                        <span>Age Calculator</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300">Active</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Exact chronological age & milestones</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/unit-converter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="scale" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Unit Converter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Metric & imperial conversions</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Text & OCR Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  <span>Text & OCR</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/image-to-text.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="scan-text" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Image to Text (OCR)
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Extract text from images in browser</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/word-counter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        Word Counter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Word, character & reading statistics</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Utilities & Developer Section -->
+              <div>
+                <div class="flex items-center gap-2 px-2 pb-2 mb-1 border-b border-neutral-100 dark:border-neutral-800 text-[11px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>Utilities & Developer</span>
+                </div>
+                <div class="space-y-1">
+                  <a
+                    href="/tools/qr-code-generator.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="qr-code" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        QR Code Generator
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Custom high-res downloadable QR codes</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="/tools/json-formatter.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="code-2" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        JSON Formatter
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Validate, format & minify JSON data</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- All Tools Footer link inside dropdown -->
+              <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                <a
+                  href="/#tools-section"
+                  class="flex items-center justify-between px-2 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors"
+                >
+                  <span>Explore all 7 tools</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Right Header Actions -->
+        <div class="flex items-center gap-2">
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+            title="Toggle light/dark mode"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 theme-icon-sun text-amber-400 hidden"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700"></i>
+          </button>
+
+          <!-- Mobile Hamburger -->
+          <button
+            type="button"
+            id="mobile-menu-btn"
+            class="md:hidden p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            aria-label="Open mobile menu"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu-drawer" class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 pt-3 pb-6 space-y-3">
+        <a href="/" class="block px-3 py-2 rounded-lg text-sm font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+          Home
+        </a>
+        <a href="/#tools-section" class="block px-3 py-2 rounded-lg text-sm font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+          All Tools
+        </a>
+
+        <!-- Calculators Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+            <span>Calculators</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/discount-calculator.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Discount Calculator
+            </a>
+            <a href="/tools/age-calculator.html" class="block px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">
+              Age Calculator
+            </a>
+            <a href="/tools/unit-converter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Unit Converter
+            </a>
+          </div>
+        </div>
+
+        <!-- Text & OCR Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+            <span>Text & OCR</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/image-to-text.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Image to Text (OCR)
+            </a>
+            <a href="/tools/word-counter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Word Counter
+            </a>
+          </div>
+        </div>
+
+        <!-- Utilities & Dev Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span>Utilities & Dev</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/qr-code-generator.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              QR Code Generator
+            </a>
+            <a href="/tools/json-formatter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              JSON Formatter
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 py-6 sm:py-10 md:py-14 max-w-5xl mx-auto px-3.5 sm:px-6 lg:px-8 space-y-6 sm:space-y-10 md:space-y-12">
+      
+      <!-- Breadcrumbs & Heading -->
+      <div class="space-y-2.5 sm:space-y-3">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+          <span>/</span>
+          <a href="/#tools-section" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Calculators</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Age Calculator</span>
+        </nav>
+
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+          <div class="space-y-2">
+            <!-- H1 Heading Required -->
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-100">
+              Age Calculation Calculator: Calculate Your Age Online
+            </h1>
+            <!-- Lead Paragraph Required -->
+            <p class="text-xs sm:text-sm md:text-base text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
+              Welcome to the internet's most accurate Chronological Age Calculator. Whether you are wondering "how old am I calculator" or need to calculate age using date of birth for official applications, school admissions, or job verifications, our free age calculation calculator delivers instant precision down to years, months, days, hours, and minutes.
+            </p>
+          </div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 self-start sm:self-auto shrink-0">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
+            <span>100% Client-Side Privacy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Calculator Card -->
+      <div class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-xs space-y-5 sm:space-y-6">
+        
+        <!-- Error Banner Container -->
+        <div id="error-banner" class="hidden p-3.5 sm:p-4 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-xs sm:text-sm flex items-start gap-2.5 sm:gap-3">
+          <i data-lucide="alert-circle" class="w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5"></i>
+          <div class="flex-1">
+            <h4 class="font-bold text-red-900 dark:text-red-200">Invalid Date Selection</h4>
+            <p id="error-message" class="text-xs mt-0.5">Birth date cannot be after the target calculation date.</p>
+          </div>
+        </div>
+
+        <!-- Inputs Form Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 md:gap-8">
+          
+          <!-- Column 1: Date of Birth -->
+          <div class="space-y-3 sm:space-y-3.5">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                Date of Birth <span class="text-red-500">*</span>
+              </label>
+              <span class="text-[11px] text-neutral-400">Month / Day / Year</span>
+            </div>
+
+            <!-- Native Date Picker Input -->
+            <div class="relative">
+              <input
+                type="date"
+                id="dob-native"
+                class="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-hidden transition-all text-xs sm:text-sm"
+              />
+            </div>
+
+            <!-- Detailed Day, Month, Year Dropdown Selectors -->
+            <div class="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-3">
+              <div>
+                <label for="dob-day" class="block text-[11px] font-semibold text-neutral-500 mb-1">Day</label>
+                <select
+                  id="dob-day"
+                  class="w-full px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium text-xs focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
+                >
+                  <!-- Populated by JavaScript -->
+                </select>
+              </div>
+
+              <div>
+                <label for="dob-month" class="block text-[11px] font-semibold text-neutral-500 mb-1">Month</label>
+                <select
+                  id="dob-month"
+                  class="w-full px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-medium text-xs focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
+                >
+                  <option value="1">January (1)</option>
+                  <option value="2">February (2)</option>
+                  <option value="3">March (3)</option>
+                  <option value="4">April (4)</option>
+                  <option value="5">May (5)</option>
+                  <option value="6">June (6)</option>
+                  <option value="7">July (7)</option>
+                  <option value="8">August (8)</option>
+                  <option value="9">September (9)</option>
+                  <option value="10">October (10)</option>
+                  <option value="11">November (11)</option>
+                  <option value="12">December (12)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="dob-year" class="block text-[11px] font-semibold text-neutral-500 mb-1">Year</label>
+                <input
+                  type="number"
+                  id="dob-year"
+                  min="1900"
+                  max="2100"
+                  placeholder="YYYY"
+                  class="w-full px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 font-mono text-xs focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Age at Date (Defaults to Today) -->
+          <div class="space-y-3 sm:space-y-3.5">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
+                Age at Date (Target Date)
+              </label>
+              <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Defaults to Today
+              </span>
+            </div>
+
+            <!-- Target Date Input -->
+            <div class="relative">
+              <input
+                type="date"
+                id="target-native"
+                class="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-hidden transition-all text-xs sm:text-sm"
+              />
+            </div>
+
+            <!-- Target Quick Select Buttons -->
+            <div class="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-3">
+              <button
+                type="button"
+                id="btn-target-today"
+                class="px-1.5 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-[11px] sm:text-xs font-semibold text-neutral-800 dark:text-neutral-200 transition-colors flex items-center justify-center gap-1 sm:gap-1.5"
+              >
+                <i data-lucide="clock" class="w-3.5 h-3.5 text-blue-500 shrink-0"></i>
+                <span class="truncate">Today</span>
+              </button>
+
+              <button
+                type="button"
+                id="btn-target-eoy"
+                class="px-1.5 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-[11px] sm:text-xs font-semibold text-neutral-800 dark:text-neutral-200 transition-colors flex items-center justify-center gap-1 sm:gap-1.5"
+              >
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-500 shrink-0"></i>
+                <span class="truncate">End of Year</span>
+              </button>
+
+              <button
+                type="button"
+                id="btn-target-future"
+                class="px-1.5 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-[11px] sm:text-xs font-semibold text-neutral-800 dark:text-neutral-200 transition-colors flex items-center justify-center gap-1.5"
+              >
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500 shrink-0"></i>
+                <span class="truncate">Year 2030</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Action Buttons Toolbar -->
+        <div class="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
+          <div class="grid grid-cols-2 sm:flex items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              id="btn-calculate"
+              class="px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 min-h-[44px]"
+            >
+              <i data-lucide="calculator" class="w-4 h-4 shrink-0"></i>
+              <span>Calculate Age</span>
+            </button>
+
+            <button
+              type="button"
+              id="btn-reset"
+              class="px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300 font-semibold text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
+            >
+              <i data-lucide="rotate-ccw" class="w-4 h-4 shrink-0"></i>
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            id="btn-share-result"
+            class="w-full sm:w-auto px-4 py-2.5 sm:py-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:border-blue-500 text-neutral-800 dark:text-neutral-200 font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-xs min-h-[44px]"
+          >
+            <i data-lucide="copy" class="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0"></i>
+            <span>Copy / Share Result</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Output Presentation Section (Instant Results) -->
+      <div id="results-container" class="space-y-4 sm:space-y-6">
+        
+        <!-- Birthday Banner (Celebratory if today is birthday) -->
+        <div id="birthday-celebration-banner" class="hidden p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-amber-500/10 via-pink-500/10 to-blue-500/10 border border-amber-300 dark:border-amber-700/50 flex items-center gap-2.5 sm:gap-3">
+          <div class="text-xl sm:text-2xl shrink-0">🎉</div>
+          <div>
+            <h3 class="font-bold text-neutral-900 dark:text-neutral-100 text-xs sm:text-sm">Happy Birthday!</h3>
+            <p class="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-300 mt-0.5">Today marks your exact birthday anniversary. Wishing you a year filled with happiness, health, and success!</p>
+          </div>
+        </div>
+
+        <!-- 1. Primary Output: Exact Age in Years, Months, Days -->
+        <div class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white rounded-2xl p-4 sm:p-6 md:p-8 shadow-md relative overflow-hidden border border-blue-400/30 dark:border-blue-400/20">
+          <!-- Background geometric accent -->
+          <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-white/5 pointer-events-none blur-xl"></div>
+
+          <div class="relative z-10 space-y-4 sm:space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 border-b border-white/10 pb-3 sm:pb-4">
+              <div>
+                <span class="text-[11px] sm:text-xs uppercase tracking-widest text-blue-200 font-bold">Exact Chronological Age</span>
+                <p id="target-date-label" class="text-[11px] sm:text-xs text-blue-100 mt-0.5">Calculated as of Today</p>
+              </div>
+              <span id="birth-day-name-pill" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-white/10 text-white border border-white/20 self-start sm:self-auto">
+                <i data-lucide="sparkles" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-300"></i>
+                <span id="born-day-text">Born on ...</span>
+              </span>
+            </div>
+
+            <!-- Big 3 Metric Columns -->
+            <div class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 text-center">
+              
+              <!-- Years -->
+              <div class="bg-white/10 backdrop-blur-xs rounded-xl p-2.5 sm:p-4 md:p-6 border border-white/15 flex flex-col justify-center">
+                <div id="res-years" class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-mono tracking-tight text-white leading-tight">
+                  0
+                </div>
+                <span class="block text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider text-blue-200 mt-1 sm:mt-2">
+                  Years
+                </span>
+              </div>
+
+              <!-- Months -->
+              <div class="bg-white/10 backdrop-blur-xs rounded-xl p-2.5 sm:p-4 md:p-6 border border-white/15 flex flex-col justify-center">
+                <div id="res-months" class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-mono tracking-tight text-white leading-tight">
+                  0
+                </div>
+                <span class="block text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider text-blue-200 mt-1 sm:mt-2">
+                  Months
+                </span>
+              </div>
+
+              <!-- Days -->
+              <div class="bg-white/10 backdrop-blur-xs rounded-xl p-2.5 sm:p-4 md:p-6 border border-white/15 flex flex-col justify-center">
+                <div id="res-days" class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-mono tracking-tight text-white leading-tight">
+                  0
+                </div>
+                <span class="block text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider text-blue-200 mt-1 sm:mt-2">
+                  Days
+                </span>
+              </div>
+
+            </div>
+
+            <!-- Human Readable Sentence Summary -->
+            <div class="text-center pt-1 sm:pt-2">
+              <p id="res-sentence-summary" class="text-xs sm:text-sm md:text-base font-medium text-blue-100 leading-relaxed">
+                You are currently <strong class="text-white font-bold">0 years, 0 months, and 0 days</strong> old.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Next Birthday Countdown Card -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-2xl p-4 sm:p-6 shadow-sm flex flex-col justify-between">
+          <div class="space-y-2.5 sm:space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400 flex items-center justify-center shrink-0">
+                  <i data-lucide="cake" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                </div>
+                <h3 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-200">
+                  Next Birthday Countdown
+                </h3>
+              </div>
+              <span id="next-birthday-dayname" class="text-[11px] sm:text-xs font-semibold text-pink-600 dark:text-pink-400">
+                Saturday
+              </span>
+            </div>
+
+            <div class="pt-1 sm:pt-2">
+              <div id="next-bday-countdown" class="text-xl sm:text-2xl md:text-3xl font-extrabold font-display text-neutral-900 dark:text-neutral-100">
+                0 Months, 0 Days
+              </div>
+              <p id="next-bday-date-str" class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 sm:mt-1">
+                Turning <span id="next-turning-age" class="font-bold text-neutral-700 dark:text-neutral-300">0</span> on ...
+              </p>
+            </div>
+          </div>
+
+          <!-- Progress bar towards next birthday -->
+          <div class="pt-4 sm:pt-6 space-y-1.5">
+            <div class="flex justify-between text-[11px] font-semibold text-neutral-500 dark:text-neutral-400">
+              <span>Year Completion</span>
+              <span id="next-bday-pct">0%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+              <div id="next-bday-progress-bar" class="h-full bg-pink-500 rounded-full transition-all duration-500" style="width: 50%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Total Life Milestones Summary Grid -->
+        <div class="bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm space-y-4 sm:space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold font-display text-neutral-900 dark:text-neutral-100">
+                Total Life Summary & Milestones
+              </h3>
+              <p class="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                Every unit of time lived from your date of birth to the target date.
+              </p>
+            </div>
+            <span class="text-[11px] sm:text-xs font-semibold px-2.5 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 self-start sm:self-auto shrink-0">
+              Cumulative Totals
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
+            
+            <!-- Total Months -->
+            <div class="p-3 sm:p-4 rounded-xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col justify-between">
+              <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-500">Total Months</span>
+              <div id="tot-months" class="text-lg sm:text-xl md:text-2xl font-bold font-mono text-neutral-900 dark:text-neutral-100 mt-1.5 sm:mt-2">
+                0
+              </div>
+              <span class="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Calendar cycles</span>
+            </div>
+
+            <!-- Total Weeks -->
+            <div class="p-3 sm:p-4 rounded-xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col justify-between">
+              <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-500">Total Weeks</span>
+              <div id="tot-weeks" class="text-lg sm:text-xl md:text-2xl font-bold font-mono text-neutral-900 dark:text-neutral-100 mt-1.5 sm:mt-2">
+                0
+              </div>
+              <span id="tot-weeks-rem" class="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">+0 days</span>
+            </div>
+
+            <!-- Total Days -->
+            <div class="p-3 sm:p-4 rounded-xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col justify-between">
+              <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-500">Total Days</span>
+              <div id="tot-days" class="text-lg sm:text-xl md:text-2xl font-bold font-mono text-blue-600 dark:text-blue-400 mt-1.5 sm:mt-2">
+                0
+              </div>
+              <span class="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">Earth rotations</span>
+            </div>
+
+            <!-- Total Hours -->
+            <div class="p-3 sm:p-4 rounded-xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col justify-between">
+              <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-500">Total Hours</span>
+              <div id="tot-hours" class="text-lg sm:text-xl md:text-2xl font-bold font-mono text-neutral-900 dark:text-neutral-100 mt-1.5 sm:mt-2">
+                0
+              </div>
+              <span class="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">60-min hours</span>
+            </div>
+
+            <!-- Total Minutes -->
+            <div class="p-3 sm:p-4 rounded-xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col justify-between col-span-2 sm:col-span-1">
+              <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-neutral-500">Total Minutes</span>
+              <div id="tot-minutes" class="text-lg sm:text-xl md:text-2xl font-bold font-mono text-neutral-900 dark:text-neutral-100 mt-1.5 sm:mt-2">
+                0
+              </div>
+              <span class="text-[10px] text-neutral-400 mt-0.5 sm:mt-1">60-sec minutes</span>
+            </div>
+
+          </div>
+
+          <!-- Secondary biological estimates -->
+          <div class="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 border-t border-neutral-100 dark:border-neutral-800">
+            <div class="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl bg-neutral-50/50 dark:bg-neutral-950/50 text-xs">
+              <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-red-100 dark:bg-red-950 text-red-600 flex items-center justify-center shrink-0">
+                <i data-lucide="heart" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+              </div>
+              <div>
+                <span class="text-neutral-400 text-[10px] uppercase font-bold block">Estimated Heartbeats</span>
+                <strong id="bio-heartbeats" class="font-mono text-neutral-800 dark:text-neutral-200 font-semibold text-xs sm:text-sm">~0</strong>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl bg-neutral-50/50 dark:bg-neutral-950/50 text-xs">
+              <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-600 flex items-center justify-center shrink-0">
+                <i data-lucide="wind" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+              </div>
+              <div>
+                <span class="text-neutral-400 text-[10px] uppercase font-bold block">Estimated Breaths</span>
+                <strong id="bio-breaths" class="font-mono text-neutral-800 dark:text-neutral-200 font-semibold text-xs sm:text-sm">~0</strong>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl bg-neutral-50/50 dark:bg-neutral-950/50 text-xs">
+              <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 flex items-center justify-center shrink-0">
+                <i data-lucide="moon" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+              </div>
+              <div>
+                <span class="text-neutral-400 text-[10px] uppercase font-bold block">Estimated Sleep</span>
+                <strong id="bio-sleep" class="font-mono text-neutral-800 dark:text-neutral-200 font-semibold text-xs sm:text-sm">~0 years</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEO Content & Educational Guide Section -->
+      <section class="border-t border-neutral-200 dark:border-neutral-800 pt-8 sm:pt-12 space-y-10 sm:space-y-14">
+        
+        <!-- SECTION 1: STEP-BY-STEP USER GUIDE -->
+        <div class="space-y-6">
+          <div class="space-y-2 max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-neutral-900 dark:text-neutral-100">
+              How to Calculate Age Using Date of Birth Step-by-Step
+            </h2>
+            <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Determining your exact chronological milestone is simple and takes just seconds. Follow these easy steps to count age by date of birth and calculate your age online with 100% precision:
+            </p>
+          </div>
+
+          <!-- 3-Step Guide Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold font-mono text-base">
+                1
+              </div>
+              <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100">
+                Select Your Date of Birth
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Choose your birth day, month, and year using the calendar date picker or synchronized drop-down selectors to accurately register your starting date.
+              </p>
+            </div>
+
+            <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold font-mono text-base">
+                2
+              </div>
+              <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100">
+                Choose the Target Date
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                By default, the tool sets the target date to today's date. If you want to compute age at a historical event or future retirement milestone, simply update the target date.
+              </p>
+            </div>
+
+            <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold font-mono text-base">
+                3
+              </div>
+              <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100">
+                Get Instant Chronological Results
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Click Calculate Age to view your exact age calculator in years months and days, next birthday countdown, total weeks, hours, and minutes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: KEY FEATURES & VALUE PROPOSITION -->
+        <div class="space-y-6">
+          <div class="space-y-2 max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-neutral-900 dark:text-neutral-100">
+              Why Use Our Precision Chronological Age Finder?
+            </h2>
+            <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Our age finder online is engineered for professionals, applicants, and curious minds who demand mathematical rigor over rough approximations. Here is why users trust our age calculation calculator:
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                <i data-lucide="cpu" class="w-5 h-5"></i>
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100">
+                  Advanced Date-Math Algorithms
+                </h3>
+                <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  Accounts for month-end overflows (28, 29, 30, and 31 days) and quadrennial leap years automatically, preventing off-by-one errors common in basic subtraction.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                <i data-lucide="clock" class="w-5 h-5"></i>
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100">
+                  Complete Time Breakdown
+                </h3>
+                <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  Provides full multi-unit transparency by showing results in completed years, months, days, total weeks, cumulative hours, minutes, and biological estimates.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <i data-lucide="shield-check" class="w-5 h-5"></i>
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100">
+                  100% Data Privacy
+                </h3>
+                <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  Browser-based client-side computation ensures your personal date of birth and calculation history are never uploaded, logged, or sent to any remote server.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                <i data-lucide="smartphone" class="w-5 h-5"></i>
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100">
+                  Mobile-Optimized &amp; Fast Performance
+                </h3>
+                <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                  Fully responsive UI built with lightweight code delivers ultra-fast results across smartphones, tablets, and desktops with comfortable touch targets.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: EDUCATIONAL DEEP-DIVE (SEARCH INTENT & AEO OPTIMIZATION) -->
+        <div class="space-y-6">
+          <div class="space-y-2 max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-neutral-900 dark:text-neutral-100">
+              Understanding Chronological Age vs. Calculator Net Age
+            </h2>
+          </div>
+
+          <div class="bg-neutral-50 dark:bg-neutral-900/60 rounded-2xl p-6 sm:p-8 border border-neutral-200 dark:border-neutral-800 space-y-4 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            <p>
+              When people ask "how old am I calculator", they often make the mistake of performing simple year subtraction (such as Current Year minus Birth Year). However, this naive approach fails to calculate your true chronological age because your birthday may not have occurred yet in the current calendar cycle. 
+            </p>
+            <p>
+              Chronological age is the exact measurement of time elapsed from a person's birth to a specified target date, strictly expressed in completed calendar units: years, months, and days. Under the international Gregorian calendar system, months possess unequal durations ranging from 28 to 31 days. When standard calendar subtraction encounters a scenario where the target day is lower than the birth day, days must be borrowed from the preceding month. Automated date-math accurately identifies the specific preceding month—accounting for whether it has 30, 31, 28, or 29 days—to establish the genuine calculator net age without rounding discrepancies.
+            </p>
+            <div class="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/60 text-blue-900 dark:text-blue-200 space-y-2">
+              <h4 class="font-bold text-sm flex items-center gap-2">
+                <i data-lucide="info" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                The Leap Year Factor (February 29th)
+              </h4>
+              <p class="text-xs leading-relaxed text-blue-800 dark:text-blue-300">
+                A standard solar year spans approximately 365.2422 days. To synchronize our civil calendar with Earth's orbit around the sun, an intercalary leap day is appended to February every four years (excluding century years not divisible by 400). If you were born in a leap year or your age calculation spans multiple leap cycles, our precision chronological age calculator incorporates these extra days precisely into your total day count and birthday countdowns.
+              </p>
+            </div>
+            <p>
+              Whether you are verifying legal age requirements for employment, calculating civil service eligibility, determining grade-level placement for academic admissions, or planning retirement funds, utilizing a certified date-to-date calculation engine eliminates human calculation errors entirely.
+            </p>
+          </div>
+        </div>
+
+        <!-- SECTION 4: FREQUENTLY ASKED QUESTIONS (FAQ - SCHEMA READY) -->
+        <div class="space-y-6">
+          <div class="space-y-2 max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-neutral-900 dark:text-neutral-100">
+              Frequently Asked Questions About Age Calculation Calculator
+            </h2>
+            <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+              Common questions regarding chronological calculation, leap years, and date accuracy.
+            </p>
+          </div>
+
+          <div class="divide-y divide-neutral-200 dark:divide-neutral-800 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-xs">
+            
+            <!-- FAQ 1 -->
+            <details class="group p-5 sm:p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+              <summary class="flex items-center justify-between text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 class="text-sm sm:text-base font-bold pr-4">How do you figure out your exact age accurately?</h3>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-500 group-open:rotate-180 transition-transform shrink-0"></i>
+              </summary>
+              <div class="mt-3 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                To figure out your exact chronological age accurately, subtract your date of birth from today's date (or any specified target date) using Gregorian calendar date-math. Our online age calculator compares your birth day, month, and year against the target date, automatically borrowing exact calendar days (28, 29, 30, or 31) from preceding months to deliver 100% precision in years, months, days, hours, and minutes.
+              </div>
+            </details>
+
+            <!-- FAQ 2 -->
+            <details class="group p-5 sm:p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+              <summary class="flex items-center justify-between text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 class="text-sm sm:text-base font-bold pr-4">How is age calculated during leap years?</h3>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-500 group-open:rotate-180 transition-transform shrink-0"></i>
+              </summary>
+              <div class="mt-3 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Leap years contain 366 days instead of 365, adding February 29th. Our chronological age calculator automatically verifies leap year conditions (years divisible by 4, except century years not divisible by 400). When borrowing days for calculation or tracking birthdays, it dynamically accounts for whether February had 28 or 29 days, eliminating off-by-one errors.
+              </div>
+            </details>
+
+            <!-- FAQ 3 -->
+            <details class="group p-5 sm:p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+              <summary class="flex items-center justify-between text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 class="text-sm sm:text-base font-bold pr-4">How does the date to date age calculator work for future or past dates?</h3>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-500 group-open:rotate-180 transition-transform shrink-0"></i>
+              </summary>
+              <div class="mt-3 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                The date to date age calculator allows you to customize the 'Age at the Date of' field. Simply select any historical date (e.g., to determine age at college graduation or marriage) or any future milestone date (e.g., retirement day or 50th jubilee) to compute the exact net age between those two calendar dates instantly.
+              </div>
+            </details>
+
+            <!-- FAQ 4 -->
+            <details class="group p-5 sm:p-6 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+              <summary class="flex items-center justify-between text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 class="text-sm sm:text-base font-bold pr-4">Can I calculate my current age on mobile devices?</h3>
+                <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-500 group-open:rotate-180 transition-transform shrink-0"></i>
+              </summary>
+              <div class="mt-3 text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Yes, our age calculation calculator is fully mobile-friendly and responsive. You can use your smartphone or tablet's native date picker or dropdown selectors to calculate your age on iOS, Android, and all modern mobile web browsers with zero lag and 100% client-side privacy.
+              </div>
+            </details>
+
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8 text-xs">
+          <!-- Column 1: Brand -->
+          <div class="space-y-3 col-span-2 md:col-span-1">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <span class="text-base font-bold font-display text-neutral-900 dark:text-neutral-100">
+                Tool<span class="text-blue-600">Stacker</span>
+              </span>
+            </div>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Chronological age calculator with leap year accuracy, milestone milestones, and upcoming birthday countdowns.
+            </p>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Quick Links
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/blogs.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blogs</a></li>
+              <li><a href="/privacy.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+              <li><a href="/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Popular Tools -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Popular Tools
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/age-calculator.html" class="hover:text-blue-600">Age Calculator</a></li>
+              <li><a href="/tools/qr-code-generator.html" class="hover:text-blue-600">QR Code Generator</a></li>
+              <li><a href="/tools/image-to-text.html" class="hover:text-blue-600">Image to Text (OCR)</a></li>
+              <li><a href="/tools/discount-calculator.html" class="hover:text-blue-600">Discount Calculator</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Developer & Units -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Developer & Units
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/unit-converter.html" class="hover:text-blue-600">Universal Unit Converter</a></li>
+              <li><a href="/tools/json-formatter.html" class="hover:text-blue-600">JSON Formatter</a></li>
+              <li><a href="/tools/word-counter.html" class="hover:text-blue-600">Word Counter</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 5: Privacy -->
+          <div class="col-span-2 md:col-span-1">
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              100% In-Browser
+            </h4>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Dates of birth are computed locally in client-side code and never sent to any server.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+          <p>© 2026 ToolStacker Suite • 100% Client-Side Chronological Age Calculator</p>
+          <div class="flex items-center gap-4">
+            <a href="/blogs.html" class="hover:text-blue-600 transition-colors">Blogs</a>
+            <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Client-Side Vanilla JS Logic -->
+    <script type="module">
+      import { initTheme, showToast } from '/js/main.js';
+
+      // DOM Elements
+      const dobNative = document.getElementById('dob-native');
+      const dobDay = document.getElementById('dob-day');
+      const dobMonth = document.getElementById('dob-month');
+      const dobYear = document.getElementById('dob-year');
+
+      const targetNative = document.getElementById('target-native');
+      const btnTargetToday = document.getElementById('btn-target-today');
+      const btnTargetEoy = document.getElementById('btn-target-eoy');
+      const btnTargetFuture = document.getElementById('btn-target-future');
+
+      const btnCalculate = document.getElementById('btn-calculate');
+      const btnReset = document.getElementById('btn-reset');
+      const btnShareResult = document.getElementById('btn-share-result');
+
+      const errorBanner = document.getElementById('error-banner');
+      const errorMessage = document.getElementById('error-message');
+      const resultsContainer = document.getElementById('results-container');
+      const birthdayBanner = document.getElementById('birthday-celebration-banner');
+
+      // Output Elements
+      const resYears = document.getElementById('res-years');
+      const resMonths = document.getElementById('res-months');
+      const resDays = document.getElementById('res-days');
+      const resSentence = document.getElementById('res-sentence-summary');
+      const bornDayText = document.getElementById('born-day-text');
+      const targetDateLabel = document.getElementById('target-date-label');
+
+      const nextBdayCountdown = document.getElementById('next-bday-countdown');
+      const nextBdayDateStr = document.getElementById('next-bday-date-str');
+      const nextTurningAge = document.getElementById('next-turning-age');
+      const nextBdayDayname = document.getElementById('next-birthday-dayname');
+      const nextBdayPct = document.getElementById('next-bday-pct');
+      const nextBdayProgressBar = document.getElementById('next-bday-progress-bar');
+
+      const zodiacSymbol = document.getElementById('zodiac-symbol');
+      const zodiacName = document.getElementById('zodiac-name');
+      const zodiacElement = document.getElementById('zodiac-element');
+      const chineseZodiacSymbol = document.getElementById('chinese-zodiac-symbol');
+      const chineseZodiacName = document.getElementById('chinese-zodiac-name');
+      const chineseZodiacElement = document.getElementById('chinese-zodiac-element');
+      const birthStarText = document.getElementById('birth-star-text');
+
+      const totMonths = document.getElementById('tot-months');
+      const totWeeks = document.getElementById('tot-weeks');
+      const totWeeksRem = document.getElementById('tot-weeks-rem');
+      const totDays = document.getElementById('tot-days');
+      const totHours = document.getElementById('tot-hours');
+      const totMinutes = document.getElementById('tot-minutes');
+
+      const bioHeartbeats = document.getElementById('bio-heartbeats');
+      const bioBreaths = document.getElementById('bio-breaths');
+      const bioSleep = document.getElementById('bio-sleep');
+
+      // Populate Day select options based on month and year
+      function populateDays(selectedDay) {
+        const y = parseInt(dobYear.value, 10) || new Date().getFullYear();
+        const m = parseInt(dobMonth.value, 10) || 1;
+        const maxDays = getDaysInMonth(y, m - 1);
+        const currentVal = selectedDay !== undefined ? selectedDay : (parseInt(dobDay.value, 10) || 1);
+        const targetDay = Math.min(Math.max(1, currentVal), maxDays);
+
+        dobDay.innerHTML = '';
+        for (let d = 1; d <= maxDays; d++) {
+          const opt = document.createElement('option');
+          opt.value = d;
+          opt.textContent = d < 10 ? `0${d}` : `${d}`;
+          if (d === targetDay) {
+            opt.selected = true;
+          }
+          dobDay.appendChild(opt);
+        }
+      }
+
+      // Format Date to YYYY-MM-DD
+      function formatDateISO(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+      }
+
+      // Check if a year is a Leap Year
+      function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+      }
+
+      // Get days in a given month of a specific year (monthIndex0: 0-11)
+      function getDaysInMonth(year, monthIndex0) {
+        return new Date(year, monthIndex0 + 1, 0).getDate();
+      }
+
+      // Synchronize Dropdowns to Native Input
+      function syncNativeFromDropdowns() {
+        const y = parseInt(dobYear.value, 10);
+        const m = parseInt(dobMonth.value, 10);
+        let d = parseInt(dobDay.value, 10);
+
+        if (isNaN(y) || isNaN(m) || isNaN(d)) return;
+
+        // Ensure d does not exceed maximum days in month
+        const maxDays = getDaysInMonth(y, m - 1);
+        if (d > maxDays) {
+          d = maxDays;
+          dobDay.value = d;
+        }
+
+        const mStr = String(m).padStart(2, '0');
+        const dStr = String(d).padStart(2, '0');
+        dobNative.value = `${y}-${mStr}-${dStr}`;
+        calculateAge();
+      }
+
+      // Synchronize Native Input to Dropdowns
+      function syncDropdownsFromNative() {
+        if (!dobNative.value) return;
+        const [yStr, mStr, dStr] = dobNative.value.split('-');
+        const y = parseInt(yStr, 10);
+        const m = parseInt(mStr, 10);
+        const d = parseInt(dStr, 10);
+
+        if (!isNaN(y)) dobYear.value = y;
+        if (!isNaN(m)) dobMonth.value = m;
+        populateDays(d);
+
+        calculateAge();
+      }
+
+      // Determine Zodiac Sign (Western)
+      function getWesternZodiac(month, day) {
+        // month is 1-12, day is 1-31
+        const signs = [
+          { name: 'Capricorn', symbol: '♑', element: 'Earth • Cardinal', start: [1, 1], end: [1, 19] },
+          { name: 'Aquarius', symbol: '♒', element: 'Air • Fixed', start: [1, 20], end: [2, 18] },
+          { name: 'Pisces', symbol: '♓', element: 'Water • Mutable', start: [2, 19], end: [3, 20] },
+          { name: 'Aries', symbol: '♈', element: 'Fire • Cardinal', start: [3, 21], end: [4, 19] },
+          { name: 'Taurus', symbol: '♉', element: 'Earth • Fixed', start: [4, 20], end: [5, 20] },
+          { name: 'Gemini', symbol: '♊', element: 'Air • Mutable', start: [5, 21], end: [6, 20] },
+          { name: 'Cancer', symbol: '♋', element: 'Water • Cardinal', start: [6, 21], end: [7, 22] },
+          { name: 'Leo', symbol: '♌', element: 'Fire • Fixed', start: [7, 23], end: [8, 22] },
+          { name: 'Virgo', symbol: '♍', element: 'Earth • Mutable', start: [8, 23], end: [9, 22] },
+          { name: 'Libra', symbol: '♎', element: 'Air • Cardinal', start: [9, 23], end: [10, 22] },
+          { name: 'Scorpio', symbol: '♏', element: 'Water • Fixed', start: [10, 23], end: [11, 21] },
+          { name: 'Sagittarius', symbol: '♐', element: 'Fire • Mutable', start: [11, 22], end: [12, 21] },
+          { name: 'Capricorn', symbol: '♑', element: 'Earth • Cardinal', start: [12, 22], end: [12, 31] },
+        ];
+
+        for (const s of signs) {
+          const [sm, sd] = s.start;
+          const [em, ed] = s.end;
+          if (
+            (month === sm && day >= sd) ||
+            (month === em && day <= ed)
+          ) {
+            return s;
+          }
+        }
+        return signs[0];
+      }
+
+      // Determine Chinese Zodiac Sign
+      function getChineseZodiac(year) {
+        const animals = [
+          { name: 'Monkey', symbol: '🐒' },
+          { name: 'Rooster', symbol: '🐓' },
+          { name: 'Dog', symbol: '🐕' },
+          { name: 'Pig', symbol: '🐖' },
+          { name: 'Rat', symbol: '🐀' },
+          { name: 'Ox', symbol: '🐂' },
+          { name: 'Tiger', symbol: '🐅' },
+          { name: 'Rabbit', symbol: '🐇' },
+          { name: 'Dragon', symbol: '🐉' },
+          { name: 'Snake', symbol: '🐍' },
+          { name: 'Horse', symbol: '🐎' },
+          { name: 'Goat', symbol: '🐐' },
+        ];
+        const elements = ['Metal', 'Metal', 'Water', 'Water', 'Wood', 'Wood', 'Fire', 'Fire', 'Earth', 'Earth'];
+        
+        const animalIndex = ((year % 12) + 12) % 12;
+        const elementIndex = ((year % 10) + 10) % 10;
+        
+        return {
+          animal: animals[animalIndex].name,
+          symbol: animals[animalIndex].symbol,
+          element: `${elements[elementIndex]} Element`
+        };
+      }
+
+      // Primary Age Calculation Engine
+      function calculateAge() {
+        if (!dobNative.value || !targetNative.value) {
+          return;
+        }
+
+        const [bY, bM, bD] = dobNative.value.split('-').map(Number);
+        const [tY, tM, tD] = targetNative.value.split('-').map(Number);
+
+        if (!bY || !bM || !bD || !tY || !tM || !tD) {
+          return;
+        }
+
+        // Validation: Block future birth dates (Birth date > Target date)
+        const isFuture = (bY > tY) || (bY === tY && bM > tM) || (bY === tY && bM === tM && bD > tD);
+        if (isFuture) {
+          errorBanner.classList.remove('hidden');
+          errorMessage.textContent = 'Birth date cannot be in the future. Please select a birth date on or before the target calculation date.';
+          resYears.textContent = '0';
+          resMonths.textContent = '0';
+          resDays.textContent = '0';
+          resSentence.textContent = 'Birth date cannot be in the future relative to the target calculation date.';
+          birthdayBanner.classList.add('hidden');
+          nextBdayCountdown.textContent = '—';
+          nextBdayDateStr.textContent = '—';
+          nextBdayDayname.textContent = '—';
+          nextBdayPct.textContent = '0%';
+          nextBdayProgressBar.style.width = '0%';
+          totMonths.textContent = '0';
+          totWeeks.textContent = '0';
+          totWeeksRem.textContent = '+0 days';
+          totDays.textContent = '0';
+          totHours.textContent = '0';
+          totMinutes.textContent = '0';
+          bioHeartbeats.textContent = '~0';
+          bioBreaths.textContent = '~0';
+          bioSleep.textContent = '~0 years';
+          bornDayText.textContent = 'Born on ...';
+          if (birthStarText) birthStarText.textContent = '—';
+          return;
+        }
+
+        // Valid date: clear error state
+        errorBanner.classList.add('hidden');
+
+        // Leap year handling: if born on Feb 29 and target year is non-leap,
+        // their anniversary day in that target year is recognized on Feb 28.
+        const isTargetLeap = isLeapYear(tY);
+        let effectiveBD = bD;
+        if (bM === 2 && bD === 29 && !isTargetLeap) {
+          effectiveBD = 28;
+        }
+
+        // Exact Chronological Years, Months, Days
+        let years = tY - bY;
+        let months = tM - bM;
+        let days = tD - effectiveBD;
+
+        if (days < 0) {
+          months--;
+          let prevM = tM - 1;
+          let prevY = tY;
+          if (prevM === 0) {
+            prevM = 12;
+            prevY--;
+          }
+          const daysInPrevMonth = getDaysInMonth(prevY, prevM - 1);
+          // If birth day exceeds the length of the previous month (e.g. Jan 31 -> March 1, where Feb has 28 days),
+          // the completed month anniversary landed on the last day of the previous month,
+          // so the remaining days in the target month are exactly tD.
+          if (effectiveBD > daysInPrevMonth) {
+            days = tD;
+          } else {
+            days += daysInPrevMonth;
+          }
+        }
+
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        // Render Primary Exact Age
+        resYears.textContent = years.toLocaleString();
+        resMonths.textContent = months.toLocaleString();
+        resDays.textContent = days.toLocaleString();
+
+        const yearLabel = years === 1 ? 'year' : 'years';
+        const monthLabel = months === 1 ? 'month' : 'months';
+        const dayLabel = days === 1 ? 'day' : 'days';
+
+        resSentence.innerHTML = `You are currently <strong class="text-white font-bold">${years} ${yearLabel}, ${months} ${monthLabel}, and ${days} ${dayLabel}</strong> old.`;
+
+        // Day of week born on
+        const birthDateObj = new Date(bY, bM - 1, bD, 12, 0, 0);
+        const targetDateObj = new Date(tY, tM - 1, tD, 12, 0, 0);
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const bornDay = dayNames[birthDateObj.getDay()];
+        bornDayText.textContent = `Born on a ${bornDay}`;
+
+        // Target Date Label
+        const todayStr = formatDateISO(new Date());
+        if (targetNative.value === todayStr) {
+          targetDateLabel.textContent = `Calculated as of Today (${targetDateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })})`;
+        } else {
+          targetDateLabel.textContent = `Calculated as of ${targetDateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`;
+        }
+
+        // Next Birthday Calculation
+        let nextBdayYear = tY;
+        let nextBdayDay = bD;
+        if (bM === 2 && bD === 29 && !isLeapYear(nextBdayYear)) {
+          nextBdayDay = 28;
+        }
+
+        // Has birthday occurred yet this year?
+        const isTargetBeforeOrOnBday = (tM < bM) || (tM === bM && tD <= nextBdayDay);
+        if (!isTargetBeforeOrOnBday) {
+          nextBdayYear = tY + 1;
+          nextBdayDay = (bM === 2 && bD === 29 && !isLeapYear(nextBdayYear)) ? 28 : bD;
+        }
+
+        const nextBdayDate = new Date(nextBdayYear, bM - 1, nextBdayDay, 12, 0, 0);
+        const isTodayBirthday = (tM === bM && tD === nextBdayDay);
+        const turningAge = nextBdayYear - bY;
+
+        nextTurningAge.textContent = turningAge;
+        nextBdayDayname.textContent = dayNames[nextBdayDate.getDay()];
+
+        if (isTodayBirthday) {
+          birthdayBanner.classList.remove('hidden');
+          nextBdayCountdown.textContent = 'Today is the Day! 🎂';
+          nextBdayDateStr.innerHTML = `Celebrating turning <span class="font-bold text-neutral-800 dark:text-neutral-200">${years}</span> years old today!`;
+          nextBdayPct.textContent = '100%';
+          nextBdayProgressBar.style.width = '100%';
+        } else {
+          birthdayBanner.classList.add('hidden');
+
+          let remMonths = (nextBdayYear - tY) * 12 + (bM - tM);
+          let remDays = nextBdayDay - tD;
+
+          if (remDays < 0) {
+            remMonths--;
+            let prevM = bM - 1;
+            let prevY = nextBdayYear;
+            if (prevM === 0) {
+              prevM = 12;
+              prevY--;
+            }
+            const daysInPrevMonth = getDaysInMonth(prevY, prevM - 1);
+            if (tD > daysInPrevMonth) {
+              remDays = nextBdayDay;
+            } else {
+              remDays += daysInPrevMonth;
+            }
+          }
+
+          const remMonthsText = `${remMonths} ${remMonths === 1 ? 'Month' : 'Months'}`;
+          const remDaysText = `${remDays} ${remDays === 1 ? 'Day' : 'Days'}`;
+          nextBdayCountdown.textContent = remMonths > 0 ? `${remMonthsText}, ${remDaysText}` : remDaysText;
+          nextBdayDateStr.innerHTML = `Turning <span class="font-bold text-neutral-800 dark:text-neutral-200">${turningAge}</span> on ${nextBdayDate.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}`;
+
+          // Year Progress towards next birthday
+          const prevBdayYear = nextBdayYear - 1;
+          const prevBdayDay = (bM === 2 && bD === 29 && !isLeapYear(prevBdayYear)) ? 28 : bD;
+          const prevBdayDate = new Date(prevBdayYear, bM - 1, prevBdayDay, 12, 0, 0);
+
+          const totalSpanDays = Math.round((nextBdayDate.getTime() - prevBdayDate.getTime()) / 86400000);
+          const daysPassed = Math.round((targetDateObj.getTime() - prevBdayDate.getTime()) / 86400000);
+          const pct = Math.max(0, Math.min(100, Math.round((daysPassed / totalSpanDays) * 100)));
+          nextBdayPct.textContent = `${pct}%`;
+          nextBdayProgressBar.style.width = `${pct}%`;
+        }
+
+        // Western & Chinese Zodiac (if present)
+        if (zodiacName && zodiacSymbol && zodiacElement) {
+          const western = getWesternZodiac(bM, bD);
+          if (zodiacSymbol) zodiacSymbol.textContent = western.symbol;
+          if (zodiacName) zodiacName.textContent = western.name;
+          if (zodiacElement) zodiacElement.textContent = western.element;
+          if (birthStarText) birthStarText.textContent = `${western.name} (${bornDay})`;
+        }
+
+        if (chineseZodiacSymbol && chineseZodiacName && chineseZodiacElement) {
+          const chinese = getChineseZodiac(bY);
+          if (chineseZodiacSymbol) chineseZodiacSymbol.textContent = chinese.symbol;
+          if (chineseZodiacName) chineseZodiacName.textContent = chinese.animal;
+          if (chineseZodiacElement) chineseZodiacElement.textContent = chinese.element;
+        }
+
+        // Total Cumulative Lifetime Metrics (UTC arithmetic prevents daylight saving skew)
+        const utcBirth = Date.UTC(bY, bM - 1, bD);
+        const utcTarget = Date.UTC(tY, tM - 1, tD);
+        const totalDaysCount = Math.floor((utcTarget - utcBirth) / 86400000);
+        const totalWeeksCount = Math.floor(totalDaysCount / 7);
+        const remDaysInWeek = totalDaysCount % 7;
+        const totalMonthsCount = years * 12 + months;
+        const totalHoursCount = totalDaysCount * 24;
+        const totalMinutesCount = totalHoursCount * 60;
+
+        totMonths.textContent = totalMonthsCount.toLocaleString();
+        totWeeks.textContent = totalWeeksCount.toLocaleString();
+        totWeeksRem.textContent = `+${remDaysInWeek} ${remDaysInWeek === 1 ? 'day' : 'days'}`;
+        totDays.textContent = totalDaysCount.toLocaleString();
+        totHours.textContent = totalHoursCount.toLocaleString();
+        totMinutes.textContent = totalMinutesCount.toLocaleString();
+
+        // Biological Estimates
+        const approxHeartbeats = Math.round(totalDaysCount * 103680); // ~72 bpm
+        const approxBreaths = Math.round(totalDaysCount * 23040);    // ~16 bpm
+        const approxSleepYears = (years / 3).toFixed(1);
+
+        bioHeartbeats.textContent = `~${approxHeartbeats.toLocaleString()}`;
+        bioBreaths.textContent = `~${approxBreaths.toLocaleString()}`;
+        bioSleep.textContent = `~${approxSleepYears} years`;
+
+        // Refresh icons
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      }
+
+      // Initialize Defaults
+      function initDefaults() {
+        errorBanner.classList.add('hidden');
+
+        // Default Target Date: Today
+        const now = new Date();
+        const todayStr = formatDateISO(now);
+        targetNative.value = todayStr;
+
+        // Default DOB: 25 years ago today
+        const defaultDOB = new Date(now.getFullYear() - 25, 5, 15);
+        dobNative.value = formatDateISO(defaultDOB);
+        dobYear.value = defaultDOB.getFullYear();
+        dobMonth.value = defaultDOB.getMonth() + 1;
+        populateDays(defaultDOB.getDate());
+        dobDay.value = defaultDOB.getDate();
+
+        calculateAge();
+      }
+
+      // Event Listeners
+      dobNative.addEventListener('change', syncDropdownsFromNative);
+      dobDay.addEventListener('change', syncNativeFromDropdowns);
+      dobMonth.addEventListener('change', () => {
+        populateDays();
+        syncNativeFromDropdowns();
+      });
+      dobYear.addEventListener('input', () => {
+        populateDays();
+        syncNativeFromDropdowns();
+      });
+
+      targetNative.addEventListener('change', calculateAge);
+
+      // Target Date Preset buttons
+      btnTargetToday.addEventListener('click', () => {
+        targetNative.value = formatDateISO(new Date());
+        calculateAge();
+        showToast('Set target date to Today');
+      });
+
+      btnTargetEoy.addEventListener('click', () => {
+        const thisYear = new Date().getFullYear();
+        targetNative.value = `${thisYear}-12-31`;
+        calculateAge();
+        showToast(`Set target date to End of Year (${thisYear}-12-31)`);
+      });
+
+      btnTargetFuture.addEventListener('click', () => {
+        targetNative.value = '2030-01-01';
+        calculateAge();
+        showToast('Set target date to January 1, 2030');
+      });
+
+      // Calculate Button (Manual trigger & scroll smoothly into view)
+      btnCalculate.addEventListener('click', () => {
+        calculateAge();
+        if (!errorBanner.classList.contains('hidden')) {
+          showToast('Birth date cannot be in the future', 'error');
+        } else {
+          resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          showToast('Calculated exact age!');
+        }
+      });
+
+      // Reset Button
+      btnReset.addEventListener('click', () => {
+        initDefaults();
+        showToast('Reset to default values');
+      });
+
+      // Share & Copy Result
+      btnShareResult.addEventListener('click', async () => {
+        if (errorBanner && !errorBanner.classList.contains('hidden')) {
+          showToast('Cannot copy invalid calculation', 'error');
+          return;
+        }
+
+        const y = resYears.textContent;
+        const m = resMonths.textContent;
+        const d = resDays.textContent;
+        const bdayCount = nextBdayCountdown.textContent;
+        const totalD = totDays.textContent;
+        const totalH = totHours.textContent;
+        const totalM = totMinutes.textContent;
+        const bornDay = bornDayText.textContent;
+        const zodiacLine = (zodiacName && zodiacSymbol && zodiacName.textContent) ? `• Astrological Sign: ${zodiacName.textContent} ${zodiacSymbol.textContent}\n` : '';
+
+        const summaryText = `🎂 Chronological Age Summary\n` +
+          `• Exact Age: ${y} Years, ${m} Months, ${d} Days\n` +
+          `• ${bornDay}\n` +
+          `• Next Birthday: In ${bdayCount}\n` +
+          `• Total Days Lived: ${totalD} days\n` +
+          `• Total Hours Lived: ${totalH} hours\n` +
+          `• Total Minutes Lived: ${totalM} minutes\n` +
+          zodiacLine +
+          `Calculated with ToolStacker Age Calculator (100% Client-Side)\n` +
+          `${window.location.href}`;
+
+        // Attempt Web Share API if available and user is on mobile
+        if (navigator.share && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+          try {
+            await navigator.share({
+              title: 'My Exact Chronological Age',
+              text: summaryText,
+              url: window.location.href,
+            });
+            showToast('Result shared successfully!');
+            return;
+          } catch (err) {
+            // Fallback to clipboard if user dismissed share dialog
+          }
+        }
+
+        // Clipboard Copy Fallback
+        try {
+          await navigator.clipboard.writeText(summaryText);
+          showToast('Age breakdown copied to clipboard!');
+        } catch (err) {
+          // Fallback via prompt or textarea
+          const ta = document.createElement('textarea');
+          ta.value = summaryText;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          showToast('Age breakdown copied to clipboard!');
+        }
+      });
+
+      // Initialize on load
+      document.addEventListener('DOMContentLoaded', () => {
+        initDefaults();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      });
+    </script>
+  </body>
+</html>

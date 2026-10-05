@@ -1,0 +1,1636 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO & Social Meta Tags -->
+    <title>Image to Text - Free Image to Text Converter Online With OCR</title>
+    <meta name="title" content="Image to Text - Free Image to Text Converter Online With OCR" />
+    <meta name="description" content="Convert image to text online for free with our secure OCR tool. Extract text from photos, scanned notes &amp; screenshots instantly with 100% privacy." />
+    <meta name="keywords" content="text from image to text, free image to text converter free, image to text converter online, extract text from image, convert text in a picture to text, optical character recognition ocr online &amp; free, copy text from image, photo to text converter online free, picture to text online converter, jpg image to text converter" />
+    
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Image to Text - Free Image to Text Converter Online With OCR" />
+    <meta property="og:description" content="Convert image to text online for free with our secure OCR tool. Extract text from photos, scanned notes &amp; screenshots instantly with 100% privacy." />
+    <meta property="og:site_name" content="ToolStacker" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Image to Text - Free Image to Text Converter Online With OCR" />
+    <meta name="twitter:description" content="Convert image to text online for free with our secure OCR tool. Extract text from photos, scanned notes &amp; screenshots instantly with 100% privacy." />
+
+    <!-- Google Fonts with Bengali and Multilingual Support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Hind Siliguri"', '"Noto Sans Bengali"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', '"Hind Siliguri"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tesseract.js via CDN for 100% Client-Side OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+    <!-- Schema.org JSON-LD Structured Data for Google Ranking & AEO/GEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Image to Text - Free Image to Text Converter Online With OCR",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript and HTML5 Canvas.",
+          "description": "Convert image to text online for free with our secure OCR tool. Extract text from photos, scanned notes & screenshots instantly with 100% privacy.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How can I copy text from image without installing software?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can use our free picture to text online converter directly in your web browser. Simply upload your image, let the tool convert image text to text, and click to copy the text from image."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is this optical character recognition ocr online & free to use for unlimited files?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, our image to text converter free tool offers unlimited processing with no hidden limits or subscription requirements."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I convert text in an image to text for Microsoft Word?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Upload your picture or document to convert text in an image to text, then copy the generated text or export it directly to convert a picture to text in word."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I extract text from picture online safely with confidential documents?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely. Since our tool works entirely client-side, your files are processed locally. It is the safest way to extract text from picture online without risking privacy."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Header Navigation Bar -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                OCR Tool
+              </span>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400 hidden sm:block">Client-Side Text Extractor</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation: Streamlined & Categorized Dropdown -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+
+          <!-- Categorized Tools Dropdown -->
+          <div class="relative">
+            <button
+              type="button"
+              id="tools-menu-btn"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-50/70 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-all cursor-pointer"
+            >
+              <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
+              <span>Tools Directory</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-200" data-chevron></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div
+              id="tools-dropdown-menu"
+              class="absolute right-0 mt-2 w-80 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl opacity-0 invisible -translate-y-2 pointer-events-none transition-all duration-200 z-50 p-2 space-y-2"
+            >
+              <!-- Calculators Section -->
+              <div>
+                <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 py-1 flex items-center gap-1.5">
+                  <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+                  <span>Calculators</span>
+                </div>
+                <div class="space-y-0.5">
+                  <a href="/tools/discount-calculator.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span>Discount Calculator</span>
+                    <span class="text-[10px] text-neutral-400">Finance</span>
+                  </a>
+                  <a href="/tools/age-calculator.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span>Age Calculator</span>
+                    <span class="text-[10px] text-neutral-400">Date</span>
+                  </a>
+                  <a href="/tools/unit-converter.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span>Unit Converter</span>
+                    <span class="text-[10px] text-neutral-400">Metric</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Text & OCR Section -->
+              <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 py-1 flex items-center gap-1.5">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+                  <span>Text & OCR</span>
+                </div>
+                <div class="space-y-0.5">
+                  <a href="/tools/image-to-text.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 transition-colors">
+                    <span>Image to Text (OCR)</span>
+                    <span class="text-[10px] text-blue-500">Active</span>
+                  </a>
+                  <a href="/tools/word-counter.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span>Word Counter</span>
+                    <span class="text-[10px] text-neutral-400">Writing</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Utilities & Dev Section -->
+              <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 py-1 flex items-center gap-1.5">
+                  <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>Utilities & Dev</span>
+                </div>
+                <div class="space-y-0.5">
+                  <a href="/tools/qr-code-generator.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span>QR Code Generator</span>
+                    <span class="text-[10px] text-neutral-400">Studio</span>
+                  </a>
+                  <a href="/tools/json-formatter.html" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span>JSON Formatter</span>
+                    <span class="text-[10px] text-neutral-400">Dev</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Right Side Controls -->
+        <div class="flex items-center gap-2">
+          <!-- Dark / Light Mode Toggle Button -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle dark mode"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button
+            type="button"
+            id="mobile-menu-btn"
+            class="md:hidden p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Open mobile navigation menu"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-menu-drawer" class="hidden md:hidden border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-4 pt-3 pb-6 space-y-3">
+        <a href="/" class="block px-3 py-2 rounded-lg text-sm font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+          Home
+        </a>
+        <a href="/#tools-section" class="block px-3 py-2 rounded-lg text-sm font-semibold text-neutral-700 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+          All Tools
+        </a>
+
+        <!-- Calculators Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-500"></i>
+            <span>Calculators</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/discount-calculator.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Discount Calculator
+            </a>
+            <a href="/tools/age-calculator.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Age Calculator
+            </a>
+            <a href="/tools/unit-converter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Unit Converter
+            </a>
+          </div>
+        </div>
+
+        <!-- Text & OCR Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-500"></i>
+            <span>Text & OCR</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/image-to-text.html" class="block px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50">
+              Image to Text (OCR)
+            </a>
+            <a href="/tools/word-counter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              Word Counter
+            </a>
+          </div>
+        </div>
+
+        <!-- Utilities & Dev Section -->
+        <div class="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-neutral-400 px-3 mb-1.5 flex items-center gap-1.5">
+            <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span>Utilities & Dev</span>
+          </div>
+          <div class="space-y-1 pl-2">
+            <a href="/tools/qr-code-generator.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              QR Code Generator
+            </a>
+            <a href="/tools/json-formatter.html" class="block px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800">
+              JSON Formatter & Validator
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 py-8 sm:py-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <!-- HERO SECTION (Target Keyword Architecture) -->
+      <section class="space-y-4 text-center sm:text-left">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="Breadcrumb" class="flex items-center justify-center sm:justify-start gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <a href="/#tools-section" class="hover:text-blue-600 transition-colors">Text &amp; OCR</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Image to Text (OCR)</span>
+        </nav>
+
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div class="space-y-2">
+            <!-- H1 Heading Required -->
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-100">
+              Image to Text - Free Image to Text Converter Online With OCR
+            </h1>
+            <!-- Sub-heading Required -->
+            <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
+              Convert image to text online for free with our secure OCR tool. Extract text from photos, scanned notes &amp; screenshots instantly with 100% privacy.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature Badges Required -->
+        <div class="flex items-center justify-center sm:justify-start gap-2.5 flex-wrap pt-1">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            100% Browser-Based Security
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            Image to Text Converter Free
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-950/60 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+            Fast Optical Character Recognition OCR Online &amp; Free
+          </span>
+        </div>
+      </section>
+
+      <!-- Error Notification Banner -->
+      <div id="ocr-error-banner" class="hidden p-4 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-xs sm:text-sm text-red-700 dark:text-red-300 flex items-start gap-3" role="alert">
+        <i data-lucide="alert-circle" class="w-5 h-5 text-red-600 shrink-0 mt-0.5"></i>
+        <div class="flex-1" id="ocr-error-message">An error occurred while analyzing the image.</div>
+        <button type="button" id="close-error-btn" class="text-red-400 hover:text-red-700 cursor-pointer" aria-label="Dismiss error">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- INTERACTIVE TOOL BOX CONTAINER -->
+      <section class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+        
+        <!-- Stage 1: File Upload & Drag-and-Drop Zone -->
+        <div id="upload-stage" class="space-y-4">
+          <div
+            id="dropzone"
+            tabindex="0"
+            role="button"
+            aria-label="Upload image for optical character recognition"
+            class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 dark:hover:border-blue-500 rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all bg-neutral-50/50 dark:bg-neutral-950/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <input type="file" id="image-file-input" accept="image/jpeg,image/png,image/webp" class="hidden" />
+            <div class="max-w-md mx-auto flex flex-col items-center">
+              <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4 shadow-xs">
+                <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+              </div>
+              
+              <!-- Blueprint Required Drop-zone Text -->
+              <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2 leading-snug">
+                Drag &amp; drop your file here, or browse to extract text from picture online. Supports JPG, PNG, WebP, and direct paste (Ctrl + V).
+              </h3>
+              
+              <!-- Blueprint Required Sub-text -->
+              <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-sm mb-4">
+                Optimized as a jpg image to text converter and photo to text converter online for quick and accurate text extraction.
+              </p>
+
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-xs">
+                  <i data-lucide="folder-open" class="w-3.5 h-3.5"></i>
+                  <span>Browse Image</span>
+                </span>
+                <span class="text-xs font-mono text-neutral-400">or Paste with Ctrl+V</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2: Image Preview & Pre-processing Toolbar -->
+        <div id="preview-stage" class="hidden space-y-5">
+          <div class="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="image" class="w-4 h-4 text-blue-600"></i>
+              <span id="preview-filename" class="text-xs font-semibold text-neutral-800 dark:text-neutral-200 truncate max-w-xs sm:max-w-md">
+                image.png
+              </span>
+            </div>
+            <button
+              type="button"
+              id="change-image-btn"
+              class="text-xs text-red-600 hover:text-red-700 dark:text-red-400 flex items-center gap-1 font-semibold cursor-pointer"
+            >
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Change Picture
+            </button>
+          </div>
+
+          <!-- Pre-processing Filters Toolbar (Canvas-based) -->
+          <div class="p-3.5 bg-neutral-50 dark:bg-neutral-950 rounded-2xl border border-neutral-200 dark:border-neutral-800 space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2 text-xs">
+              <span class="font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+                <i data-lucide="sliders" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>Image Pre-processing &amp; Contrast Optimizer:</span>
+              </span>
+              <button
+                type="button"
+                id="filter-auto-enhance-btn"
+                class="px-3 py-1 rounded-lg border border-blue-300 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold hover:bg-blue-100 dark:hover:bg-blue-900/60 flex items-center gap-1.5 text-xs cursor-pointer transition-all"
+                title="Automatically applies Denoising, Sharpening, and Adaptive Otsu Binarization"
+              >
+                <i data-lucide="wand-2" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>Auto-Enhance Text Clarity</span>
+              </button>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+              <button
+                type="button"
+                id="filter-rotate-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 cursor-pointer font-medium"
+              >
+                <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i> Rotate 90° (<span id="rotation-deg">0</span>°)
+              </button>
+              <button
+                type="button"
+                id="filter-contrast-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 cursor-pointer font-medium"
+                title="Adaptive Otsu Binarization (Converts to high-contrast black & white)"
+              >
+                <i data-lucide="contrast" class="w-3.5 h-3.5"></i> High Contrast (Binarize)
+              </button>
+              <button
+                type="button"
+                id="filter-sharpen-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 cursor-pointer font-medium"
+                title="Sharpen character contours and edges"
+              >
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-500"></i> Sharpen
+              </button>
+              <button
+                type="button"
+                id="filter-grayscale-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 cursor-pointer font-medium"
+              >
+                <i data-lucide="eye" class="w-3.5 h-3.5"></i> Grayscale
+              </button>
+              <button
+                type="button"
+                id="filter-denoise-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 cursor-pointer font-medium"
+                title="Remove scanner grain and noise"
+              >
+                <i data-lucide="sparkle" class="w-3.5 h-3.5"></i> De-noise
+              </button>
+              <button
+                type="button"
+                id="filter-invert-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 cursor-pointer font-medium"
+                title="Invert negative text (white letters on dark backgrounds)"
+              >
+                <i data-lucide="flip-horizontal" class="w-3.5 h-3.5"></i> Invert
+              </button>
+              <button
+                type="button"
+                id="filter-reset-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500 hover:text-neutral-900 flex items-center gap-1.5 cursor-pointer font-medium ml-auto"
+                title="Revert back to original photo"
+              >
+                <i data-lucide="refresh-ccw" class="w-3.5 h-3.5"></i> Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- HTML5 Canvas Preview Display -->
+          <div class="max-h-[360px] rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-950 flex items-center justify-center p-3 border border-neutral-200 dark:border-neutral-800">
+            <canvas id="preview-canvas" class="max-h-[330px] max-w-full object-contain rounded shadow-xs"></canvas>
+          </div>
+
+          <!-- Engine Controls & Start Button Area -->
+          <div class="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Language Selector -->
+              <div class="space-y-1">
+                <label for="ocr-language-select" class="text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+                  <i data-lucide="globe" class="w-3.5 h-3.5 text-neutral-500"></i>
+                  <span>Target Language Traineddata:</span>
+                </label>
+                <select
+                  id="ocr-language-select"
+                  class="w-full px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-xs font-semibold text-neutral-800 dark:text-neutral-200 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                >
+                  <option value="eng" selected>English (Latin alphabet - US/UK)</option>
+                  <option value="ben+eng">Bengali + English (বাংলা ও ইংরেজি)</option>
+                  <option value="ben">Bengali Only (বাংলা)</option>
+                  <option value="hin">Hindi (हिन्दी)</option>
+                  <option value="ara">Arabic (العربية)</option>
+                  <option value="spa">Spanish (Español)</option>
+                  <option value="fra">French (Français)</option>
+                  <option value="deu">German (Deutsch)</option>
+                  <option value="ita">Italian (Italiano)</option>
+                  <option value="por">Portuguese (Português)</option>
+                  <option value="rus">Russian (Русский)</option>
+                  <option value="jpn">Japanese (日本語)</option>
+                  <option value="chi_sim">Chinese Simplified (简体中文)</option>
+                </select>
+              </div>
+
+              <!-- Page Segmentation Mode (PSM) -->
+              <div class="space-y-1">
+                <label for="ocr-psm-select" class="text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
+                  <i data-lucide="layout" class="w-3.5 h-3.5 text-neutral-500"></i>
+                  <span>Page Layout Analysis (PSM):</span>
+                </label>
+                <select
+                  id="ocr-psm-select"
+                  class="w-full px-3 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-xs font-semibold text-neutral-800 dark:text-neutral-200 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                >
+                  <option value="3" selected>PSM 3: Automatic Layout Segmentation (Default)</option>
+                  <option value="6">PSM 6: Single Uniform Block of Text (Scanned pages)</option>
+                  <option value="4">PSM 4: Single Column of Variable Sizes</option>
+                  <option value="11">PSM 11: Sparse Text (Receipts, tables, invoices)</option>
+                  <option value="7">PSM 7: Single Text Line (Signs, banners)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Action Button: Extract Text in Image -->
+            <div class="flex items-center justify-between flex-wrap gap-3 pt-1">
+              <span class="text-xs text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5">
+                <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-500"></i>
+                100% In-Browser Optical Character Recognition
+              </span>
+
+              <!-- Blueprint Action Button Required: "Extract Text in Image" -->
+              <button
+                type="button"
+                id="start-ocr-btn"
+                class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 transition-all cursor-pointer w-full sm:w-auto"
+              >
+                <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+                <span>Extract Text in Image</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 3: Real-Time Loading & Progress Bar -->
+        <div id="progress-stage" class="hidden p-6 rounded-2xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/30 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2.5 text-xs font-bold text-blue-900 dark:text-blue-200">
+              <i data-lucide="loader-2" class="w-4 h-4 animate-spin text-blue-600"></i>
+              <span id="ocr-status-label">Initializing client-side OCR engine...</span>
+            </div>
+            <span id="ocr-progress-percentage" class="text-xs font-mono font-extrabold text-blue-600 dark:text-blue-400">
+              0%
+            </span>
+          </div>
+
+          <div class="w-full h-3 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden p-0.5">
+            <div id="ocr-progress-bar" class="h-full bg-blue-600 rounded-full transition-all duration-200 shadow-xs" style="width: 5%"></div>
+          </div>
+          <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+            Running WebAssembly OCR locally. No image data is being sent over the network.
+          </p>
+        </div>
+
+        <!-- Stage 4: Extracted Results & Action Output Buttons -->
+        <div id="results-stage" class="hidden space-y-5">
+          <!-- Ribbon Header: Tabs & Action Buttons -->
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 dark:border-neutral-800 pb-4">
+            
+            <!-- Output Format Options: Plain Text & Formatted Text -->
+            <div class="flex items-center gap-1 p-1 bg-neutral-100 dark:bg-neutral-800 rounded-xl">
+              <button
+                type="button"
+                id="tab-formatted"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 shadow-2xs transition-colors cursor-pointer"
+              >
+                Formatted Text
+              </button>
+              <button
+                type="button"
+                id="tab-plain"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors cursor-pointer"
+              >
+                Plain Text
+              </button>
+              <button
+                type="button"
+                id="tab-edit"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors cursor-pointer"
+              >
+                Edit Text
+              </button>
+              <button
+                type="button"
+                id="tab-code"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors cursor-pointer"
+              >
+                HTML Code
+              </button>
+            </div>
+
+            <!-- Blueprint Required Action Buttons: "Copy the Text from Image" & "Copy Text on Image" -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <!-- Copy Text on Image (Formatted Rich Text) -->
+              <button
+                type="button"
+                id="btn-copy-formatted"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-xs cursor-pointer"
+                title="Copy formatted rich text with headings and paragraphs preserved"
+              >
+                <i data-lucide="copy-check" class="w-3.5 h-3.5"></i>
+                <span>Copy Text on Image</span>
+              </button>
+
+              <!-- Copy the Text from Image (Plain Text) -->
+              <button
+                type="button"
+                id="btn-copy-plain"
+                class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-all cursor-pointer"
+                title="Copy raw unformatted text into clipboard"
+              >
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>Copy the Text from Image</span>
+              </button>
+
+              <!-- Save to Profile Button -->
+              <button
+                type="button"
+                id="btn-save-ocr-profile"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900 transition-all cursor-pointer shadow-2xs"
+                title="Save extracted text to your profile & cloud storage"
+              >
+                <i data-lucide="bookmark" class="w-3.5 h-3.5 text-amber-600"></i>
+                <span>Save to Profile</span>
+              </button>
+
+              <!-- Export / Download Options -->
+              <div class="flex items-center gap-1 border-l border-neutral-200 dark:border-neutral-700 pl-2">
+                <button
+                  type="button"
+                  id="download-doc-btn"
+                  class="inline-flex items-center gap-1 px-2.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold cursor-pointer"
+                  title="Export directly into Microsoft Word (.doc) format"
+                >
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-600"></i>
+                  <span>Word (.doc)</span>
+                </button>
+                <button
+                  type="button"
+                  id="download-txt-btn"
+                  class="inline-flex items-center gap-1 px-2.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold cursor-pointer"
+                  title="Download plain notepad text (.txt)"
+                >
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>.TXT</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Document Metrics Ribbon -->
+          <div class="flex flex-wrap items-center gap-3 text-xs text-neutral-500 border-b border-neutral-100 dark:border-neutral-800 pb-3">
+            <span id="stat-confidence" class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+              <span>High Precision (Tesseract.js Engine)</span>
+            </span>
+            <span>•</span>
+            <span id="stat-words" class="font-medium">0 words</span>
+            <span>•</span>
+            <span id="stat-characters" class="font-medium">0 characters</span>
+            <span>•</span>
+            <span id="stat-time" class="font-medium">0.00s</span>
+          </div>
+
+          <!-- Result Content Display Window -->
+          <div class="min-h-[240px] max-h-[500px] overflow-y-auto p-4 sm:p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 text-sm">
+            <!-- Formatted View -->
+            <div id="result-formatted-view" class="leading-relaxed space-y-3 font-sans text-neutral-900 dark:text-neutral-100 text-base"></div>
+            
+            <!-- Plain Text View -->
+            <pre id="result-plain-view" class="hidden whitespace-pre-wrap font-sans text-neutral-900 dark:text-neutral-100 text-base leading-relaxed"></pre>
+            
+            <!-- Edit Text View -->
+            <div id="result-edit-container" class="hidden space-y-2">
+              <textarea
+                id="result-edit-view"
+                class="w-full h-80 p-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 text-base font-sans leading-relaxed focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="Make any direct edits to the extracted text..."
+              ></textarea>
+              <div class="text-[11px] text-neutral-400">Edits are synchronized with the copy and download buttons automatically.</div>
+            </div>
+
+            <!-- HTML Code View -->
+            <pre id="result-code-view" class="hidden whitespace-pre-wrap font-mono text-xs text-neutral-600 dark:text-neutral-400"></pre>
+          </div>
+
+          <!-- Bottom Actions -->
+          <div class="flex justify-between items-center pt-1">
+            <span class="text-xs text-neutral-500 dark:text-neutral-400">
+              💡 Tip: Click <b>Edit Text</b> above if you want to make manual corrections before exporting.
+            </span>
+            <button
+              type="button"
+              id="reset-tool-btn"
+              class="text-xs text-neutral-600 dark:text-neutral-300 hover:text-blue-600 flex items-center gap-1.5 font-bold px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer"
+            >
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+              <span>Extract Another Picture</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 4: HOW IT WORKS (H2 - Step-by-Step User Guide / AEO Focus) -->
+      <section class="border-t border-neutral-200 dark:border-neutral-800 pt-12 space-y-6">
+        <div class="space-y-2">
+          <!-- Exact H2 Heading Required -->
+          <h2 class="text-2xl sm:text-3xl font-bold font-display text-neutral-900 dark:text-neutral-100">
+            How Can I Copy Text from Image in 3 Easy Steps?
+          </h2>
+          <!-- Exact Introductory Sentence Required -->
+          <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-3xl">
+            If you are wondering how to extract the text from image or how can i copy text from image directly into your documents, follow this simple guide:
+          </p>
+        </div>
+
+        <!-- 3-Step Guide Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <!-- Step 1 Required -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm font-mono">
+              01
+            </div>
+            <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100">
+              Upload Your Image or Photo
+            </h3>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Select your file using our online photo to text converter or drop a screenshot to text file straight into the box.
+            </p>
+          </div>
+
+          <!-- Step 2 Required -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-sm font-mono">
+              02
+            </div>
+            <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100">
+              Instant Client-Side Processing
+            </h3>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              The browser-based optical character recognition ocr online &amp; free engine will convert image text to text locally without sending your data to any external server.
+            </p>
+          </div>
+
+          <!-- Step 3 Required -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-sm font-mono">
+              03
+            </div>
+            <h3 class="text-base font-bold text-neutral-900 dark:text-neutral-100">
+              Copy or Export Formatted Output
+            </h3>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              Use the one-click option to copy text on image, extract text from picture, or convert a picture to text in word format.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: KEY FEATURES (H2 & Grid Layout) -->
+      <section class="border-t border-neutral-200 dark:border-neutral-800 pt-12 space-y-6">
+        <div class="space-y-2">
+          <!-- Exact H2 Heading Required -->
+          <h2 class="text-2xl sm:text-3xl font-bold font-display text-neutral-900 dark:text-neutral-100">
+            Why Choose Our Text Generator from Image &amp; OCR Tool?
+          </h2>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400 max-w-2xl">
+            Built from the ground up for privacy-conscious professionals, students, and developers who need instant text extraction.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+          <!-- Feature 1 Required -->
+          <div class="flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-1">
+              <h3 class="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                100% Private &amp; Free Extraction
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Enjoy an extract text from image free experience with zero cloud uploads. Your documents, receipts, and private IDs stay completely inside your browser sandbox.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 2 Required -->
+          <div class="flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <i data-lucide="pen-tool" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-1">
+              <h3 class="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                Convert Scanned Handwriting &amp; Low-Quality Images
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Our advanced pre-processing algorithms easily convert scanned handwriting to text and clean up blurry scans before processing.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 3 Required -->
+          <div class="flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-image" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-1">
+              <h3 class="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                Multi-Format Photo Conversion
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Whether you need a picture to text online converter, a photo to text converter online free, or a picture extract text utility, our tool supports all standard image extensions seamlessly.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 4 Required -->
+          <div class="flex items-start gap-4 p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+              <i data-lucide="file-output" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-1">
+              <h3 class="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                Export Options for Documents
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Effortlessly convert text from a picture convert online and convert a picture to text in word or plain notepad formats without formatting loss.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 6: FREQUENTLY ASKED QUESTIONS (H2 Accordion Section) -->
+      <section class="border-t border-neutral-200 dark:border-neutral-800 pt-12 space-y-6">
+        <div class="space-y-2">
+          <!-- Exact H2 Heading Required -->
+          <h2 class="text-2xl sm:text-3xl font-bold font-display text-neutral-900 dark:text-neutral-100">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            Got questions about browser-based OCR? Find quick answers below.
+          </p>
+        </div>
+
+        <div class="space-y-3.5 pt-2">
+          <!-- Q1 & A1 Required -->
+          <details class="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group shadow-2xs">
+            <summary class="cursor-pointer list-none flex items-center justify-between text-neutral-900 dark:text-neutral-100">
+              <h3 class="font-bold text-sm sm:text-base text-neutral-900 dark:text-neutral-100 m-0 pr-2">How can I copy text from image without installing software?</h3>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-400 group-open:rotate-180 transition-transform shrink-0"></i>
+            </summary>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-3.5 leading-relaxed">
+              You can use our free picture to text online converter directly in your web browser. Simply upload your image, let the tool convert image text to text, and click to copy the text from image.
+            </p>
+          </details>
+
+          <!-- Q2 & A2 Required -->
+          <details class="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group shadow-2xs">
+            <summary class="cursor-pointer list-none flex items-center justify-between text-neutral-900 dark:text-neutral-100">
+              <h3 class="font-bold text-sm sm:text-base text-neutral-900 dark:text-neutral-100 m-0 pr-2">Is this optical character recognition ocr online &amp; free to use for unlimited files?</h3>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-400 group-open:rotate-180 transition-transform shrink-0"></i>
+            </summary>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-3.5 leading-relaxed">
+              Yes, our image to text converter free tool offers unlimited processing with no hidden limits or subscription requirements.
+            </p>
+          </details>
+
+          <!-- Q3 & A3 Required -->
+          <details class="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group shadow-2xs">
+            <summary class="cursor-pointer list-none flex items-center justify-between text-neutral-900 dark:text-neutral-100">
+              <h3 class="font-bold text-sm sm:text-base text-neutral-900 dark:text-neutral-100 m-0 pr-2">How do I convert text in an image to text for Microsoft Word?</h3>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-400 group-open:rotate-180 transition-transform shrink-0"></i>
+            </summary>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-3.5 leading-relaxed">
+              Upload your picture or document to convert text in an image to text, then copy the generated text or export it directly to convert a picture to text in word.
+            </p>
+          </details>
+
+          <!-- Q4 & A4 Required -->
+          <details class="p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 group shadow-2xs">
+            <summary class="cursor-pointer list-none flex items-center justify-between text-neutral-900 dark:text-neutral-100">
+              <h3 class="font-bold text-sm sm:text-base text-neutral-900 dark:text-neutral-100 m-0 pr-2">Can I extract text from picture online safely with confidential documents?</h3>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-neutral-400 group-open:rotate-180 transition-transform shrink-0"></i>
+            </summary>
+            <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mt-3.5 leading-relaxed">
+              Absolutely. Since our tool works entirely client-side, your files are processed locally. It is the safest way to extract text from picture online without risking privacy.
+            </p>
+          </details>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-8 text-xs">
+          <!-- Column 1: Brand -->
+          <div class="space-y-3 col-span-2 md:col-span-1">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+              </div>
+              <span class="text-base font-bold font-display text-neutral-900 dark:text-neutral-100">
+                Tool<span class="text-blue-600">Stacker</span>
+              </span>
+            </div>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Extract plain and formatted text from photos, scans, and documents directly in your browser.
+            </p>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Quick Links
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/blogs.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Blogs</a></li>
+              <li><a href="/privacy.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+              <li><a href="/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Popular Tools -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Popular Tools
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/image-to-text.html" class="hover:text-blue-600">Image to Text (OCR)</a></li>
+              <li><a href="/tools/qr-code-generator.html" class="hover:text-blue-600">QR Code Generator</a></li>
+              <li><a href="/tools/discount-calculator.html" class="hover:text-blue-600">Discount Calculator</a></li>
+              <li><a href="/tools/word-counter.html" class="hover:text-blue-600">Word Counter</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Developer & Units -->
+          <div>
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              Developer & Units
+            </h4>
+            <ul class="space-y-2 text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/json-formatter.html" class="hover:text-blue-600">JSON Formatter</a></li>
+              <li><a href="/tools/unit-converter.html" class="hover:text-blue-600">Universal Unit Converter</a></li>
+              <li><a href="/tools/age-calculator.html" class="hover:text-blue-600">Age Calculator</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 5: Privacy -->
+          <div class="col-span-2 md:col-span-1">
+            <h4 class="font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-200 mb-3">
+              100% In-Browser
+            </h4>
+            <p class="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              Tesseract.js WebAssembly runs OCR locally on your device. Images are never uploaded.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+          <p>© 2026 ToolStacker Suite • Free Client-Side Image to Text OCR Converter</p>
+          <div class="flex items-center gap-4">
+            <a href="/blogs.html" class="hover:text-blue-600 transition-colors">Blogs</a>
+            <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+            <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Client-Side OCR Script Implementation using Tesseract.js -->
+    <script type="module">
+      import { initTheme, showToast } from '/js/main.js';
+
+      // Application State
+      let currentImageSource = null;
+      let rotation = 0;
+      let isGrayscale = false;
+      let isBinarize = false;
+      let isSharpen = false;
+      let isDenoise = false;
+      let isInvert = false;
+      let activeTab = 'formatted';
+      let extractedData = { plain: '', formatted: '', words: 0, chars: 0 };
+
+      // DOM Elements
+      const dropzone = document.getElementById('dropzone');
+      const fileInput = document.getElementById('image-file-input');
+      const uploadStage = document.getElementById('upload-stage');
+      const previewStage = document.getElementById('preview-stage');
+      const progressStage = document.getElementById('progress-stage');
+      const resultsStage = document.getElementById('results-stage');
+      const previewCanvas = document.getElementById('preview-canvas');
+      const previewFilename = document.getElementById('preview-filename');
+      const errorBanner = document.getElementById('ocr-error-banner');
+      const errorMessage = document.getElementById('ocr-error-message');
+
+      function showError(msg) {
+        errorMessage.textContent = msg;
+        errorBanner.classList.remove('hidden');
+      }
+
+      function hideError() {
+        errorBanner.classList.add('hidden');
+      }
+
+      document.getElementById('close-error-btn').addEventListener('click', hideError);
+
+      // File Selection & Drag & Drop Zone
+      dropzone.addEventListener('click', () => fileInput.click());
+      dropzone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          fileInput.click();
+        }
+      });
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('border-blue-500', 'bg-blue-50/50', 'dark:bg-blue-950/20');
+      });
+
+      dropzone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-blue-500', 'bg-blue-50/50', 'dark:bg-blue-950/20');
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('border-blue-500', 'bg-blue-50/50', 'dark:bg-blue-950/20');
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          handleFile(e.dataTransfer.files[0]);
+        }
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+          handleFile(e.target.files[0]);
+        }
+      });
+
+      // Direct Clipboard Paste (Ctrl + V)
+      window.addEventListener('paste', (e) => {
+        if (e.clipboardData && e.clipboardData.items) {
+          for (let i = 0; i < e.clipboardData.items.length; i++) {
+            const item = e.clipboardData.items[i];
+            if (item.type.indexOf('image') !== -1) {
+              const file = item.getAsFile();
+              if (file) {
+                handleFile(file);
+                showToast('Image pasted from clipboard!');
+              }
+              return;
+            }
+          }
+        }
+      });
+
+      function handleFile(file) {
+        hideError();
+        if (!file.type.startsWith('image/')) {
+          showError('Please upload a valid JPG, PNG, or WebP image file.');
+          return;
+        }
+
+        previewFilename.textContent = file.name || 'uploaded-picture.png';
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          loadImageToCanvas(ev.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function loadImageToCanvas(dataUrl) {
+        currentImageSource = dataUrl;
+        rotation = 0;
+        isGrayscale = false;
+        isBinarize = false;
+        isSharpen = false;
+        isDenoise = false;
+        isInvert = false;
+        document.getElementById('rotation-deg').textContent = '0';
+        updateFilterButtonStyles();
+
+        renderCanvas();
+        uploadStage.classList.add('hidden');
+        previewStage.classList.remove('hidden');
+        resultsStage.classList.add('hidden');
+      }
+
+      // Otsu's Thresholding calculation for sharp binarization
+      function computeOtsuThreshold(d) {
+        const histogram = new Array(256).fill(0);
+        let total = 0;
+        for (let i = 0; i < d.length; i += 4) {
+          histogram[d[i]]++;
+          total++;
+        }
+        if (total === 0) return 128;
+
+        let sum = 0;
+        for (let t = 0; t < 256; t++) sum += t * histogram[t];
+
+        let sumB = 0;
+        let wB = 0;
+        let wF = 0;
+        let varMax = 0;
+        let threshold = 128;
+
+        for (let t = 0; t < 256; t++) {
+          wB += histogram[t];
+          if (wB === 0) continue;
+          wF = total - wB;
+          if (wF === 0) break;
+
+          sumB += t * histogram[t];
+          const mB = sumB / wB;
+          const mF = (sum - sumB) / wF;
+
+          const varBetween = wB * wF * (mB - mF) * (mB - mF);
+          if (varBetween > varMax) {
+            varMax = varBetween;
+            threshold = t;
+          }
+        }
+        return threshold;
+      }
+
+      function renderCanvas() {
+        if (!currentImageSource) return;
+        const img = new Image();
+        img.onload = () => {
+          const ctx = previewCanvas.getContext('2d');
+          const rot = ((rotation % 360) + 360) % 360;
+          const isSideways = rot === 90 || rot === 270;
+
+          previewCanvas.width = isSideways ? img.naturalHeight : img.naturalWidth;
+          previewCanvas.height = isSideways ? img.naturalWidth : img.naturalHeight;
+
+          ctx.save();
+          ctx.translate(previewCanvas.width / 2, previewCanvas.height / 2);
+          ctx.rotate((rot * Math.PI) / 180);
+          ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+          ctx.restore();
+
+          if (isGrayscale || isBinarize || isSharpen || isDenoise || isInvert) {
+            let imgData = ctx.getImageData(0, 0, previewCanvas.width, previewCanvas.height);
+            const w = previewCanvas.width;
+            const h = previewCanvas.height;
+
+            // Denoise Filter (3x3 mean box filter)
+            if (isDenoise && w > 2 && h > 2) {
+              const src = new Uint8ClampedArray(imgData.data);
+              const dst = imgData.data;
+              for (let y = 1; y < h - 1; y++) {
+                for (let x = 1; x < w - 1; x++) {
+                  const idx = (y * w + x) * 4;
+                  for (let c = 0; c < 3; c++) {
+                    let sum = 0;
+                    for (let dy = -1; dy <= 1; dy++) {
+                      for (let dx = -1; dx <= 1; dx++) {
+                        sum += src[((y + dy) * w + (x + dx)) * 4 + c];
+                      }
+                    }
+                    dst[idx + c] = Math.round(sum / 9);
+                  }
+                }
+              }
+            }
+
+            // Sharpen Filter (high-pass edge booster)
+            if (isSharpen && w > 2 && h > 2) {
+              const src = new Uint8ClampedArray(imgData.data);
+              const dst = imgData.data;
+              for (let y = 1; y < h - 1; y++) {
+                for (let x = 1; x < w - 1; x++) {
+                  const idx = (y * w + x) * 4;
+                  for (let c = 0; c < 3; c++) {
+                    const top = src[((y - 1) * w + x) * 4 + c];
+                    const bottom = src[((y + 1) * w + x) * 4 + c];
+                    const left = src[(y * w + (x - 1)) * 4 + c];
+                    const right = src[(y * w + (x + 1)) * 4 + c];
+                    const center = src[idx + c];
+                    const val = 5 * center - (top + bottom + left + right);
+                    dst[idx + c] = Math.min(255, Math.max(0, val));
+                  }
+                }
+              }
+            }
+
+            // Grayscale conversion
+            if (isGrayscale || isBinarize) {
+              const d = imgData.data;
+              for (let i = 0; i < d.length; i += 4) {
+                const gray = Math.round(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
+                d[i] = gray;
+                d[i + 1] = gray;
+                d[i + 2] = gray;
+              }
+            }
+
+            // Adaptive Otsu Binarization
+            if (isBinarize) {
+              const thresh = computeOtsuThreshold(imgData.data);
+              const d = imgData.data;
+              for (let i = 0; i < d.length; i += 4) {
+                const val = d[i] >= thresh ? 255 : 0;
+                d[i] = val;
+                d[i + 1] = val;
+                d[i + 2] = val;
+              }
+            }
+
+            // Invert colors
+            if (isInvert) {
+              const d = imgData.data;
+              for (let i = 0; i < d.length; i += 4) {
+                d[i] = 255 - d[i];
+                d[i + 1] = 255 - d[i + 1];
+                d[i + 2] = 255 - d[i + 2];
+              }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+          }
+        };
+        img.src = currentImageSource;
+      }
+
+      function updateFilterButtonStyles() {
+        const setStyle = (id, active) => {
+          const btn = document.getElementById(id);
+          if (!btn) return;
+          if (active) {
+            btn.classList.add('bg-blue-50', 'dark:bg-blue-950/60', 'text-blue-700', 'dark:text-blue-300', 'border-blue-400', 'font-semibold');
+            btn.classList.remove('bg-white', 'dark:bg-neutral-900');
+          } else {
+            btn.classList.remove('bg-blue-50', 'dark:bg-blue-950/60', 'text-blue-700', 'dark:text-blue-300', 'border-blue-400', 'font-semibold');
+            btn.classList.add('bg-white', 'dark:bg-neutral-900');
+          }
+        };
+
+        setStyle('filter-grayscale-btn', isGrayscale && !isBinarize);
+        setStyle('filter-contrast-btn', isBinarize);
+        setStyle('filter-sharpen-btn', isSharpen);
+        setStyle('filter-denoise-btn', isDenoise);
+        setStyle('filter-invert-btn', isInvert);
+      }
+
+      // Preprocessing event listeners
+      document.getElementById('filter-rotate-btn').addEventListener('click', () => {
+        rotation = (rotation + 90) % 360;
+        document.getElementById('rotation-deg').textContent = rotation.toString();
+        renderCanvas();
+      });
+
+      document.getElementById('filter-contrast-btn').addEventListener('click', () => {
+        isBinarize = !isBinarize;
+        if (isBinarize) isGrayscale = true;
+        updateFilterButtonStyles();
+        renderCanvas();
+      });
+
+      document.getElementById('filter-sharpen-btn').addEventListener('click', () => {
+        isSharpen = !isSharpen;
+        updateFilterButtonStyles();
+        renderCanvas();
+      });
+
+      document.getElementById('filter-grayscale-btn').addEventListener('click', () => {
+        isGrayscale = !isGrayscale;
+        if (!isGrayscale) isBinarize = false;
+        updateFilterButtonStyles();
+        renderCanvas();
+      });
+
+      document.getElementById('filter-denoise-btn').addEventListener('click', () => {
+        isDenoise = !isDenoise;
+        updateFilterButtonStyles();
+        renderCanvas();
+      });
+
+      document.getElementById('filter-invert-btn').addEventListener('click', () => {
+        isInvert = !isInvert;
+        updateFilterButtonStyles();
+        renderCanvas();
+      });
+
+      // Auto-Enhance Button
+      document.getElementById('filter-auto-enhance-btn').addEventListener('click', () => {
+        isDenoise = true;
+        isSharpen = true;
+        isGrayscale = true;
+        isBinarize = true;
+        updateFilterButtonStyles();
+        renderCanvas();
+        showToast('Auto-enhancement applied to sharpen text!');
+      });
+
+      document.getElementById('filter-reset-btn').addEventListener('click', () => {
+        rotation = 0;
+        isGrayscale = false;
+        isBinarize = false;
+        isSharpen = false;
+        isDenoise = false;
+        isInvert = false;
+        document.getElementById('rotation-deg').textContent = '0';
+        updateFilterButtonStyles();
+        renderCanvas();
+        showToast('Filters reset to original image.');
+      });
+
+      document.getElementById('change-image-btn').addEventListener('click', () => {
+        uploadStage.classList.remove('hidden');
+        previewStage.classList.add('hidden');
+        resultsStage.classList.add('hidden');
+        fileInput.value = '';
+      });
+
+      // OCR Execution via Tesseract.js (Pure Client-Side WebAssembly)
+      document.getElementById('start-ocr-btn').addEventListener('click', async () => {
+        if (!previewCanvas) return;
+        const lang = document.getElementById('ocr-language-select').value || 'eng';
+        const psmValue = parseInt(document.getElementById('ocr-psm-select').value || '3', 10);
+
+        previewStage.classList.add('hidden');
+        progressStage.classList.remove('hidden');
+        resultsStage.classList.add('hidden');
+        hideError();
+
+        const statusLabel = document.getElementById('ocr-status-label');
+        const progressPct = document.getElementById('ocr-progress-percentage');
+        const progressBar = document.getElementById('ocr-progress-bar');
+        const startTime = performance.now();
+
+        try {
+          if (!window.Tesseract) {
+            throw new Error('Tesseract.js OCR engine is loading. Please check your internet connection.');
+          }
+
+          statusLabel.textContent = 'Initializing in-browser OCR worker...';
+          progressPct.textContent = '5%';
+          progressBar.style.width = '5%';
+
+          const worker = await window.Tesseract.createWorker(lang, 1, {
+            logger: (m) => {
+              let label = 'Processing image...';
+              const p = typeof m.progress === 'number' ? Math.round(m.progress * 100) : 0;
+
+              if (m.status === 'loading tesseract core') label = 'Loading WebAssembly Core...';
+              else if (m.status === 'initializing tesseract') label = 'Initializing OCR Engine...';
+              else if (m.status === 'loading language traineddata') label = `Loading Language Model (${lang})...`;
+              else if (m.status === 'initializing api') label = 'Configuring layout parameters...';
+              else if (m.status === 'recognizing text') label = `Recognizing text ${p}%`;
+
+              statusLabel.textContent = label;
+              progressPct.textContent = `${p}%`;
+              progressBar.style.width = `${Math.max(5, p)}%`;
+            }
+          });
+
+          await worker.setParameters({
+            tessedit_pageseg_mode: psmValue,
+            preserve_interword_spaces: '1',
+          });
+
+          const res = await worker.recognize(previewCanvas);
+          await worker.terminate();
+
+          const rawText = (res && res.data && res.data.text) ? res.data.text.trim() : '';
+          const confidence = Math.round((res && res.data && res.data.confidence) || 90);
+          const elapsedSec = ((performance.now() - startTime) / 1000).toFixed(2);
+
+          if (!rawText) {
+            throw new Error('No readable text could be detected. Try applying High Contrast (Binarize) or rotating the picture upright.');
+          }
+
+          // Format output
+          const words = rawText.split(/\s+/).filter(Boolean);
+          extractedData.plain = rawText;
+          extractedData.words = words.length;
+          extractedData.chars = rawText.length;
+
+          // Semantic HTML generation for Formatted Text view
+          const lines = rawText.split(/\r?\n/);
+          let html = '';
+          lines.forEach(l => {
+            const trim = l.trim();
+            if (!trim) return;
+            if (trim.length <= 70 && (trim === trim.toUpperCase() || trim.endsWith(':') || trim.startsWith('Subject:') || trim.startsWith('বিষয়:'))) {
+              html += `<h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-1 mt-4 mb-2">${escapeHtml(trim)}</h3>`;
+            } else if (/^[•\-*]|^[১-৯0-9]+[\.\)]/.test(trim)) {
+              html += `<p class="pl-4 border-l-2 border-blue-500 my-1 font-medium text-neutral-800 dark:text-neutral-200">${escapeHtml(trim)}</p>`;
+            } else {
+              html += `<p class="my-1.5 leading-relaxed text-neutral-800 dark:text-neutral-200">${escapeHtml(trim)}</p>`;
+            }
+          });
+          extractedData.formatted = html;
+
+          // Render into DOM
+          document.getElementById('result-formatted-view').innerHTML = html;
+          document.getElementById('result-plain-view').textContent = rawText;
+          document.getElementById('result-edit-view').value = rawText;
+          document.getElementById('result-code-view').textContent = html;
+          document.getElementById('stat-confidence').innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i><span>${confidence}% Accuracy (Client-Side)</span>`;
+          document.getElementById('stat-words').textContent = `${words.length} words`;
+          document.getElementById('stat-characters').textContent = `${rawText.length} characters`;
+          document.getElementById('stat-time').textContent = `${elapsedSec}s`;
+
+          if (window.lucide) window.lucide.createIcons();
+
+          progressStage.classList.add('hidden');
+          resultsStage.classList.remove('hidden');
+          showToast('Text successfully extracted from image!');
+        } catch (err) {
+          console.error(err);
+          progressStage.classList.add('hidden');
+          previewStage.classList.remove('hidden');
+          showError(err.message || 'OCR extraction failed. Please try again.');
+        }
+      });
+
+      // Output Tabs Handling
+      const tabFormatted = document.getElementById('tab-formatted');
+      const tabPlain = document.getElementById('tab-plain');
+      const tabEdit = document.getElementById('tab-edit');
+      const tabCode = document.getElementById('tab-code');
+      const viewFormatted = document.getElementById('result-formatted-view');
+      const viewPlain = document.getElementById('result-plain-view');
+      const viewEdit = document.getElementById('result-edit-container');
+      const viewCode = document.getElementById('result-code-view');
+      const editInput = document.getElementById('result-edit-view');
+
+      function setTab(tab) {
+        activeTab = tab;
+        [tabFormatted, tabPlain, tabEdit, tabCode].forEach(t => {
+          t.classList.remove('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
+          t.classList.add('text-neutral-600', 'dark:text-neutral-400');
+        });
+        [viewFormatted, viewPlain, viewEdit, viewCode].forEach(v => v.classList.add('hidden'));
+
+        if (tab === 'formatted') {
+          tabFormatted.classList.add('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
+          viewFormatted.classList.remove('hidden');
+        } else if (tab === 'plain') {
+          tabPlain.classList.add('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
+          viewPlain.classList.remove('hidden');
+        } else if (tab === 'edit') {
+          tabEdit.classList.add('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
+          viewEdit.classList.remove('hidden');
+        } else {
+          tabCode.classList.add('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
+          viewCode.classList.remove('hidden');
+        }
+      }
+
+      tabFormatted.addEventListener('click', () => setTab('formatted'));
+      tabPlain.addEventListener('click', () => setTab('plain'));
+      tabEdit.addEventListener('click', () => setTab('edit'));
+      tabCode.addEventListener('click', () => setTab('code'));
+
+      // Live Editor Synchronization
+      editInput.addEventListener('input', () => {
+        const updated = editInput.value;
+        extractedData.plain = updated;
+        document.getElementById('result-plain-view').textContent = updated;
+        
+        const lines = updated.split(/\r?\n/);
+        let html = '';
+        lines.forEach(l => {
+          const trim = l.trim();
+          if (!trim) return;
+          if (/^[•\-*]|^[১-৯0-9]+[\.\)]/.test(trim)) {
+            html += `<p class="pl-4 border-l-2 border-blue-500 my-1 font-medium">${escapeHtml(trim)}</p>`;
+          } else {
+            html += `<p class="my-1.5 leading-relaxed">${escapeHtml(trim)}</p>`;
+          }
+        });
+        extractedData.formatted = html;
+        document.getElementById('result-formatted-view').innerHTML = html;
+        document.getElementById('result-code-view').textContent = html;
+        
+        const words = updated.split(/\s+/).filter(Boolean);
+        document.getElementById('stat-words').textContent = `${words.length} words`;
+        document.getElementById('stat-characters').textContent = `${updated.length} characters`;
+      });
+
+      // Action Button: "Copy Text on Image" (Rich Formatted Text)
+      document.getElementById('btn-copy-formatted').addEventListener('click', async () => {
+        try {
+          if (typeof ClipboardItem !== 'undefined' && navigator.clipboard && navigator.clipboard.write) {
+            const blobHtml = new Blob([extractedData.formatted], { type: 'text/html' });
+            const blobText = new Blob([extractedData.plain], { type: 'text/plain' });
+            await navigator.clipboard.write([new ClipboardItem({ 'text/html': blobHtml, 'text/plain': blobText })]);
+          } else {
+            await navigator.clipboard.writeText(extractedData.plain);
+          }
+          showToast('Formatted text copied to clipboard!');
+        } catch (e) {
+          await navigator.clipboard.writeText(extractedData.plain);
+          showToast('Text copied to clipboard!');
+        }
+      });
+
+      // Action Button: "Copy the Text from Image" (Plain Text)
+      document.getElementById('btn-copy-plain').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(extractedData.plain);
+          showToast('Plain text copied to clipboard!');
+        } catch (e) {
+          showToast('Failed to copy to clipboard', 'error');
+        }
+      });
+
+      // Export / Download to Microsoft Word (.doc format)
+      document.getElementById('download-doc-btn').addEventListener('click', () => {
+        const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'><title>Extracted Text Document</title>
+<style>body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.5; padding: 20px; } h3 { font-size: 14pt; font-weight: bold; margin-top: 15pt; } p { margin: 6pt 0; }</style>
+</head><body>`;
+        const footer = `</body></html>`;
+        const fullDoc = header + extractedData.formatted + footer;
+        const blob = new Blob(['\ufeff' + fullDoc], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'extracted-document.doc';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Word document (.doc) downloaded!');
+      });
+
+      // Export / Download Plain Text (.txt)
+      document.getElementById('download-txt-btn').addEventListener('click', () => {
+        const blob = new Blob([extractedData.plain], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'extracted-text.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Plain text file (.txt) downloaded!');
+      });
+
+      // Save OCR Extracted Text to Profile
+      document.getElementById('btn-save-ocr-profile').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-save-ocr-profile');
+        if (!extractedData.plain) {
+          showToast('No extracted text to save!', 'error');
+          return;
+        }
+
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin text-amber-600"></i><span>Saving...</span>';
+        if (window.lucide) window.lucide.createIcons();
+
+        try {
+          const { saveWorkItem } = await import('/js/firebase.js');
+          const title = `OCR: ${currentFileName ? currentFileName.slice(0, 30) : 'Extracted Text'} (${new Date().toLocaleDateString()})`;
+          const saved = await saveWorkItem({
+            type: 'ocr',
+            title,
+            content: extractedData.plain,
+            summary: `${extractedData.words} words • ${extractedData.chars} characters`,
+            metadata: {
+              language: document.getElementById('ocr-language-select')?.value || 'eng',
+              confidence: 90
+            }
+          });
+
+          btn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i><span>Saved to Profile!</span>';
+          if (window.lucide) window.lucide.createIcons();
+
+          showToast(saved.isCloud ? '✓ Saved to your Cloud Account!' : '✓ Saved to Browser Profile (Sign in to sync)');
+
+          setTimeout(() => {
+            btn.innerHTML = originalHtml;
+            if (window.lucide) window.lucide.createIcons();
+          }, 2500);
+        } catch (err) {
+          console.error('Failed saving OCR to profile:', err);
+          btn.innerHTML = originalHtml;
+          if (window.lucide) window.lucide.createIcons();
+          showToast('Failed to save text to profile.', 'error');
+        }
+      });
+
+      // Reset to process another picture
+      document.getElementById('reset-tool-btn').addEventListener('click', () => {
+        resultsStage.classList.add('hidden');
+        uploadStage.classList.remove('hidden');
+        fileInput.value = '';
+      });
+
+      function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+    </script>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

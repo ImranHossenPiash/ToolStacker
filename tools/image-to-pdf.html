@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Image to PDF Converter – Free & Private – ToolStacker</title>
+    <meta name="title" content="Image to PDF Converter – Free & Private – ToolStacker" />
+    <meta name="description" content="Convert JPG, PNG, and WebP images to PDF online with custom page size, orientation, and margins. 100% client-side, free, and private." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- jsPDF CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your Images Never Leave Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                Image to PDF
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Image to PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800/80">
+            <i data-lucide="images" class="w-3.5 h-3.5"></i>
+            <span>Multi-Image Document Converter</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+            Image to PDF Converter – Free &amp; Private
+          </h1>
+          <p class="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Convert JPG, PNG, WebP to PDF. No upload, no signup. 100% browser-based.
+          </p>
+        </div>
+
+        <!-- Upload Dropzone Area -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload Images"
+          class="border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 dark:hover:border-blue-500 rounded-3xl p-8 sm:p-12 text-center bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-all cursor-pointer group"
+        >
+          <input
+            type="file"
+            id="file-input"
+            accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+            multiple
+            class="hidden"
+          />
+          <div class="max-w-md mx-auto space-y-4 pointer-events-none">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-3xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <i data-lucide="camera" class="w-8 h-8 sm:w-10 sm:h-10"></i>
+            </div>
+            <div class="space-y-1">
+              <h2 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+                Drag &amp; drop images here or click to browse
+              </h2>
+              <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+                Supports JPG, PNG, WebP (up to 50 images). Processed entirely on your device.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                id="browse-btn"
+                class="pointer-events-auto inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow transition-all cursor-pointer"
+              >
+                <i data-lucide="folder-open" class="w-4 h-4"></i>
+                <span>Choose Images</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Workspace (Hidden until images loaded) -->
+      <section id="workspace" class="hidden space-y-6">
+        
+        <!-- Toolbar & Count -->
+        <div id="grid-toolbar" class="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
+              <i data-lucide="layers" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 id="image-count-label" class="font-bold text-sm text-neutral-900 dark:text-neutral-100">
+                0 images
+              </h3>
+              <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+                Drag cards to reorder pages • Click card to select/deselect
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+            <input
+              type="file"
+              id="add-more-input"
+              accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+              multiple
+              class="hidden"
+            />
+            
+            <button
+              type="button"
+              id="add-more-btn"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors cursor-pointer"
+            >
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>Add Images</span>
+            </button>
+
+            <button
+              type="button"
+              id="select-all-btn"
+              class="px-2.5 py-1.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            >
+              Select All
+            </button>
+
+            <button
+              type="button"
+              id="deselect-all-btn"
+              class="px-2.5 py-1.5 rounded-xl text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            >
+              Deselect All
+            </button>
+
+            <button
+              type="button"
+              id="clear-all-btn"
+              class="px-2.5 py-1.5 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
+            >
+              Clear All
+            </button>
+          </div>
+        </div>
+
+        <!-- Responsive Thumbnail Grid -->
+        <!-- 1 column (mobile), 2-3 (tablet), 4-5 (desktop) -->
+        <div
+          id="image-grid"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+        >
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <!-- Settings Panel & Conversion Box -->
+        <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm space-y-6">
+          <div class="flex items-center gap-2.5 border-b border-neutral-100 dark:border-neutral-800 pb-4">
+            <i data-lucide="sliders" class="w-4 h-4 text-blue-600"></i>
+            <h4 class="font-bold text-sm text-neutral-900 dark:text-neutral-100">Document &amp; Layout Settings</h4>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <!-- Page Size -->
+            <div class="space-y-2">
+              <label for="page-size-select" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                Page Size
+              </label>
+              <select
+                id="page-size-select"
+                class="w-full px-3 py-2 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer"
+              >
+                <option value="a4">A4 (210 × 297 mm)</option>
+                <option value="letter">Letter (8.5 × 11 in)</option>
+                <option value="fit">Fit to Image (Proportional)</option>
+              </select>
+              <p class="text-[11px] text-neutral-400">Standard paper size or auto-fit image bounds.</p>
+            </div>
+
+            <!-- Orientation -->
+            <div class="space-y-2">
+              <span class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                Orientation
+              </span>
+              <div class="flex flex-col gap-1.5 text-xs">
+                <label class="flex items-center gap-2 cursor-pointer font-medium">
+                  <input type="radio" name="orientation" value="portrait" checked class="accent-blue-600" />
+                  <span>Portrait</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer font-medium">
+                  <input type="radio" name="orientation" value="landscape" class="accent-blue-600" />
+                  <span>Landscape</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer font-medium">
+                  <input type="radio" name="orientation" value="auto" class="accent-blue-600" />
+                  <span>Auto (Match Image)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Margins -->
+            <div class="space-y-2">
+              <span class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                Page Margins
+              </span>
+              <div class="flex flex-col gap-1.5 text-xs">
+                <label class="flex items-center gap-2 cursor-pointer font-medium">
+                  <input type="radio" name="margin" value="0" class="accent-blue-600" />
+                  <span>None (Full Bleed)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer font-medium">
+                  <input type="radio" name="margin" value="10" checked class="accent-blue-600" />
+                  <span>Small (10 mm)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer font-medium">
+                  <input type="radio" name="margin" value="20" class="accent-blue-600" />
+                  <span>Large (20 mm)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Quality & DPI -->
+            <div class="space-y-2">
+              <label for="quality-select" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                Resolution &amp; Quality
+              </label>
+              <select
+                id="quality-select"
+                class="w-full px-3 py-2 text-xs rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer"
+              >
+                <option value="high">High (300 DPI - Print Quality)</option>
+                <option value="medium">Medium (150 DPI - Standard Web)</option>
+              </select>
+              <p class="text-[11px] text-neutral-400">High retains maximum fidelity; Medium reduces PDF file size.</p>
+            </div>
+
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center gap-3">
+            <button
+              type="button"
+              id="convert-btn"
+              class="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+            >
+              <i data-lucide="file-check" class="w-4 h-4"></i>
+              <span id="convert-btn-text">Convert to PDF</span>
+            </button>
+
+            <button
+              type="button"
+              id="reset-btn"
+              class="w-full sm:w-auto py-3.5 px-5 rounded-2xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-semibold text-xs transition-colors cursor-pointer"
+            >
+              <span>Reset</span>
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Download State Section (Hidden until conversion complete) -->
+      <section id="download-section" class="hidden max-w-2xl mx-auto py-8 text-center space-y-6">
+        <div class="w-20 h-20 mx-auto rounded-3xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-lg border border-emerald-200 dark:border-emerald-800">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="space-y-2">
+          <h2 id="result-success-msg" class="text-2xl sm:text-3xl font-extrabold text-neutral-900 dark:text-neutral-50 font-display">
+            ✅ Converted successfully!
+          </h2>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400">
+            Your images have been assembled into a high-quality PDF document.
+          </p>
+          <div>
+            <span id="result-details-badge" class="inline-block px-3 py-1 rounded-full text-xs font-mono font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300">
+              0 pages • images.pdf
+            </span>
+          </div>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            type="button"
+            id="download-pdf-btn"
+            class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2.5 cursor-pointer active:scale-98"
+          >
+            <i data-lucide="download" class="w-5 h-5"></i>
+            <span>Download PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="convert-more-link"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-2xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 font-semibold text-sm transition-colors cursor-pointer"
+          >
+            <span>Convert More Images</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- SEO / Features Info Section -->
+      <section class="mt-16 pt-12 border-t border-neutral-200 dark:border-neutral-800 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">100% In-Browser Privacy</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Your photos and scans are converted in browser memory. No files are uploaded to any server or cloud, ensuring absolute confidentiality.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <i data-lucide="move" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Drag to Reorder Pages</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Easily drag thumbnails into any order before conversion. Touch-friendly arrows ensure effortless reordering on tablets and smartphones.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="sliders" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Custom Dimensions &amp; Margins</h3>
+          <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            Choose from A4, US Letter, or Fit-to-Image with customizable margins and resolution presets up to 300 DPI for sharp prints.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Sticky Mobile Action Bar -->
+    <div
+      id="sticky-action-bar"
+      class="hidden md:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 z-30 shadow-xl"
+    >
+      <button
+        type="button"
+        id="sticky-convert-btn"
+        class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+      >
+        <i data-lucide="file-check" class="w-4 h-4"></i>
+        <span>Convert to PDF</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div
+      id="processing-modal"
+      class="hidden fixed inset-0 z-50 bg-neutral-950/70 backdrop-blur-xs flex items-center justify-center p-4"
+    >
+      <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-8 max-w-sm w-full shadow-2xl text-center space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center animate-spin">
+          <i data-lucide="loader-2" class="w-8 h-8"></i>
+        </div>
+
+        <div class="space-y-1">
+          <h3 class="font-bold text-lg text-neutral-900 dark:text-neutral-100 font-display">
+            Converting to PDF
+          </h3>
+          <p id="progress-text" class="text-xs text-neutral-500 dark:text-neutral-400">
+            Converting images... Please wait
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-2">
+          <div class="w-full h-2.5 rounded-full bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+            <div
+              id="progress-fill"
+              class="h-full bg-blue-600 rounded-full transition-all duration-200 w-0"
+            ></div>
+          </div>
+          <div class="flex justify-between text-[11px] font-mono text-neutral-400">
+            <span>Progress</span>
+            <span id="progress-pct">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-neutral-500 dark:text-neutral-400 space-y-2">
+        <p>&copy; 2026 ToolStacker. Free, fast, private in-browser document tools.</p>
+        <div class="flex justify-center gap-4">
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+          <span>•</span>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+          <span>•</span>
+          <a href="/" class="hover:text-blue-600 transition-colors">All Tools</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- App Script -->
+    <script type="module" src="/assets/js/image-to-pdf.js"></script>
+    <script>
+      // Initialize Lucide icons
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+      // Theme toggle support
+      const themeBtn = document.querySelector('[data-theme-toggle]');
+      if (themeBtn) {
+        const updateThemeUI = (isDark) => {
+          document.documentElement.classList.toggle('dark', isDark);
+          const sunIcon = themeBtn.querySelector('.theme-icon-sun');
+          const moonIcon = themeBtn.querySelector('.theme-icon-moon');
+          if (sunIcon && moonIcon) {
+            sunIcon.classList.toggle('hidden', !isDark);
+            moonIcon.classList.toggle('hidden', isDark);
+          }
+        };
+
+        const isDark = localStorage.getItem('theme') === 'dark' || 
+          (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        updateThemeUI(isDark);
+
+        themeBtn.addEventListener('click', () => {
+          const currentlyDark = document.documentElement.classList.contains('dark');
+          const nextDark = !currentlyDark;
+          localStorage.setItem('theme', nextDark ? 'dark' : 'light');
+          updateThemeUI(nextDark);
+        });
+      }
+    </script>
+  </body>
+</html>

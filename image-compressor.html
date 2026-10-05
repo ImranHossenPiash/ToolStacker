@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Image Compressor – ToolStacker</title>
+    <meta name="title" content="Image Compressor – ToolStacker" />
+    <meta name="description" content="Compress JPEG, PNG, WebP, AVIF images online without losing quality. 100% client-side, free, and unlimited." />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- JSZip CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% Private Client-Side Image Compression • No Server Uploads • Unlimited Files</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                Studio
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: Language Switcher, PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Language Toggle Button (EN / বাংলা) -->
+          <button
+            type="button"
+            id="lang-toggle-btn"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 text-xs font-bold transition-colors cursor-pointer"
+            title="Switch Language (English / বাংলা)"
+          >
+            <i data-lucide="languages" class="w-4 h-4 text-blue-600"></i>
+            <span>বাংলা</span>
+          </button>
+
+          <!-- PWA Install Button -->
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Tool Container (Strictly tool interface only, no SEO/blog/FAQ) -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Tool Header -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <a href="/image-tools.html" class="hover:text-blue-600 transition-colors">Image Tools</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Image Compressor</span>
+        </nav>
+        <h1 data-i18n="appTitle" class="text-3xl sm:text-4xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-100">
+          Image Compressor
+        </h1>
+        <p data-i18n="appSubtitle" class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
+          Compress JPEG, PNG, WebP, AVIF images online without losing quality. 100% client-side, free, and unlimited.
+        </p>
+      </section>
+
+      <!-- Drag & Drop Upload Zone -->
+      <section>
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload images to compress"
+          class="relative flex flex-col items-center justify-center p-8 sm:p-12 rounded-3xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 bg-white dark:bg-neutral-900 transition-all text-center group cursor-pointer shadow-xs overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <!-- Hidden standard file input -->
+          <input
+            type="file"
+            id="file-input"
+            multiple
+            accept="image/*,image/jpeg,image/png,image/webp,image/avif"
+            class="hidden"
+          />
+
+          <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform mb-4 shadow-xs pointer-events-none">
+            <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+          </div>
+
+          <h3 data-i18n="dropzoneTitle" class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 pointer-events-none">
+            Drag &amp; drop images here, or browse files
+          </h3>
+          <p data-i18n="dropzoneSubtitle" class="mt-1.5 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-md pointer-events-none">
+            Supports JPEG, PNG, WebP, AVIF • Batch upload 50+ files • Ctrl+V to paste from clipboard
+          </p>
+
+          <button
+            type="button"
+            id="browse-btn"
+            data-i18n="dropzoneBrowseBtn"
+            class="mt-5 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+          >
+            Select Images
+          </button>
+        </div>
+      </section>
+
+      <!-- Batch Summary Bar & Action Row -->
+      <section id="batch-summary-bar" class="hidden p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          
+          <!-- Compression Stats Summary -->
+          <div class="flex flex-wrap items-center gap-6 text-sm">
+            <div>
+              <span data-i18n="totalOriginal" class="text-neutral-500 text-xs">Original:</span>
+              <div id="total-original" class="font-bold text-neutral-800 dark:text-neutral-200">0 KB</div>
+            </div>
+            <div>
+              <span data-i18n="totalCompressed" class="text-neutral-500 text-xs">Compressed:</span>
+              <div id="total-compressed" class="font-bold text-blue-600 dark:text-blue-400">0 KB</div>
+            </div>
+            <div>
+              <span data-i18n="totalSavings" class="text-neutral-500 text-xs">Total Saved:</span>
+              <div id="total-savings" class="font-bold text-emerald-600 dark:text-emerald-400">0%</div>
+            </div>
+          </div>
+
+          <!-- Actions: Download ZIP, Settings Jump & Clear All -->
+          <div class="flex items-center gap-3">
+            <a
+              href="#settings-section"
+              id="jump-to-settings-btn"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-blue-400 text-neutral-700 dark:text-neutral-300 hover:text-blue-600 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="sliders" class="w-3.5 h-3.5 text-blue-600"></i>
+              <span data-i18n="settingsToggle">Settings</span>
+            </a>
+            <button
+              type="button"
+              id="clear-all-btn"
+              data-i18n="clearAllBtn"
+              class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-red-400 text-neutral-700 dark:text-neutral-300 hover:text-red-500 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              <span>Clear All</span>
+            </button>
+            <button
+              type="button"
+              id="download-all-btn"
+              data-i18n="downloadAllZip"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+            >
+              <i data-lucide="archive" class="w-4 h-4"></i>
+              <span>Download All as ZIP</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Overall Batch Progress Bar -->
+        <div id="batch-progress-bar" class="hidden w-full bg-neutral-100 dark:bg-neutral-800 rounded-full h-1.5 overflow-hidden">
+          <div id="batch-progress-fill" class="bg-blue-600 h-1.5 rounded-full transition-all duration-200 w-0"></div>
+        </div>
+      </section>
+
+      <!-- Processed Images Cards Container (Directly below dropzone & summary bar) -->
+      <section id="results-section" class="space-y-4">
+        
+        <!-- Empty State Placeholder -->
+        <div id="empty-state" class="py-12 text-center space-y-3 bg-white dark:bg-neutral-900 rounded-3xl border border-dashed border-neutral-200 dark:border-neutral-800 p-8">
+          <div class="w-14 h-14 rounded-2xl bg-neutral-100 dark:bg-neutral-800 text-neutral-400 flex items-center justify-center mx-auto">
+            <i data-lucide="images" class="w-7 h-7"></i>
+          </div>
+          <p data-i18n="noImagesYet" class="text-sm font-medium text-neutral-500">
+            No images uploaded yet. Drop images or click above to begin.
+          </p>
+        </div>
+
+        <!-- Cards List -->
+        <div id="cards-container" class="space-y-4"></div>
+
+      </section>
+
+      <!-- Compression & Dimension Settings Panel (Accordion Style) -->
+      <section id="settings-section" class="space-y-4">
+        
+        <!-- Settings Header Bar with Quick Reset and Expand/Collapse All -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center">
+              <i data-lucide="sliders" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 data-i18n="settingsTitle" class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100">
+                Compression &amp; Resize Settings
+              </h3>
+              <p class="text-xs text-neutral-500">Fine-tune quality, format, dimensions &amp; responsive variants</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="reset-settings-btn"
+              data-i18n="resetSettingsBtn"
+              class="px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-colors cursor-pointer"
+            >
+              Reset Defaults
+            </button>
+            <button
+              type="button"
+              id="toggle-all-settings-btn"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            >
+              <span id="toggle-all-settings-text">Collapse All</span>
+              <i data-lucide="chevrons-up-down" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="settings-panel-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        
+          <!-- ACCORDION 1: Core Compression Controls -->
+          <div class="rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs overflow-hidden transition-all">
+            <button
+              type="button"
+              id="accordion-btn-compression"
+              class="w-full flex items-center justify-between p-5 text-left hover:bg-neutral-50/70 dark:hover:bg-neutral-800/40 transition-colors cursor-pointer select-none"
+            >
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center shrink-0">
+                  <i data-lucide="sliders" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 data-i18n="settingsTitle" class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100">
+                    Compression Settings
+                  </h3>
+                  <p class="text-xs text-neutral-500 truncate">Mode, Quality, Format &amp; Target Size</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2.5 shrink-0">
+                <span id="summary-badge-compression" class="hidden sm:inline-flex text-[11px] font-mono font-medium px-2.5 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+                  Lossy • WebP • 80%
+                </span>
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400">
+                  <i data-lucide="chevron-down" id="accordion-icon-compression" class="w-4 h-4 transition-transform duration-200 rotate-180"></i>
+                </div>
+              </div>
+            </button>
+
+            <!-- Accordion Body: Compression -->
+            <div id="accordion-body-compression" class="p-6 pt-2 border-t border-neutral-100 dark:border-neutral-800/80 space-y-6">
+              <!-- Mode: Lossy vs Lossless -->
+              <div class="space-y-2">
+                <label data-i18n="modeLabel" class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                  Compression Mode
+                </label>
+                <div class="grid grid-cols-2 gap-3">
+                  <label class="flex items-center gap-2.5 p-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/60 cursor-pointer hover:border-blue-500 transition-colors">
+                    <input type="radio" name="compression-mode" id="mode-lossy" value="lossy" checked class="text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" />
+                    <span data-i18n="modeLossy" class="text-xs font-bold text-neutral-800 dark:text-neutral-200">Lossy (Best Size)</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/60 cursor-pointer hover:border-blue-500 transition-colors">
+                    <input type="radio" name="compression-mode" id="mode-lossless" value="lossless" class="text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer" />
+                    <span data-i18n="modeLossless" class="text-xs font-bold text-neutral-800 dark:text-neutral-200">Lossless (Best Quality)</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Smart Compression Checkbox -->
+              <div class="flex items-start gap-3 p-3.5 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40">
+                <input
+                  type="checkbox"
+                  id="smart-checkbox"
+                  checked
+                  class="mt-0.5 rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                />
+                <div>
+                  <label for="smart-checkbox" data-i18n="smartCompression" class="text-xs font-bold text-blue-900 dark:text-blue-200 cursor-pointer">
+                    Smart Compression
+                  </label>
+                  <p data-i18n="smartCompressionHelp" class="text-[11px] text-blue-700/80 dark:text-blue-300/80">
+                    Auto-balances quality and file size for optimal performance
+                  </p>
+                </div>
+              </div>
+
+              <!-- Quality Slider (1 to 100) -->
+              <div id="quality-container" class="space-y-2 transition-opacity">
+                <div class="flex items-center justify-between text-xs font-semibold">
+                  <span data-i18n="qualityLabel" class="text-neutral-700 dark:text-neutral-300">Quality</span>
+                  <span id="quality-value" class="font-mono text-blue-600 dark:text-blue-400 font-bold">80%</span>
+                </div>
+                <input
+                  type="range"
+                  id="quality-slider"
+                  min="1"
+                  max="100"
+                  value="80"
+                  class="w-full h-2 bg-neutral-200 dark:bg-neutral-700 rounded-lg cursor-pointer"
+                />
+              </div>
+
+              <!-- Output Format Selector -->
+              <div class="space-y-2">
+                <label data-i18n="formatLabel" for="format-select" class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                  Output Format
+                </label>
+                <select
+                  id="format-select"
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-xs font-semibold focus:outline-hidden focus:border-blue-500 cursor-pointer"
+                >
+                  <option value="original" data-i18n="formatOriginal">Keep Original</option>
+                  <option value="image/webp" data-i18n="formatWebp" selected>WebP (Recommended)</option>
+                  <option value="image/jpeg" data-i18n="formatJpeg">JPEG (.jpg)</option>
+                  <option value="image/png" data-i18n="formatPng">PNG (.png)</option>
+                  <option value="image/avif" data-i18n="formatAvif">AVIF (.avif)</option>
+                </select>
+              </div>
+
+              <!-- Target File Size Control -->
+              <div class="space-y-2.5 pt-1 border-t border-neutral-100 dark:border-neutral-800">
+                <div class="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="target-size-checkbox"
+                    class="rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                  />
+                  <label for="target-size-checkbox" data-i18n="targetSizeToggle" class="text-xs font-bold text-neutral-800 dark:text-neutral-200 cursor-pointer">
+                    Set Target File Size (KB)
+                  </label>
+                </div>
+                <div id="target-size-container" class="hidden space-y-1.5 pl-6">
+                  <input
+                    type="number"
+                    id="target-size-input"
+                    min="10"
+                    max="50000"
+                    value="200"
+                    data-i18n-placeholder="targetSizePlaceholder"
+                    placeholder="e.g. 200"
+                    class="w-full px-3.5 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-xs font-mono"
+                  />
+                  <p data-i18n="targetSizeHelp" class="text-[11px] text-neutral-500">
+                    Automatically optimizes quality to reach desired file size
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACCORDION 2: Resize & Dimension Controls -->
+          <div class="rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs overflow-hidden transition-all">
+            <button
+              type="button"
+              id="accordion-btn-resize"
+              class="w-full flex items-center justify-between p-5 text-left hover:bg-neutral-50/70 dark:hover:bg-neutral-800/40 transition-colors cursor-pointer select-none"
+            >
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0">
+                  <i data-lucide="scaling" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 data-i18n="resizeTitle" class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100">
+                    Resize &amp; Dimensions
+                  </h3>
+                  <p class="text-xs text-neutral-500 truncate">Presets, Scale, Aspect Ratio &amp; Variants</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2.5 shrink-0">
+                <span id="summary-badge-resize" class="hidden sm:inline-flex text-[11px] font-mono font-medium px-2.5 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+                  Original Size (100%)
+                </span>
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center text-neutral-400">
+                  <i data-lucide="chevron-down" id="accordion-icon-resize" class="w-4 h-4 transition-transform duration-200 rotate-180"></i>
+                </div>
+              </div>
+            </button>
+
+            <!-- Accordion Body: Resize -->
+            <div id="accordion-body-resize" class="p-6 pt-2 border-t border-neutral-100 dark:border-neutral-800/80 space-y-6">
+              <!-- Social Media Presets -->
+              <div class="space-y-2">
+                <label data-i18n="presetLabel" for="preset-select" class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                  Preset Template
+                </label>
+                <select
+                  id="preset-select"
+                  class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-xs font-semibold focus:outline-hidden focus:border-blue-500 cursor-pointer"
+                >
+                  <option value="original" data-i18n="presetOriginal">Original Size</option>
+                  <option value="ig-post" data-i18n="presetIgPost">Instagram Post (1080×1080)</option>
+                  <option value="ig-story" data-i18n="presetIgStory">Instagram Story (1080×1920)</option>
+                  <option value="fb-og" data-i18n="presetFbOg">Facebook OG Image (1200×630)</option>
+                  <option value="twitter-header" data-i18n="presetTwitterHeader">Twitter Header (1500×500)</option>
+                  <option value="linkedin-cover" data-i18n="presetLinkedinCover">LinkedIn Cover (1584×396)</option>
+                  <option value="favicon" data-i18n="presetFavicon">Favicon (64×64)</option>
+                  <option value="full-hd" data-i18n="presetFullHd">Full HD (1920×1080)</option>
+                  <option value="custom" data-i18n="presetCustom">Custom Dimensions</option>
+                </select>
+              </div>
+
+              <!-- Max Width & Height Grid -->
+              <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-1.5">
+                  <label data-i18n="maxWidthLabel" for="max-width-input" class="block text-xs font-semibold text-neutral-600 dark:text-neutral-400">
+                    Max Width (px)
+                  </label>
+                  <input
+                    type="number"
+                    id="max-width-input"
+                    placeholder="Auto"
+                    min="1"
+                    class="w-full px-3.5 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-xs font-mono"
+                  />
+                </div>
+                <div class="space-y-1.5">
+                  <label data-i18n="maxHeightLabel" for="max-height-input" class="block text-xs font-semibold text-neutral-600 dark:text-neutral-400">
+                    Max Height (px)
+                  </label>
+                  <input
+                    type="number"
+                    id="max-height-input"
+                    placeholder="Auto"
+                    min="1"
+                    class="w-full px-3.5 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-xs font-mono"
+                  />
+                </div>
+              </div>
+
+              <!-- Scale Percent Slider -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs font-semibold">
+                  <span data-i18n="scaleLabel" class="text-neutral-700 dark:text-neutral-300">Scale Percent</span>
+                  <span id="scale-value" class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">100%</span>
+                </div>
+                <input
+                  type="range"
+                  id="scale-slider"
+                  min="10"
+                  max="100"
+                  value="100"
+                  class="w-full h-2 bg-neutral-200 dark:bg-neutral-700 rounded-lg cursor-pointer"
+                />
+              </div>
+
+              <!-- Aspect Ratio, Crop, and Padding Toggles -->
+              <div class="space-y-2 pt-1 border-t border-neutral-100 dark:border-neutral-800">
+                <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-neutral-700 dark:text-neutral-300">
+                  <input
+                    type="checkbox"
+                    id="lock-aspect-checkbox"
+                    checked
+                    class="rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                  />
+                  <span data-i18n="lockAspect">Lock Aspect Ratio</span>
+                </label>
+
+                <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-neutral-700 dark:text-neutral-300">
+                  <input
+                    type="checkbox"
+                    id="crop-checkbox"
+                    class="rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                  />
+                  <span data-i18n="cropOption">Center Crop to Fit Dimensions</span>
+                </label>
+
+                <div class="space-y-2">
+                  <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-neutral-700 dark:text-neutral-300">
+                    <input
+                      type="checkbox"
+                      id="padding-checkbox"
+                      class="rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                    />
+                    <span data-i18n="paddingOption">Add Padding Color</span>
+                  </label>
+
+                  <div id="padding-container" class="hidden flex items-center gap-3 pl-6">
+                    <span data-i18n="paddingColor" class="text-xs text-neutral-500">Color:</span>
+                    <input
+                      type="color"
+                      id="padding-color-input"
+                      value="#ffffff"
+                      class="w-8 h-8 rounded-lg border border-neutral-300 dark:border-neutral-700 cursor-pointer"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Responsive Width Variants -->
+              <div class="space-y-2.5 pt-1 border-t border-neutral-100 dark:border-neutral-800">
+                <div class="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="responsive-checkbox"
+                    class="rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer"
+                  />
+                  <label for="responsive-checkbox" data-i18n="responsiveWidthsToggle" class="text-xs font-bold text-neutral-800 dark:text-neutral-200 cursor-pointer">
+                    Generate Responsive Width Variants
+                  </label>
+                </div>
+                <div id="responsive-container" class="hidden space-y-1.5 pl-6">
+                  <input
+                    type="text"
+                    id="responsive-widths-input"
+                    value="320, 640, 1024"
+                    data-i18n-placeholder="responsiveWidthsPlaceholder"
+                    placeholder="e.g. 320, 640, 1024"
+                    class="w-full px-3.5 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-xs font-mono"
+                  />
+                  <p data-i18n="responsiveWidthsHelp" class="text-[11px] text-neutral-500">
+                    Creates multiple scaled variants for modern srcset responsive images
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Zoom Inspection Modal -->
+    <div id="zoom-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+      <div class="relative w-full max-w-4xl bg-white dark:bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-neutral-200 dark:border-neutral-800 flex flex-col max-h-[90vh]">
+        
+        <!-- Modal Top Bar -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-200 dark:border-neutral-800 shrink-0">
+          <div class="flex items-center gap-3">
+            <h3 id="zoom-modal-title" class="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 truncate">
+              Quality Inspection
+            </h3>
+            <span id="zoom-stats-badge" class="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">
+              --
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <!-- Zoom Scale Dropdown -->
+            <select
+              id="zoom-level-select"
+              class="px-2.5 py-1.5 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-xs font-semibold"
+            >
+              <option value="fit" data-i18n="zoomFit">Fit View</option>
+              <option value="1" data-i18n="zoom100">100%</option>
+              <option value="2" data-i18n="zoom200">200%</option>
+            </select>
+
+            <button
+              type="button"
+              id="zoom-close-btn"
+              class="p-1.5 rounded-lg text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 cursor-pointer"
+            >
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Split View Viewport -->
+        <div id="zoom-viewport" class="zoom-viewport flex-1 p-4 flex items-center justify-center bg-neutral-100 dark:bg-neutral-950 transparency-grid min-h-[350px]">
+          <div class="relative max-w-full max-h-[60vh] select-none shadow-lg rounded-xl overflow-hidden border border-neutral-300 dark:border-neutral-700">
+            <!-- Compressed Image (After) -->
+            <img id="zoom-after-img" src="" alt="After Zoom" class="max-w-full max-h-[60vh] object-contain transition-transform origin-center" />
+            
+            <!-- Original Image Overlay (Before) -->
+            <div id="zoom-compare-overlay" class="absolute inset-0 overflow-hidden border-r-2 border-white shadow-xl" style="width: 50%;">
+              <img id="zoom-before-img" src="" alt="Before Zoom" class="max-w-none max-h-[60vh] object-contain transition-transform origin-center" style="width: 100%; height: 100%;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider Bar for Before/After in Modal -->
+        <div class="p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex items-center justify-between gap-4 text-xs font-semibold">
+          <span class="text-neutral-500">Before (Original)</span>
+          <input
+            type="range"
+            id="zoom-slider"
+            min="0"
+            max="100"
+            value="50"
+            class="flex-1 h-2 bg-neutral-200 dark:bg-neutral-700 rounded-lg cursor-ew-resize"
+          />
+          <span class="text-blue-600 dark:text-blue-400">After (Compressed)</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/image-compressor.js"></script>
+  </body>
+</html>

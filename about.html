@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>About Us – ToolStacker</title>
+    <meta name="title" content="About Us – ToolStacker" />
+    <meta name="description" content="Discover ToolStacker: Our mission to provide 100% free, client-side, privacy-first document and image utilities." />
+    <meta name="keywords" content="about toolstacker, client side tools, private pdf tools, free online utilities" />
+    <meta name="author" content="ToolStacker" />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="About Us – ToolStacker" />
+    <meta property="og:description" content="Free, fast, private in-browser document tools without servers or file tracking." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your Files Never Leave Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+              Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-neutral-600 dark:text-neutral-300">
+          <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+          <a href="/#tools-section" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">All Tools</a>
+          <a href="/about.html" class="text-blue-600 dark:text-blue-400 font-bold transition-colors">About</a>
+          <a href="/contact.html" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+        </nav>
+
+        <!-- Right Theme Toggle -->
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full space-y-12">
+      
+      <!-- Hero -->
+      <div class="space-y-4 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>Our Vision &amp; Architecture</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+          Building the Fastest, Most Private Web Tools
+        </h1>
+        <p class="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+          ToolStacker was founded with a singular conviction: document processing should never require surrendering your personal privacy to cloud servers.
+        </p>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">100% In-Browser Privacy</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Every PDF merge, image crop, stamp, and metadata cleanse is computed locally via modern WebAssembly and JavaScript. Zero files are sent to remote servers.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="zap" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Zero Wait Times</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            Without server upload pipelines or queues, conversions complete in milliseconds, saving bandwidth and delivering instant download links.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <i data-lucide="unlock" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-base text-neutral-900 dark:text-neutral-100">Completely Free &amp; Open</h3>
+          <p class="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+            No mandatory signups, no watermarks, no hidden paywalls, and no arbitrary limits. Practical productivity for professionals, students, and businesses.
+          </p>
+        </div>
+      </div>
+
+      <!-- Story Section -->
+      <div class="bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 p-8 sm:p-12 space-y-6 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
+        <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 font-display">
+          Why We Built ToolStacker
+        </h2>
+        <p>
+          Most conventional online PDF and image conversion platforms follow a model where your confidential files—contracts, tax returns, personal identification, and proprietary photographs—must be uploaded to third-party cloud servers. Even with promises of scheduled deletions, data breaches and unauthorized retention remain persistent threats.
+        </p>
+        <p>
+          We leveraged breakthroughs in modern browser technology, including WebAssembly and high-performance client libraries (like <code>pdf-lib</code>, <code>pdf.js</code>, and <code>jsPDF</code>), to move all computational processing directly into your browser tab.
+        </p>
+        <p>
+          The result is a comprehensive suite of professional utilities that offers the ease of a web application with the confidentiality of desktop software.
+        </p>
+
+        <div class="pt-6 border-t border-neutral-100 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span class="text-xs text-neutral-500 font-semibold">Have questions or want to request a tool?</span>
+          <a
+            href="/contact.html"
+            class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition-colors"
+          >
+            Get in Touch
+          </a>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-neutral-500 dark:text-neutral-400 space-y-2">
+        <p>&copy; 2026 ToolStacker. Free, fast, private in-browser document tools.</p>
+        <div class="flex justify-center gap-4">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>•</span>
+          <a href="/about.html" class="hover:text-blue-600 transition-colors text-blue-600 dark:text-blue-400 font-bold">About Us</a>
+          <span>•</span>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a>
+          <span>•</span>
+          <a href="/terms.html" class="hover:text-blue-600 transition-colors">Terms of Service</a>
+          <span>•</span>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize Lucide icons
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      });
+      // Theme toggle
+      const themeBtn = document.querySelector('[data-theme-toggle]');
+      if (themeBtn) {
+        const updateThemeUI = (isDark) => {
+          document.documentElement.classList.toggle('dark', isDark);
+          const sunIcon = themeBtn.querySelector('.theme-icon-sun');
+          const moonIcon = themeBtn.querySelector('.theme-icon-moon');
+          if (sunIcon && moonIcon) {
+            sunIcon.classList.toggle('hidden', !isDark);
+            moonIcon.classList.toggle('hidden', isDark);
+          }
+        };
+
+        const isDark = localStorage.getItem('theme') === 'dark' || 
+          (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        updateThemeUI(isDark);
+
+        themeBtn.addEventListener('click', () => {
+          const currentlyDark = document.documentElement.classList.contains('dark');
+          const nextDark = !currentlyDark;
+          localStorage.setItem('theme', nextDark ? 'dark' : 'light');
+          updateThemeUI(nextDark);
+        });
+      }
+    </script>
+  </body>
+</html>

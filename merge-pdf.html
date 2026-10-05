@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Merge PDF Files Online – Free & Private – ToolStacker</title>
+    <meta name="title" content="Merge PDF Files Online – Free & Private – ToolStacker" />
+    <meta name="description" content="Combine multiple PDF files into one document instantly. 100% client-side, zero server uploads, free, no signup, no watermark." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' blob: data:; connect-src 'self' blob: data: https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdnjs.cloudflare.com;" />
+
+    <!-- Web App Manifest & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Outfit"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF Libraries CDN -->
+    <!-- pdf-lib for merging -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.9/pdf-lib.min.js"></script>
+    <!-- pdf.js for thumbnail rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Mammoth.js for DOCX to PDF conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <!-- SheetJS for XLSX to PDF conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  </head>
+  <body class="bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-150">
+    
+    <!-- Top Global Privacy Bar -->
+    <div class="bg-neutral-900 text-neutral-300 text-xs py-2 px-4 text-center border-b border-neutral-800 flex items-center justify-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="font-medium">100% In-Browser Client-Side Processing • Your Documents Never Leave Your Device</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+            <i data-lucide="wrench" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50 font-display">
+                Tool<span class="text-blue-600 dark:text-blue-400">Stacker</span>
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                PDF Studio
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/#tools-section" class="text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            All Tools
+          </a>
+        </nav>
+
+        <!-- Right Actions: Language Switcher, PWA Install, Theme Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- PWA Install Button -->
+          <button
+            type="button"
+            id="pwa-install-btn"
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-xs transition-colors cursor-pointer"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Install App</span>
+          </button>
+
+          <!-- Theme Toggle -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="p-2 rounded-xl text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            <i data-lucide="sun" class="w-5 h-5 hidden theme-icon-sun text-amber-400"></i>
+            <i data-lucide="moon" class="w-5 h-5 theme-icon-moon text-neutral-700 dark:text-neutral-300"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+      
+      <!-- Breadcrumb & Header -->
+      <section class="space-y-2">
+        <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <span>/</span>
+          <span class="text-neutral-900 dark:text-neutral-100" aria-current="page">Merge PDF</span>
+        </nav>
+      </section>
+
+      <!-- Hero Section (Upload & Information) -->
+      <section id="hero-section" class="space-y-6">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 text-xs font-bold">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
+            <span>100% In-Browser • No File Upload • Zero Watermark</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight font-display text-neutral-900 dark:text-neutral-50 leading-tight">
+            Merge PDF Files Online – <span class="text-blue-600 dark:text-blue-400">Free &amp; Private</span>
+          </h1>
+          <p class="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            Combine multiple PDFs into one document. No upload, no signup, no watermark. Preserves original vector quality, fonts, and images.
+          </p>
+        </div>
+
+        <!-- Large Upload Zone -->
+        <div
+          id="dropzone"
+          role="button"
+          tabindex="0"
+          aria-label="Upload files to merge"
+          class="relative flex flex-col items-center justify-center p-8 sm:p-14 rounded-3xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 hover:border-blue-500 bg-white dark:bg-neutral-900 transition-all text-center group cursor-pointer shadow-xs overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <!-- Hidden standard file input -->
+          <input
+            type="file"
+            id="file-input"
+            multiple
+            accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx"
+            class="hidden"
+          />
+
+          <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform mb-4 shadow-xs pointer-events-none">
+            <i data-lucide="files" class="w-8 h-8"></i>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-bold text-neutral-900 dark:text-neutral-100 pointer-events-none">
+            Drag &amp; drop PDFs here or click to browse
+          </h3>
+          <p class="mt-1.5 text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-md pointer-events-none">
+            Supports PDF, PNG, JPG, DOCX, XLSX • Max 20 files, 100MB each • Ctrl+V to paste
+          </p>
+
+          <button
+            type="button"
+            id="browse-btn"
+            class="mt-5 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+          >
+            <i data-lucide="folder-open" class="w-4 h-4"></i>
+            <span>Select PDF Files</span>
+          </button>
+        </div>
+
+        <!-- Feature Badges Ribbon -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto pt-2">
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="lock" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">100% Client-Side</div>
+              <div class="text-[11px] text-neutral-500 truncate">No server transmission</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center shrink-0">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">No Quality Loss</div>
+              <div class="text-[11px] text-neutral-500 truncate">Vector &amp; font fidelity</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center shrink-0">
+              <i data-lucide="move" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">Reorder Pages</div>
+              <div class="text-[11px] text-neutral-500 truncate">Drag &amp; drop reorder</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center shrink-0">
+              <i data-lucide="file-plus" class="w-4 h-4"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-neutral-900 dark:text-neutral-100">Image &amp; Office</div>
+              <div class="text-[11px] text-neutral-500 truncate">JPG, PNG, DOCX, XLSX</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Workspace Section (Active when files are uploaded) -->
+      <section id="workspace-section" class="hidden space-y-6">
+        
+        <!-- Controls Bar -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div>
+              <span class="text-xs text-neutral-500">Selected Files:</span>
+              <div id="total-files-count" class="font-bold text-neutral-900 dark:text-neutral-100 text-sm">
+                0 files
+              </div>
+            </div>
+            <div class="h-8 w-px bg-neutral-200 dark:border-neutral-800"></div>
+            <div>
+              <span class="text-xs text-neutral-500">Total Size:</span>
+              <div id="total-estimated-size" class="font-bold text-blue-600 dark:text-blue-400 text-sm">
+                0 B
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <!-- Add More Input & Button -->
+            <input type="file" id="add-more-input" multiple accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx" class="hidden" />
+            <button
+              type="button"
+              id="add-more-btn"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-blue-400 text-neutral-700 dark:text-neutral-300 hover:text-blue-600 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>Add More Files</span>
+            </button>
+
+            <!-- Clear All -->
+            <button
+              type="button"
+              id="clear-all-btn"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-700 hover:border-red-400 text-neutral-700 dark:text-neutral-300 hover:text-red-500 text-xs font-bold transition-colors cursor-pointer"
+            >
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              <span>Clear All</span>
+            </button>
+
+            <!-- Primary Merge Button -->
+            <button
+              type="button"
+              id="merge-btn"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-600/20 transition-all cursor-pointer"
+            >
+              <i data-lucide="merge" class="w-4 h-4"></i>
+              <span>Merge PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Instructions hint -->
+        <div class="flex items-center justify-between text-xs text-neutral-500 px-1">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="info" class="w-3.5 h-3.5 text-blue-500"></i>
+            Drag files to reorder or use the arrow buttons. Documents will be merged in top-to-bottom sequence.
+          </span>
+          <span class="hidden sm:inline font-mono text-[11px]">
+            Shortcut: Ctrl + Enter
+          </span>
+        </div>
+
+        <!-- File Cards Reorderable Container -->
+        <div id="file-cards-container" class="space-y-3">
+          <!-- Rendered dynamically by merge-pdf.js -->
+        </div>
+
+      </section>
+
+      <!-- Download State Section -->
+      <section id="download-section" class="hidden max-w-2xl mx-auto py-10 text-center space-y-6">
+        <div class="w-20 h-20 rounded-3xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/10">
+          <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-extrabold font-display text-neutral-900 dark:text-neutral-100">
+            PDFs Merged Successfully!
+          </h2>
+          <p class="text-sm text-neutral-500">
+            Your combined PDF document is ready. Total size: <span id="download-size-badge" class="font-bold text-neutral-800 dark:text-neutral-200">--</span>
+          </p>
+        </div>
+
+        <!-- Custom Filename Input -->
+        <div class="max-w-md mx-auto space-y-1 text-left">
+          <label for="custom-filename-input" class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+            File Name
+          </label>
+          <div class="relative flex items-center">
+            <input
+              type="text"
+              id="custom-filename-input"
+              value="merged_document.pdf"
+              class="w-full px-4 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-sm font-semibold focus:outline-none focus:border-blue-500"
+            />
+            <span class="absolute right-3 text-xs font-mono text-neutral-400 pointer-events-none">.pdf</span>
+          </div>
+        </div>
+
+        <!-- Download Action Buttons -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button
+            type="button"
+            id="download-merged-btn"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition-all cursor-pointer"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Download Merged PDF</span>
+          </button>
+
+          <button
+            type="button"
+            id="merge-more-btn"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold text-neutral-700 dark:text-neutral-300 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 transition-colors cursor-pointer"
+          >
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>Merge More Files</span>
+          </button>
+        </div>
+
+        <!-- Privacy notice -->
+        <p class="text-xs text-neutral-400">
+          🔒 Your merged document was generated 100% locally in your browser and never transmitted over the internet.
+        </p>
+      </section>
+
+    </main>
+
+    <!-- Sticky Bottom Bar (Mobile & Scroll) -->
+    <div id="sticky-action-bar" class="hidden fixed bottom-0 inset-x-0 z-30 p-3 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 shadow-xl sm:hidden">
+      <button
+        type="button"
+        id="sticky-merge-btn"
+        class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2"
+      >
+        <i data-lucide="merge" class="w-4 h-4"></i>
+        <span>Merge PDF</span>
+      </button>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      <div class="w-full max-w-md bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-2xl border border-neutral-200 dark:border-neutral-800 text-center space-y-5">
+        <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto">
+          <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+        </div>
+
+        <div class="space-y-1.5">
+          <h3 class="text-lg font-bold text-neutral-900 dark:text-neutral-100">
+            Merging PDF Documents
+          </h3>
+          <p id="merge-progress-text" class="text-xs text-neutral-500">
+            Processing files... Please wait
+          </p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1.5">
+          <div class="w-full bg-neutral-100 dark:bg-neutral-800 rounded-full h-2.5 overflow-hidden">
+            <div id="merge-progress-fill" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300 w-0"></div>
+          </div>
+          <div id="merge-progress-pct" class="text-xs font-mono font-bold text-blue-600 text-right">
+            0%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 dark:text-neutral-400">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-neutral-700 dark:text-neutral-300">ToolStacker</span>
+          <span>•</span>
+          <span>Fast, Private, Client-Side Utilities</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="/" class="hover:text-blue-600 transition-colors">Home</a>
+          <a href="/#tools-section" class="hover:text-blue-600 transition-colors">All Tools</a>
+          <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+          <a href="/contact.html" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="/assets/js/main.js"></script>
+    <script type="module" src="/assets/js/merge-pdf.js"></script>
+  </body>
+</html>
