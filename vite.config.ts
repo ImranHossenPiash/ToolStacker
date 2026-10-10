@@ -68,6 +68,8 @@ export default defineConfig(() => {
           invoiceGeneratorRoot: path.resolve(__dirname, 'invoice-generator.html'),
           imageToPdf: path.resolve(__dirname, 'tools/image-to-pdf.html'),
           imageToPdfRoot: path.resolve(__dirname, 'image-to-pdf.html'),
+          videoToMp3: path.resolve(__dirname, 'tools/video-to-mp3.html'),
+          videoToMp3Root: path.resolve(__dirname, 'video-to-mp3.html'),
         },
       },
     },

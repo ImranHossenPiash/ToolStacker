@@ -49,6 +49,15 @@
     <!-- Tesseract.js via CDN for 100% Client-Side OCR -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
+    <!-- SheetJS (xlsx) for Excel (.xlsx) and CSV exports -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <!-- jsPDF for PDF document generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- JSZip for Word (.docx) OpenXML packaging and batch zip downloads -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
     <!-- Schema.org JSON-LD Structured Data for Google Ranking & AEO/GEO -->
     <script type="application/ld+json">
     {
@@ -360,6 +369,86 @@
       <!-- INTERACTIVE TOOL BOX CONTAINER -->
       <section class="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
         
+        <!-- Workflow Tabs: Single Image vs Bulk Batch Mode -->
+        <div class="flex items-center justify-between flex-wrap gap-3 border-b border-neutral-200 dark:border-neutral-800 pb-4">
+          <div class="inline-flex p-1 rounded-2xl bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700/60 shadow-inner">
+            <button
+              type="button"
+              id="mode-tab-single"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-neutral-700 text-blue-600 dark:text-blue-400 shadow-xs transition-all cursor-pointer"
+            >
+              <i data-lucide="image" class="w-4 h-4"></i>
+              <span>Single Image (একক ছবি)</span>
+            </button>
+            <button
+              type="button"
+              id="mode-tab-batch"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 transition-all cursor-pointer relative"
+            >
+              <i data-lucide="layers" class="w-4 h-4"></i>
+              <span>Bulk Batch Conversion (একাধিক ছবি)</span>
+              <span class="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500 text-white shadow-2xs">
+                NEW
+              </span>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span>100% In-Browser Privacy</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- OCR Specialization Presets -->
+        <div class="p-3.5 rounded-2xl bg-neutral-50/80 dark:bg-neutral-950/60 border border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-blue-600"></i>
+            <span class="text-xs font-bold text-neutral-800 dark:text-neutral-200">OCR Extraction Mode:</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              id="preset-standard"
+              class="px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-400 shadow-2xs"
+            >
+              <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+              <span>Standard Document</span>
+            </button>
+            <button
+              type="button"
+              id="preset-table"
+              class="px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-700 hover:border-blue-400"
+              title="Preserves rows and columns for Excel / CSV export"
+            >
+              <i data-lucide="table" class="w-3.5 h-3.5 text-emerald-600"></i>
+              <span>Table &amp; Excel (ছক)</span>
+            </button>
+            <button
+              type="button"
+              id="preset-handwriting"
+              class="px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-700 hover:border-blue-400"
+              title="Enhanced for handwritten notes, notebook paper, student exams, and cursive"
+            >
+              <i data-lucide="pencil" class="w-3.5 h-3.5 text-purple-600"></i>
+              <span>Handwritten Notes (হাতে লেখা)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Handwritten Tips Banner (Dynamic) -->
+        <div id="handwriting-tips-banner" class="hidden p-3 rounded-2xl bg-purple-50/70 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/60 text-xs text-purple-900 dark:text-purple-200 flex items-center gap-2.5">
+          <i data-lucide="info" class="w-4 h-4 text-purple-600 shrink-0"></i>
+          <span>✍️ <b>হাতে লেখা নোট মোড সক্রিয়:</b> খাতার পৃষ্ঠা, ডায়েরি ও হাতের লেখার জন্য এডাপ্টিভ কনট্রাস্ট ও স্ট্রোক এনহ্যান্সার স্বয়ংক্রিয়ভাবে চালু করা হয়েছে।</span>
+        </div>
+
+        <!-- Table Tips Banner (Dynamic) -->
+        <div id="table-tips-banner" class="hidden p-3 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-900 dark:text-emerald-200 flex items-center gap-2.5">
+          <i data-lucide="table" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+          <span>📊 <b>ছক ও টেবিল মোড সক্রিয়:</b> ডেটা থেকে কলাম ও রো বিন্যাস অক্ষত রেখে সরাসরি এক্সেল (.xlsx) ও CSV ফরম্যাটে রূপান্তর হবে।</span>
+        </div>
+
         <!-- Stage 1: File Upload & Drag-and-Drop Zone -->
         <div id="upload-stage" class="space-y-4">
           <div
@@ -481,6 +570,22 @@
               </button>
               <button
                 type="button"
+                id="filter-handwriting-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/60 flex items-center gap-1.5 cursor-pointer font-medium"
+                title="Adaptive local binarization & stroke booster for handwritten ink and notebook paper"
+              >
+                <i data-lucide="pen" class="w-3.5 h-3.5 text-purple-600"></i> Ink Booster
+              </button>
+              <button
+                type="button"
+                id="filter-line-remove-btn"
+                class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 cursor-pointer font-medium"
+                title="Clean and suppress horizontal ruled notebook lines"
+              >
+                <i data-lucide="minus" class="w-3.5 h-3.5 text-neutral-500"></i> Erase Lines
+              </button>
+              <button
+                type="button"
                 id="filter-reset-btn"
                 class="px-2.5 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-500 hover:text-neutral-900 flex items-center gap-1.5 cursor-pointer font-medium ml-auto"
                 title="Revert back to original photo"
@@ -589,13 +694,22 @@
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 dark:border-neutral-800 pb-4">
             
             <!-- Output Format Options: Plain Text & Formatted Text -->
-            <div class="flex items-center gap-1 p-1 bg-neutral-100 dark:bg-neutral-800 rounded-xl">
+            <div class="flex items-center gap-1 p-1 bg-neutral-100 dark:bg-neutral-800 rounded-xl flex-wrap">
               <button
                 type="button"
                 id="tab-formatted"
                 class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 shadow-2xs transition-colors cursor-pointer"
               >
                 Formatted Text
+              </button>
+              <button
+                type="button"
+                id="tab-table"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 transition-colors cursor-pointer flex items-center gap-1.5"
+                title="Preserved rows and columns for spreadsheet view"
+              >
+                <i data-lucide="table" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>Table View (ছক)</span>
               </button>
               <button
                 type="button"
@@ -620,59 +734,86 @@
               </button>
             </div>
 
-            <!-- Blueprint Required Action Buttons: "Copy the Text from Image" & "Copy Text on Image" -->
+            <!-- Blueprint Required Action Buttons & Export Downloads -->
             <div class="flex items-center gap-2 flex-wrap">
               <!-- Copy Text on Image (Formatted Rich Text) -->
               <button
                 type="button"
                 id="btn-copy-formatted"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-xs cursor-pointer"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-xs cursor-pointer"
                 title="Copy formatted rich text with headings and paragraphs preserved"
               >
                 <i data-lucide="copy-check" class="w-3.5 h-3.5"></i>
-                <span>Copy Text on Image</span>
+                <span>Copy Rich Text</span>
               </button>
 
-              <!-- Copy the Text from Image (Plain Text) -->
+              <!-- Copy Plain Text -->
               <button
                 type="button"
                 id="btn-copy-plain"
-                class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-all cursor-pointer"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-all cursor-pointer"
                 title="Copy raw unformatted text into clipboard"
               >
                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-                <span>Copy the Text from Image</span>
+                <span>Copy Plain</span>
               </button>
 
               <!-- Save to Profile Button -->
               <button
                 type="button"
                 id="btn-save-ocr-profile"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900 transition-all cursor-pointer shadow-2xs"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900 transition-all cursor-pointer shadow-2xs"
                 title="Save extracted text to your profile & cloud storage"
               >
                 <i data-lucide="bookmark" class="w-3.5 h-3.5 text-amber-600"></i>
-                <span>Save to Profile</span>
+                <span>Save</span>
               </button>
 
-              <!-- Export / Download Options -->
-              <div class="flex items-center gap-1 border-l border-neutral-200 dark:border-neutral-700 pl-2">
+              <!-- Multi-Format Export Download Options -->
+              <div class="flex items-center gap-1.5 border-l border-neutral-200 dark:border-neutral-700 pl-2 flex-wrap">
                 <button
                   type="button"
-                  id="download-doc-btn"
-                  class="inline-flex items-center gap-1 px-2.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold cursor-pointer"
-                  title="Export directly into Microsoft Word (.doc) format"
+                  id="download-docx-btn"
+                  class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/60 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/80 text-xs font-bold cursor-pointer transition-all"
+                  title="Download genuine Microsoft Word document (.docx)"
                 >
                   <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-600"></i>
-                  <span>Word (.doc)</span>
+                  <span>.DOCX</span>
+                </button>
+                <button
+                  type="button"
+                  id="download-pdf-btn"
+                  class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50/60 dark:bg-red-950/40 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/80 text-xs font-bold cursor-pointer transition-all"
+                  title="Download formatted PDF document (.pdf)"
+                >
+                  <i data-lucide="file-check" class="w-3.5 h-3.5 text-red-600"></i>
+                  <span>.PDF</span>
+                </button>
+                <button
+                  type="button"
+                  id="download-xlsx-btn"
+                  class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 text-xs font-bold cursor-pointer transition-all"
+                  title="Download Excel spreadsheet (.xlsx)"
+                >
+                  <i data-lucide="table" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  <span>.XLSX</span>
+                </button>
+                <button
+                  type="button"
+                  id="download-csv-btn"
+                  class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold cursor-pointer"
+                  title="Download CSV table (.csv)"
+                >
+                  <i data-lucide="sheet" class="w-3.5 h-3.5 text-teal-600"></i>
+                  <span>.CSV</span>
                 </button>
                 <button
                   type="button"
                   id="download-txt-btn"
-                  class="inline-flex items-center gap-1 px-2.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold cursor-pointer"
-                  title="Download plain notepad text (.txt)"
+                  class="inline-flex items-center gap-1 px-2 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold cursor-pointer"
+                  title="Download UTF-8 plain text file (.txt)"
                 >
-                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <i data-lucide="download" class="w-3.5 h-3.5 text-neutral-500"></i>
                   <span>.TXT</span>
                 </button>
               </div>
@@ -698,6 +839,45 @@
             <!-- Formatted View -->
             <div id="result-formatted-view" class="leading-relaxed space-y-3 font-sans text-neutral-900 dark:text-neutral-100 text-base"></div>
             
+            <!-- Table View (Editable Structured Table Grid) -->
+            <div id="result-table-container" class="hidden space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2 text-xs border-b border-neutral-200 dark:border-neutral-800 pb-2.5">
+                <div class="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400">
+                  <i data-lucide="edit-3" class="w-4 h-4 text-emerald-600"></i>
+                  <span><b>ইন্টারেক্টিভ টেবিল:</b> যেকোনো সেলে ক্লিক করে সরাসরি এডিট করতে পারেন।</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    id="btn-add-table-row"
+                    class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 font-semibold text-neutral-700 dark:text-neutral-200 flex items-center gap-1 cursor-pointer"
+                  >
+                    <i data-lucide="plus" class="w-3.5 h-3.5 text-emerald-600"></i>
+                    <span>Add Row</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-copy-table-tsv"
+                    class="px-2.5 py-1 rounded-lg border border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/60 font-semibold text-emerald-700 dark:text-emerald-300 flex items-center gap-1 cursor-pointer"
+                    title="Copy table TSV to paste directly into Microsoft Excel or Google Sheets"
+                  >
+                    <i data-lucide="copy" class="w-3.5 h-3.5 text-emerald-600"></i>
+                    <span>Copy for Excel</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-copy-table-md"
+                    class="px-2.5 py-1 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 font-semibold text-neutral-600 dark:text-neutral-300 flex items-center gap-1 cursor-pointer"
+                    title="Copy table in Markdown format"
+                  >
+                    <i data-lucide="code" class="w-3.5 h-3.5 text-blue-500"></i>
+                    <span>Markdown</span>
+                  </button>
+                </div>
+              </div>
+              <div id="result-table-view" class="overflow-x-auto min-h-[140px]"></div>
+            </div>
+
             <!-- Plain Text View -->
             <pre id="result-plain-view" class="hidden whitespace-pre-wrap font-sans text-neutral-900 dark:text-neutral-100 text-base leading-relaxed"></pre>
             
@@ -728,6 +908,229 @@
               <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
               <span>Extract Another Picture</span>
             </button>
+          </div>
+        </div>
+
+        <!-- Stage 5: Bulk Batch Conversion Stage (একাধিক ছবি একসাথে) -->
+        <div id="batch-stage" class="hidden space-y-6">
+          <!-- Batch Upload Dropzone -->
+          <div
+            id="batch-dropzone"
+            tabindex="0"
+            role="button"
+            aria-label="Upload multiple images for batch optical character recognition"
+            class="border-2 border-dashed border-indigo-300 dark:border-indigo-700/60 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-8 sm:p-12 text-center cursor-pointer transition-all bg-indigo-50/30 dark:bg-indigo-950/20 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <input type="file" id="batch-file-input" accept="image/jpeg,image/png,image/webp" multiple class="hidden" />
+            <div class="max-w-md mx-auto flex flex-col items-center">
+              <div class="w-16 h-16 rounded-2xl bg-indigo-100 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 shadow-xs">
+                <i data-lucide="layers" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1 leading-snug">
+                Select or Drop Multiple Images for Bulk Conversion
+              </h3>
+              <p class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-sm mb-4">
+                একসাথে একাধিক খাতার পাতা, রসিদ বা বইয়ের ছবি আপলোড করুন এবং একটিমাত্র ফাইলে সবগুলোর টেক্সট নামিয়ে নিন।
+              </p>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors shadow-xs">
+                  <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i>
+                  <span>Browse Multiple Images</span>
+                </span>
+                <span class="text-xs font-mono text-neutral-400">Ctrl + Click / Drag multiple</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Batch Queue Panel -->
+          <div id="batch-queue-container" class="hidden space-y-4">
+            <div class="flex items-center justify-between flex-wrap gap-2 border-b border-neutral-200 dark:border-neutral-800 pb-3">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sm text-neutral-800 dark:text-neutral-200">
+                  Batch Queue:
+                </span>
+                <span id="batch-queue-count" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300">
+                  0 Images
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  id="btn-batch-add-more"
+                  class="px-3 py-1.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-semibold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add More
+                </button>
+                <button
+                  type="button"
+                  id="btn-batch-clear-queue"
+                  class="px-3 py-1.5 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/60 text-xs font-semibold text-red-600 dark:text-red-400 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Clear All
+                </button>
+              </div>
+            </div>
+
+            <!-- Batch Images Grid / List -->
+            <div id="batch-items-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[380px] overflow-y-auto p-1">
+              <!-- Dynamically rendered queue items -->
+            </div>
+
+            <!-- Batch Execution Settings Bar -->
+            <div class="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <label for="batch-language-select" class="text-xs font-bold text-neutral-700 dark:text-neutral-300 flex items-center gap-1">
+                  <i data-lucide="globe" class="w-3.5 h-3.5 text-neutral-500"></i> Language:
+                </label>
+                <select
+                  id="batch-language-select"
+                  class="px-3 py-1.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-xs font-semibold text-neutral-800 dark:text-neutral-200 focus:outline-none"
+                >
+                  <option value="eng" selected>English</option>
+                  <option value="ben+eng">Bengali + English</option>
+                  <option value="ben">Bengali Only</option>
+                  <option value="hin">Hindi</option>
+                  <option value="ara">Arabic</option>
+                  <option value="spa">Spanish</option>
+                  <option value="fra">French</option>
+                  <option value="deu">German</option>
+                </select>
+              </div>
+
+              <button
+                type="button"
+                id="btn-start-batch-ocr"
+                class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-md shadow-indigo-600/20 transition-all cursor-pointer w-full sm:w-auto"
+              >
+                <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+                <span>Start Batch Conversion (সবগুলো একসাথে শুরু করুন)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Batch Progress Stage -->
+          <div id="batch-progress-stage" class="hidden p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/50 dark:bg-indigo-950/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-xs font-bold text-indigo-900 dark:text-indigo-200">
+                <i data-lucide="loader-2" class="w-4 h-4 animate-spin text-indigo-600"></i>
+                <span id="batch-status-label">Initializing batch converter...</span>
+              </div>
+              <span id="batch-progress-pct" class="text-xs font-mono font-extrabold text-indigo-600 dark:text-indigo-400">0%</span>
+            </div>
+            <div class="w-full h-3 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden p-0.5">
+              <div id="batch-progress-bar" class="h-full bg-indigo-600 rounded-full transition-all duration-200" style="width: 5%"></div>
+            </div>
+            <p class="text-[11px] text-neutral-500 dark:text-neutral-400">
+              Processing batch client-side in browser sandbox. Memory optimized.
+            </p>
+          </div>
+
+          <!-- Batch Results Stage -->
+          <div id="batch-results-stage" class="hidden space-y-5">
+            <!-- Merged Download Action Bar -->
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-indigo-50/80 via-blue-50/80 to-purple-50/80 dark:from-indigo-950/50 dark:via-blue-950/40 dark:to-purple-950/40 border border-indigo-200 dark:border-indigo-800/60 space-y-4">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-300 flex items-center justify-center font-bold">
+                    <i data-lucide="check-check" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                      Batch Conversion Completed!
+                    </h4>
+                    <p id="batch-results-summary" class="text-xs text-neutral-600 dark:text-neutral-400">
+                      All images extracted into unified documents.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    id="btn-copy-batch-text"
+                    class="px-3.5 py-1.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-xs font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                  >
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy All
+                  </button>
+                  <button
+                    type="button"
+                    id="btn-save-batch-profile"
+                    class="px-3.5 py-1.5 rounded-xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900 text-xs font-bold text-amber-800 dark:text-amber-200 flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                  >
+                    <i data-lucide="bookmark" class="w-3.5 h-3.5 text-amber-600"></i> Save Batch
+                  </button>
+                </div>
+              </div>
+
+              <!-- Merged Single-File Download Options -->
+              <div class="space-y-2 pt-1 border-t border-indigo-200/60 dark:border-indigo-800/40">
+                <span class="text-xs font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-1.5">
+                  <i data-lucide="download" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>Download All As a Single File (একটিমাত্র ফাইল হিসেবে সব টেক্সট ডাউনলোড):</span>
+                </span>
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  <button
+                    type="button"
+                    id="batch-download-docx"
+                    class="px-3 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-all"
+                    title="Download all converted pages inside a single Microsoft Word document"
+                  >
+                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                    <span>Merged Word (.docx)</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="batch-download-pdf"
+                    class="px-3 py-2 rounded-xl text-xs font-bold text-white bg-red-600 hover:bg-red-700 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-all"
+                    title="Download multi-page PDF combining all images"
+                  >
+                    <i data-lucide="file-check" class="w-4 h-4"></i>
+                    <span>Merged PDF (.pdf)</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="batch-download-xlsx"
+                    class="px-3 py-2 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs transition-all"
+                    title="Download Excel spreadsheet with separate sheet tabs per image"
+                  >
+                    <i data-lucide="table" class="w-4 h-4"></i>
+                    <span>Merged Excel (.xlsx)</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="batch-download-txt"
+                    class="px-3 py-2 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 flex items-center justify-center gap-1.5 cursor-pointer transition-all"
+                    title="Download single merged notepad text file"
+                  >
+                    <i data-lucide="file-code" class="w-4 h-4"></i>
+                    <span>Merged .TXT</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="batch-download-zip"
+                    class="px-3 py-2 rounded-xl text-xs font-bold border border-purple-300 dark:border-purple-800 bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/60 flex items-center justify-center gap-1.5 cursor-pointer transition-all col-span-2 sm:col-span-1"
+                    title="Download ZIP package containing individual text files plus merged file"
+                  >
+                    <i data-lucide="archive" class="w-4 h-4 text-purple-600"></i>
+                    <span>All (.zip)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Batch Text Preview Accordion / View -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-bold text-neutral-700 dark:text-neutral-300">
+                <span>Merged Text Content:</span>
+                <button type="button" id="btn-batch-reset" class="text-blue-600 hover:text-blue-700 font-semibold cursor-pointer">
+                  Convert More Images
+                </button>
+              </div>
+              <textarea
+                id="batch-combined-textarea"
+                class="w-full h-72 p-3.5 rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 text-sm font-sans leading-relaxed focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="Combined extracted text from all processed images..."
+              ></textarea>
+            </div>
           </div>
         </div>
 
@@ -1003,22 +1406,52 @@
       </div>
     </footer>
 
-    <!-- Client-Side OCR Script Implementation using Tesseract.js -->
+    <!-- Client-Side OCR Script Implementation with Advanced Multi-Format, Table, Handwriting & Batch Engine -->
     <script type="module">
       import { initTheme, showToast } from '/js/main.js';
+      import {
+        exportDocx,
+        exportPdf,
+        exportXlsx,
+        exportTxt,
+        exportCsv,
+        exportZip,
+        parseTableFromText,
+        tableToHtml,
+        tableToTsv,
+        tableToMarkdown,
+        applyAdaptiveLocalThreshold,
+        removeNotebookHorizontalLines,
+        applyMorphologyDilation
+      } from '/js/ocr-advanced.js';
 
-      // Application State
+      // ==========================================
+      // APPLICATION STATE
+      // ==========================================
+      let workflowMode = 'single'; // 'single' | 'batch'
+      let presetMode = 'standard'; // 'standard' | 'table' | 'handwriting'
       let currentImageSource = null;
+      let currentFileName = 'extracted-document';
       let rotation = 0;
       let isGrayscale = false;
       let isBinarize = false;
       let isSharpen = false;
       let isDenoise = false;
       let isInvert = false;
+      let isInkBoosted = false;
+      let isLinesRemoved = false;
       let activeTab = 'formatted';
-      let extractedData = { plain: '', formatted: '', words: 0, chars: 0 };
+      let extractedData = { plain: '', formatted: '', table: [], words: 0, chars: 0 };
 
-      // DOM Elements
+      // Batch Conversion State
+      let batchQueue = [];
+      let isBatchRunning = false;
+      let batchMergedText = '';
+
+      // ==========================================
+      // DOM ELEMENTS
+      // ==========================================
+      // Single Mode Elements
       const dropzone = document.getElementById('dropzone');
       const fileInput = document.getElementById('image-file-input');
       const uploadStage = document.getElementById('upload-stage');
@@ -1029,6 +1462,31 @@
       const previewFilename = document.getElementById('preview-filename');
       const errorBanner = document.getElementById('ocr-error-banner');
       const errorMessage = document.getElementById('ocr-error-message');
+
+      // Workflow Mode Tabs
+      const modeTabSingle = document.getElementById('mode-tab-single');
+      const modeTabBatch = document.getElementById('mode-tab-batch');
+
+      // Preset Optimization Mode Buttons
+      const presetStandard = document.getElementById('preset-standard');
+      const presetTable = document.getElementById('preset-table');
+      const presetHandwriting = document.getElementById('preset-handwriting');
+      const handwritingTipsBanner = document.getElementById('handwriting-tips-banner');
+      const tableTipsBanner = document.getElementById('table-tips-banner');
+
+      // Batch Mode Elements
+      const batchStage = document.getElementById('batch-stage');
+      const batchDropzone = document.getElementById('batch-dropzone');
+      const batchFileInput = document.getElementById('batch-file-input');
+      const batchQueueContainer = document.getElementById('batch-queue-container');
+      const batchQueueCount = document.getElementById('batch-queue-count');
+      const batchItemsList = document.getElementById('batch-items-list');
+      const batchProgressStage = document.getElementById('batch-progress-stage');
+      const batchProgressBar = document.getElementById('batch-progress-bar');
+      const batchProgressPct = document.getElementById('batch-progress-pct');
+      const batchStatusLabel = document.getElementById('batch-status-label');
+      const batchResultsStage = document.getElementById('batch-results-stage');
+      const batchCombinedTextarea = document.getElementById('batch-combined-textarea');
 
       function showError(msg) {
         errorMessage.textContent = msg;
@@ -1041,7 +1499,101 @@
 
       document.getElementById('close-error-btn').addEventListener('click', hideError);
 
-      // File Selection & Drag & Drop Zone
+      // ==========================================
+      // 1. WORKFLOW MODE SWITCHING (Single vs Batch)
+      // ==========================================
+      function setWorkflowMode(mode) {
+        workflowMode = mode;
+        hideError();
+
+        if (mode === 'single') {
+          modeTabSingle.classList.add('bg-white', 'dark:bg-neutral-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-xs');
+          modeTabSingle.classList.remove('text-neutral-600', 'dark:text-neutral-400');
+          modeTabBatch.classList.remove('bg-white', 'dark:bg-neutral-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-xs');
+          modeTabBatch.classList.add('text-neutral-600', 'dark:text-neutral-400');
+
+          batchStage.classList.add('hidden');
+          if (currentImageSource && !resultsStage.classList.contains('hidden')) {
+            resultsStage.classList.remove('hidden');
+          } else if (currentImageSource) {
+            previewStage.classList.remove('hidden');
+          } else {
+            uploadStage.classList.remove('hidden');
+          }
+        } else {
+          modeTabBatch.classList.add('bg-white', 'dark:bg-neutral-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-xs');
+          modeTabBatch.classList.remove('text-neutral-600', 'dark:text-neutral-400');
+          modeTabSingle.classList.remove('bg-white', 'dark:bg-neutral-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-xs');
+          modeTabSingle.classList.add('text-neutral-600', 'dark:text-neutral-400');
+
+          uploadStage.classList.add('hidden');
+          previewStage.classList.add('hidden');
+          progressStage.classList.add('hidden');
+          resultsStage.classList.add('hidden');
+          batchStage.classList.remove('hidden');
+        }
+      }
+
+      modeTabSingle.addEventListener('click', () => setWorkflowMode('single'));
+      modeTabBatch.addEventListener('click', () => setWorkflowMode('batch'));
+
+      // ==========================================
+      // 2. OCR SPECIALIZATION PRESET MODES
+      // ==========================================
+      function setPresetMode(mode) {
+        presetMode = mode;
+        const buttons = [
+          { btn: presetStandard, mode: 'standard' },
+          { btn: presetTable, mode: 'table' },
+          { btn: presetHandwriting, mode: 'handwriting' }
+        ];
+
+        buttons.forEach(item => {
+          if (item.mode === mode) {
+            item.btn.classList.add('bg-blue-50', 'dark:bg-blue-950/60', 'text-blue-700', 'dark:text-blue-300', 'border-blue-400', 'shadow-2xs');
+            item.btn.classList.remove('bg-white', 'dark:bg-neutral-900', 'text-neutral-700', 'dark:text-neutral-300', 'border-neutral-200', 'dark:border-neutral-700');
+          } else {
+            item.btn.classList.remove('bg-blue-50', 'dark:bg-blue-950/60', 'text-blue-700', 'dark:text-blue-300', 'border-blue-400', 'shadow-2xs');
+            item.btn.classList.add('bg-white', 'dark:bg-neutral-900', 'text-neutral-700', 'dark:text-neutral-300', 'border-neutral-200', 'dark:border-neutral-700');
+          }
+        });
+
+        // Banners
+        if (mode === 'handwriting') {
+          handwritingTipsBanner.classList.remove('hidden');
+          tableTipsBanner.classList.add('hidden');
+          document.getElementById('ocr-psm-select').value = '6'; // Uniform block for handwriting
+          // Automatically engage handwriting ink booster
+          isInkBoosted = true;
+          isSharpen = true;
+          updateFilterButtonStyles();
+          renderCanvas();
+          showToast('✍️ Handwritten Notes mode activated with Ink Booster!');
+        } else if (mode === 'table') {
+          tableTipsBanner.classList.remove('hidden');
+          handwritingTipsBanner.classList.add('hidden');
+          document.getElementById('ocr-psm-select').value = '6';
+          isInkBoosted = false;
+          updateFilterButtonStyles();
+          renderCanvas();
+          showToast('📊 Table & Spreadsheet layout mode activated!');
+        } else {
+          handwritingTipsBanner.classList.add('hidden');
+          tableTipsBanner.classList.add('hidden');
+          document.getElementById('ocr-psm-select').value = '3'; // Auto
+          isInkBoosted = false;
+          updateFilterButtonStyles();
+          renderCanvas();
+        }
+      }
+
+      presetStandard.addEventListener('click', () => setPresetMode('standard'));
+      presetTable.addEventListener('click', () => setPresetMode('table'));
+      presetHandwriting.addEventListener('click', () => setPresetMode('handwriting'));
+
+      // ==========================================
+      // 3. SINGLE IMAGE UPLOAD & CANVAS PIPELINE
+      // ==========================================
       dropzone.addEventListener('click', () => fileInput.click());
       dropzone.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -1064,7 +1616,13 @@
         e.preventDefault();
         dropzone.classList.remove('border-blue-500', 'bg-blue-50/50', 'dark:bg-blue-950/20');
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-          handleFile(e.dataTransfer.files[0]);
+          if (e.dataTransfer.files.length > 1) {
+            // Multiple files dropped -> automatically transition to Bulk Batch Mode!
+            setWorkflowMode('batch');
+            handleBatchFiles(Array.from(e.dataTransfer.files));
+          } else {
+            handleFile(e.dataTransfer.files[0]);
+          }
         }
       });
 
@@ -1098,6 +1656,7 @@
           return;
         }
 
+        currentFileName = file.name ? file.name.replace(/\.[^/.]+$/, '') : 'uploaded-picture';
         previewFilename.textContent = file.name || 'uploaded-picture.png';
         const reader = new FileReader();
         reader.onload = (ev) => {
@@ -1114,6 +1673,8 @@
         isSharpen = false;
         isDenoise = false;
         isInvert = false;
+        isInkBoosted = presetMode === 'handwriting';
+        isLinesRemoved = false;
         document.getElementById('rotation-deg').textContent = '0';
         updateFilterButtonStyles();
 
@@ -1123,7 +1684,7 @@
         resultsStage.classList.add('hidden');
       }
 
-      // Otsu's Thresholding calculation for sharp binarization
+      // Otsu's Thresholding calculation
       function computeOtsuThreshold(d) {
         const histogram = new Array(256).fill(0);
         let total = 0;
@@ -1178,53 +1739,66 @@
           ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
           ctx.restore();
 
-          if (isGrayscale || isBinarize || isSharpen || isDenoise || isInvert) {
-            let imgData = ctx.getImageData(0, 0, previewCanvas.width, previewCanvas.height);
-            const w = previewCanvas.width;
-            const h = previewCanvas.height;
+          const w = previewCanvas.width;
+          const h = previewCanvas.height;
 
-            // Denoise Filter (3x3 mean box filter)
-            if (isDenoise && w > 2 && h > 2) {
-              const src = new Uint8ClampedArray(imgData.data);
-              const dst = imgData.data;
-              for (let y = 1; y < h - 1; y++) {
-                for (let x = 1; x < w - 1; x++) {
-                  const idx = (y * w + x) * 4;
-                  for (let c = 0; c < 3; c++) {
-                    let sum = 0;
-                    for (let dy = -1; dy <= 1; dy++) {
-                      for (let dx = -1; dx <= 1; dx++) {
-                        sum += src[((y + dy) * w + (x + dx)) * 4 + c];
-                      }
+          // 1. Denoise Filter
+          if (isDenoise && w > 2 && h > 2) {
+            let imgData = ctx.getImageData(0, 0, w, h);
+            const src = new Uint8ClampedArray(imgData.data);
+            const dst = imgData.data;
+            for (let y = 1; y < h - 1; y++) {
+              for (let x = 1; x < w - 1; x++) {
+                const idx = (y * w + x) * 4;
+                for (let c = 0; c < 3; c++) {
+                  let sum = 0;
+                  for (let dy = -1; dy <= 1; dy++) {
+                    for (let dx = -1; dx <= 1; dx++) {
+                      sum += src[((y + dy) * w + (x + dx)) * 4 + c];
                     }
-                    dst[idx + c] = Math.round(sum / 9);
                   }
+                  dst[idx + c] = Math.round(sum / 9);
                 }
               }
             }
+            ctx.putImageData(imgData, 0, 0);
+          }
 
-            // Sharpen Filter (high-pass edge booster)
-            if (isSharpen && w > 2 && h > 2) {
-              const src = new Uint8ClampedArray(imgData.data);
-              const dst = imgData.data;
-              for (let y = 1; y < h - 1; y++) {
-                for (let x = 1; x < w - 1; x++) {
-                  const idx = (y * w + x) * 4;
-                  for (let c = 0; c < 3; c++) {
-                    const top = src[((y - 1) * w + x) * 4 + c];
-                    const bottom = src[((y + 1) * w + x) * 4 + c];
-                    const left = src[(y * w + (x - 1)) * 4 + c];
-                    const right = src[(y * w + (x + 1)) * 4 + c];
-                    const center = src[idx + c];
-                    const val = 5 * center - (top + bottom + left + right);
-                    dst[idx + c] = Math.min(255, Math.max(0, val));
-                  }
+          // 2. Sharpen Filter
+          if (isSharpen && w > 2 && h > 2) {
+            let imgData = ctx.getImageData(0, 0, w, h);
+            const src = new Uint8ClampedArray(imgData.data);
+            const dst = imgData.data;
+            for (let y = 1; y < h - 1; y++) {
+              for (let x = 1; x < w - 1; x++) {
+                const idx = (y * w + x) * 4;
+                for (let c = 0; c < 3; c++) {
+                  const top = src[((y - 1) * w + x) * 4 + c];
+                  const bottom = src[((y + 1) * w + x) * 4 + c];
+                  const left = src[(y * w + (x - 1)) * 4 + c];
+                  const right = src[(y * w + (x + 1)) * 4 + c];
+                  const center = src[idx + c];
+                  const val = 5 * center - (top + bottom + left + right);
+                  dst[idx + c] = Math.min(255, Math.max(0, val));
                 }
               }
             }
+            ctx.putImageData(imgData, 0, 0);
+          }
 
-            // Grayscale conversion
+          // 3. Notebook Rule Removal Filter
+          if (isLinesRemoved && w > 20 && h > 20) {
+            removeNotebookHorizontalLines(ctx, w, h);
+          }
+
+          // 4. Adaptive Local Thresholding for Handwriting Ink Booster
+          if (isInkBoosted) {
+            applyAdaptiveLocalThreshold(ctx, w, h, 16, 0.22);
+            applyMorphologyDilation(ctx, w, h);
+          } else {
+            // Standard Grayscale and Global Otsu Binarization
             if (isGrayscale || isBinarize) {
+              let imgData = ctx.getImageData(0, 0, w, h);
               const d = imgData.data;
               for (let i = 0; i < d.length; i += 4) {
                 const gray = Math.round(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
@@ -1232,30 +1806,29 @@
                 d[i + 1] = gray;
                 d[i + 2] = gray;
               }
-            }
 
-            // Adaptive Otsu Binarization
-            if (isBinarize) {
-              const thresh = computeOtsuThreshold(imgData.data);
-              const d = imgData.data;
-              for (let i = 0; i < d.length; i += 4) {
-                const val = d[i] >= thresh ? 255 : 0;
-                d[i] = val;
-                d[i + 1] = val;
-                d[i + 2] = val;
+              if (isBinarize) {
+                const thresh = computeOtsuThreshold(d);
+                for (let i = 0; i < d.length; i += 4) {
+                  const val = d[i] >= thresh ? 255 : 0;
+                  d[i] = val;
+                  d[i + 1] = val;
+                  d[i + 2] = val;
+                }
               }
+              ctx.putImageData(imgData, 0, 0);
             }
+          }
 
-            // Invert colors
-            if (isInvert) {
-              const d = imgData.data;
-              for (let i = 0; i < d.length; i += 4) {
-                d[i] = 255 - d[i];
-                d[i + 1] = 255 - d[i + 1];
-                d[i + 2] = 255 - d[i + 2];
-              }
+          // 5. Invert Filter
+          if (isInvert) {
+            let imgData = ctx.getImageData(0, 0, w, h);
+            const d = imgData.data;
+            for (let i = 0; i < d.length; i += 4) {
+              d[i] = 255 - d[i];
+              d[i + 1] = 255 - d[i + 1];
+              d[i + 2] = 255 - d[i + 2];
             }
-
             ctx.putImageData(imgData, 0, 0);
           }
         };
@@ -1275,11 +1848,13 @@
           }
         };
 
-        setStyle('filter-grayscale-btn', isGrayscale && !isBinarize);
-        setStyle('filter-contrast-btn', isBinarize);
+        setStyle('filter-grayscale-btn', isGrayscale && !isBinarize && !isInkBoosted);
+        setStyle('filter-contrast-btn', isBinarize && !isInkBoosted);
         setStyle('filter-sharpen-btn', isSharpen);
         setStyle('filter-denoise-btn', isDenoise);
         setStyle('filter-invert-btn', isInvert);
+        setStyle('filter-handwriting-btn', isInkBoosted);
+        setStyle('filter-line-remove-btn', isLinesRemoved);
       }
 
       // Preprocessing event listeners
@@ -1292,6 +1867,7 @@
       document.getElementById('filter-contrast-btn').addEventListener('click', () => {
         isBinarize = !isBinarize;
         if (isBinarize) isGrayscale = true;
+        isInkBoosted = false;
         updateFilterButtonStyles();
         renderCanvas();
       });
@@ -1305,6 +1881,7 @@
       document.getElementById('filter-grayscale-btn').addEventListener('click', () => {
         isGrayscale = !isGrayscale;
         if (!isGrayscale) isBinarize = false;
+        isInkBoosted = false;
         updateFilterButtonStyles();
         renderCanvas();
       });
@@ -1321,12 +1898,35 @@
         renderCanvas();
       });
 
+      document.getElementById('filter-handwriting-btn').addEventListener('click', () => {
+        isInkBoosted = !isInkBoosted;
+        if (isInkBoosted) {
+          isBinarize = false;
+          isGrayscale = true;
+          isSharpen = true;
+          showToast('✍️ Handwritten Ink Booster applied!');
+        }
+        updateFilterButtonStyles();
+        renderCanvas();
+      });
+
+      document.getElementById('filter-line-remove-btn').addEventListener('click', () => {
+        isLinesRemoved = !isLinesRemoved;
+        updateFilterButtonStyles();
+        renderCanvas();
+        showToast(isLinesRemoved ? '📏 Notebook ruled lines erased' : 'Notebook lines restored');
+      });
+
       // Auto-Enhance Button
       document.getElementById('filter-auto-enhance-btn').addEventListener('click', () => {
         isDenoise = true;
         isSharpen = true;
-        isGrayscale = true;
-        isBinarize = true;
+        if (presetMode === 'handwriting') {
+          isInkBoosted = true;
+        } else {
+          isGrayscale = true;
+          isBinarize = true;
+        }
         updateFilterButtonStyles();
         renderCanvas();
         showToast('Auto-enhancement applied to sharpen text!');
@@ -1339,6 +1939,8 @@
         isSharpen = false;
         isDenoise = false;
         isInvert = false;
+        isInkBoosted = false;
+        isLinesRemoved = false;
         document.getElementById('rotation-deg').textContent = '0';
         updateFilterButtonStyles();
         renderCanvas();
@@ -1352,7 +1954,9 @@
         fileInput.value = '';
       });
 
-      // OCR Execution via Tesseract.js (Pure Client-Side WebAssembly)
+      // ==========================================
+      // 4. OCR EXECUTION (Pure Client-Side WASM)
+      // ==========================================
       document.getElementById('start-ocr-btn').addEventListener('click', async () => {
         if (!previewCanvas) return;
         const lang = document.getElementById('ocr-language-select').value || 'eng';
@@ -1407,7 +2011,7 @@
           const elapsedSec = ((performance.now() - startTime) / 1000).toFixed(2);
 
           if (!rawText) {
-            throw new Error('No readable text could be detected. Try applying High Contrast (Binarize) or rotating the picture upright.');
+            throw new Error('No readable text could be detected. Try applying High Contrast (Binarize) or Ink Booster.');
           }
 
           // Format output
@@ -1415,6 +2019,9 @@
           extractedData.plain = rawText;
           extractedData.words = words.length;
           extractedData.chars = rawText.length;
+
+          // Parse structured table data
+          extractedData.table = parseTableFromText(rawText);
 
           // Semantic HTML generation for Formatted Text view
           const lines = rawText.split(/\r?\n/);
@@ -1437,6 +2044,11 @@
           document.getElementById('result-plain-view').textContent = rawText;
           document.getElementById('result-edit-view').value = rawText;
           document.getElementById('result-code-view').textContent = html;
+          
+          // Render Table View
+          renderTableView();
+
+          // Metrics
           document.getElementById('stat-confidence').innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i><span>${confidence}% Accuracy (Client-Side)</span>`;
           document.getElementById('stat-words').textContent = `${words.length} words`;
           document.getElementById('stat-characters').textContent = `${rawText.length} characters`;
@@ -1446,7 +2058,15 @@
 
           progressStage.classList.add('hidden');
           resultsStage.classList.remove('hidden');
-          showToast('Text successfully extracted from image!');
+
+          // If Table mode was selected or a multi-column table was detected, default to Table View tab
+          if (presetMode === 'table' || (extractedData.table.length >= 2 && extractedData.table[0].length >= 2)) {
+            setTab('table');
+            showToast('📊 Table & layout structure preserved! Click cells to edit.');
+          } else {
+            setTab('formatted');
+            showToast('Text successfully extracted from image!');
+          }
         } catch (err) {
           console.error(err);
           progressStage.classList.add('hidden');
@@ -1455,12 +2075,17 @@
         }
       });
 
-      // Output Tabs Handling
+      // ==========================================
+      // 5. OUTPUT TABS HANDLING (Formatted, Table, Plain, Edit, HTML)
+      // ==========================================
       const tabFormatted = document.getElementById('tab-formatted');
+      const tabTable = document.getElementById('tab-table');
       const tabPlain = document.getElementById('tab-plain');
       const tabEdit = document.getElementById('tab-edit');
       const tabCode = document.getElementById('tab-code');
+
       const viewFormatted = document.getElementById('result-formatted-view');
+      const viewTable = document.getElementById('result-table-container');
       const viewPlain = document.getElementById('result-plain-view');
       const viewEdit = document.getElementById('result-edit-container');
       const viewCode = document.getElementById('result-code-view');
@@ -1468,15 +2093,18 @@
 
       function setTab(tab) {
         activeTab = tab;
-        [tabFormatted, tabPlain, tabEdit, tabCode].forEach(t => {
+        [tabFormatted, tabTable, tabPlain, tabEdit, tabCode].forEach(t => {
           t.classList.remove('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
           t.classList.add('text-neutral-600', 'dark:text-neutral-400');
         });
-        [viewFormatted, viewPlain, viewEdit, viewCode].forEach(v => v.classList.add('hidden'));
+        [viewFormatted, viewTable, viewPlain, viewEdit, viewCode].forEach(v => v.classList.add('hidden'));
 
         if (tab === 'formatted') {
           tabFormatted.classList.add('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
           viewFormatted.classList.remove('hidden');
+        } else if (tab === 'table') {
+          tabTable.classList.add('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
+          viewTable.classList.remove('hidden');
         } else if (tab === 'plain') {
           tabPlain.classList.add('bg-white', 'dark:bg-neutral-700', 'text-neutral-900', 'dark:text-neutral-100', 'shadow-2xs');
           viewPlain.classList.remove('hidden');
@@ -1490,9 +2118,69 @@
       }
 
       tabFormatted.addEventListener('click', () => setTab('formatted'));
+      tabTable.addEventListener('click', () => setTab('table'));
       tabPlain.addEventListener('click', () => setTab('plain'));
       tabEdit.addEventListener('click', () => setTab('edit'));
       tabCode.addEventListener('click', () => setTab('code'));
+
+      // Table View Rendering & In-Place Editing
+      function renderTableView() {
+        const container = document.getElementById('result-table-view');
+        if (!extractedData.table || extractedData.table.length === 0) {
+          container.innerHTML = '<p class="text-neutral-500 italic p-6 text-center text-sm">No structured table found in this image. You can switch to Edit Text to format rows.</p>';
+          return;
+        }
+
+        container.innerHTML = tableToHtml(extractedData.table, true);
+
+        // Attach contenteditable listeners to synchronize edits
+        const tableElem = document.getElementById('ocr-structured-table');
+        if (tableElem) {
+          tableElem.querySelectorAll('[contenteditable="true"]').forEach(cell => {
+            cell.addEventListener('input', () => {
+              const r = parseInt(cell.getAttribute('data-row'), 10);
+              const c = parseInt(cell.getAttribute('data-col'), 10);
+              if (extractedData.table[r] && typeof extractedData.table[r][c] !== 'undefined') {
+                extractedData.table[r][c] = cell.textContent.trim();
+              }
+            });
+          });
+        }
+      }
+
+      // Add Row to Table
+      document.getElementById('btn-add-table-row').addEventListener('click', () => {
+        if (!extractedData.table || extractedData.table.length === 0) {
+          extractedData.table = [['Col 1', 'Col 2', 'Col 3'], ['', '', '']];
+        } else {
+          const cols = extractedData.table[0].length;
+          extractedData.table.push(new Array(cols).fill(''));
+        }
+        renderTableView();
+        showToast('New row added to table!');
+      });
+
+      // Copy TSV for Excel
+      document.getElementById('btn-copy-table-tsv').addEventListener('click', async () => {
+        if (!extractedData.table || extractedData.table.length === 0) {
+          showToast('No table data to copy!', 'error');
+          return;
+        }
+        const tsv = tableToTsv(extractedData.table);
+        await navigator.clipboard.writeText(tsv);
+        showToast('Table copied as TSV! Paste directly into Excel or Google Sheets.');
+      });
+
+      // Copy Markdown Table
+      document.getElementById('btn-copy-table-md').addEventListener('click', async () => {
+        if (!extractedData.table || extractedData.table.length === 0) {
+          showToast('No table data to copy!', 'error');
+          return;
+        }
+        const md = tableToMarkdown(extractedData.table);
+        await navigator.clipboard.writeText(md);
+        showToast('Table copied in Markdown format!');
+      });
 
       // Live Editor Synchronization
       editInput.addEventListener('input', () => {
@@ -1515,12 +2203,15 @@
         document.getElementById('result-formatted-view').innerHTML = html;
         document.getElementById('result-code-view').textContent = html;
         
+        extractedData.table = parseTableFromText(updated);
+        renderTableView();
+
         const words = updated.split(/\s+/).filter(Boolean);
         document.getElementById('stat-words').textContent = `${words.length} words`;
         document.getElementById('stat-characters').textContent = `${updated.length} characters`;
       });
 
-      // Action Button: "Copy Text on Image" (Rich Formatted Text)
+      // Action Button: "Copy Rich Text"
       document.getElementById('btn-copy-formatted').addEventListener('click', async () => {
         try {
           if (typeof ClipboardItem !== 'undefined' && navigator.clipboard && navigator.clipboard.write) {
@@ -1537,7 +2228,7 @@
         }
       });
 
-      // Action Button: "Copy the Text from Image" (Plain Text)
+      // Action Button: "Copy Plain"
       document.getElementById('btn-copy-plain').addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(extractedData.plain);
@@ -1547,37 +2238,108 @@
         }
       });
 
-      // Export / Download to Microsoft Word (.doc format)
-      document.getElementById('download-doc-btn').addEventListener('click', () => {
-        const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-<head><meta charset='utf-8'><title>Extracted Text Document</title>
-<style>body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.5; padding: 20px; } h3 { font-size: 14pt; font-weight: bold; margin-top: 15pt; } p { margin: 6pt 0; }</style>
-</head><body>`;
-        const footer = `</body></html>`;
-        const fullDoc = header + extractedData.formatted + footer;
-        const blob = new Blob(['\ufeff' + fullDoc], { type: 'application/msword' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'extracted-document.doc';
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast('Word document (.doc) downloaded!');
+      // ==========================================
+      // 6. MULTI-FORMAT EXPORT DOWNLOADS (.docx, .pdf, .xlsx, .txt, .csv)
+      // ==========================================
+      
+      // Download .docx (Word)
+      document.getElementById('download-docx-btn').addEventListener('click', async () => {
+        if (!extractedData.plain) {
+          showToast('No text available to download!', 'error');
+          return;
+        }
+        try {
+          await exportDocx({
+            title: currentFileName || 'Extracted Document',
+            text: extractedData.plain,
+            tableData: extractedData.table,
+            filename: `${currentFileName || 'extracted-document'}.docx`
+          });
+          showToast('Word document (.docx) downloaded!');
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to export .docx file', 'error');
+        }
       });
 
-      // Export / Download Plain Text (.txt)
+      // Download .pdf (PDF)
+      document.getElementById('download-pdf-btn').addEventListener('click', async () => {
+        if (!extractedData.plain) {
+          showToast('No text available to download!', 'error');
+          return;
+        }
+        try {
+          await exportPdf({
+            title: currentFileName || 'Extracted Document',
+            text: extractedData.plain,
+            tableData: extractedData.table,
+            filename: `${currentFileName || 'extracted-document'}.pdf`
+          });
+          showToast('PDF document (.pdf) downloaded!');
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to export .pdf file', 'error');
+        }
+      });
+
+      // Download .xlsx (Excel)
+      document.getElementById('download-xlsx-btn').addEventListener('click', () => {
+        if (!extractedData.plain) {
+          showToast('No text available to download!', 'error');
+          return;
+        }
+        try {
+          exportXlsx({
+            title: 'Extracted_Data',
+            text: extractedData.plain,
+            tableData: extractedData.table,
+            filename: `${currentFileName || 'extracted-data'}.xlsx`
+          });
+          showToast('Excel spreadsheet (.xlsx) downloaded!');
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to export .xlsx file', 'error');
+        }
+      });
+
+      // Download .csv
+      document.getElementById('download-csv-btn').addEventListener('click', () => {
+        if (!extractedData.plain) {
+          showToast('No text available to download!', 'error');
+          return;
+        }
+        try {
+          exportCsv({
+            tableData: extractedData.table,
+            text: extractedData.plain,
+            filename: `${currentFileName || 'extracted-table'}.csv`
+          });
+          showToast('CSV table file (.csv) downloaded!');
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to export .csv file', 'error');
+        }
+      });
+
+      // Download .txt
       document.getElementById('download-txt-btn').addEventListener('click', () => {
-        const blob = new Blob([extractedData.plain], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'extracted-text.txt';
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast('Plain text file (.txt) downloaded!');
+        if (!extractedData.plain) {
+          showToast('No text available to download!', 'error');
+          return;
+        }
+        try {
+          exportTxt({
+            text: extractedData.plain,
+            filename: `${currentFileName || 'extracted-text'}.txt`
+          });
+          showToast('Plain text file (.txt) downloaded!');
+        } catch (err) {
+          console.error(err);
+          showToast('Failed to export .txt file', 'error');
+        }
       });
 
-      // Save OCR Extracted Text to Profile
+      // Save to Profile
       document.getElementById('btn-save-ocr-profile').addEventListener('click', async () => {
         const btn = document.getElementById('btn-save-ocr-profile');
         if (!extractedData.plain) {
@@ -1599,11 +2361,12 @@
             summary: `${extractedData.words} words • ${extractedData.chars} characters`,
             metadata: {
               language: document.getElementById('ocr-language-select')?.value || 'eng',
+              preset: presetMode,
               confidence: 90
             }
           });
 
-          btn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i><span>Saved to Profile!</span>';
+          btn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i><span>Saved!</span>';
           if (window.lucide) window.lucide.createIcons();
 
           showToast(saved.isCloud ? '✓ Saved to your Cloud Account!' : '✓ Saved to Browser Profile (Sign in to sync)');
@@ -1620,15 +2383,346 @@
         }
       });
 
-      // Reset to process another picture
+      // Reset Single Tool
       document.getElementById('reset-tool-btn').addEventListener('click', () => {
         resultsStage.classList.add('hidden');
         uploadStage.classList.remove('hidden');
         fileInput.value = '';
       });
 
+      // ==========================================
+      // 7. BULK BATCH PROCESSING ENGINE
+      // ==========================================
+      batchDropzone.addEventListener('click', () => batchFileInput.click());
+      batchDropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        batchDropzone.classList.add('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-950/40');
+      });
+      batchDropzone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        batchDropzone.classList.remove('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-950/40');
+      });
+      batchDropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        batchDropzone.classList.remove('border-indigo-500', 'bg-indigo-50/50', 'dark:bg-indigo-950/40');
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          handleBatchFiles(Array.from(e.dataTransfer.files));
+        }
+      });
+      batchFileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+          handleBatchFiles(Array.from(e.target.files));
+        }
+      });
+
+      document.getElementById('btn-batch-add-more').addEventListener('click', () => batchFileInput.click());
+      document.getElementById('btn-batch-clear-queue').addEventListener('click', () => {
+        batchQueue = [];
+        renderBatchQueue();
+        batchQueueContainer.classList.add('hidden');
+        batchResultsStage.classList.add('hidden');
+        batchProgressStage.classList.add('hidden');
+        showToast('Batch queue cleared');
+      });
+
+      function handleBatchFiles(files) {
+        const imageFiles = files.filter(f => f.type.startsWith('image/'));
+        if (imageFiles.length === 0) {
+          showError('Please select valid JPG, PNG, or WebP image files.');
+          return;
+        }
+
+        imageFiles.forEach(file => {
+          const id = 'img_' + Math.random().toString(36).slice(2, 9);
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            batchQueue.push({
+              id,
+              file,
+              name: file.name,
+              size: (file.size / 1024).toFixed(1) + ' KB',
+              dataUrl: ev.target.result,
+              status: 'queued',
+              text: '',
+              table: null,
+              words: 0,
+              chars: 0
+            });
+            renderBatchQueue();
+          };
+          reader.readAsDataURL(file);
+        });
+
+        batchQueueContainer.classList.remove('hidden');
+        batchResultsStage.classList.add('hidden');
+        showToast(`${imageFiles.length} images added to batch queue!`);
+      }
+
+      function renderBatchQueue() {
+        batchQueueCount.textContent = `${batchQueue.length} Images`;
+        if (batchQueue.length === 0) {
+          batchQueueContainer.classList.add('hidden');
+          return;
+        }
+
+        batchItemsList.innerHTML = '';
+        batchQueue.forEach((item, idx) => {
+          const card = document.createElement('div');
+          card.className = 'p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center gap-3 shadow-2xs relative';
+
+          let statusBadge = '';
+          if (item.status === 'queued') {
+            statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">Queued</span>';
+          } else if (item.status === 'processing') {
+            statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 flex items-center gap-1"><i data-lucide="loader-2" class="w-3 h-3 animate-spin"></i> Converting</span>';
+          } else if (item.status === 'done') {
+            statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">✓ ${item.words} words</span>`;
+          } else if (item.status === 'error') {
+            statusBadge = '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300">Error</span>';
+          }
+
+          card.innerHTML = `
+            <img src="${item.dataUrl}" alt="thumb" class="w-12 h-12 rounded-lg object-cover border border-neutral-200 dark:border-neutral-700 shrink-0" />
+            <div class="flex-1 min-w-0 pr-6">
+              <p class="text-xs font-bold text-neutral-900 dark:text-neutral-100 truncate">${idx + 1}. ${escapeHtml(item.name)}</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-[10px] text-neutral-400">${item.size}</span>
+                ${statusBadge}
+              </div>
+            </div>
+            ${!isBatchRunning ? `
+              <button type="button" class="remove-batch-item absolute top-2 right-2 text-neutral-400 hover:text-red-600 cursor-pointer p-1" data-id="${item.id}" title="Remove image">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+              </button>
+            ` : ''}
+          `;
+
+          const removeBtn = card.querySelector('.remove-batch-item');
+          if (removeBtn) {
+            removeBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              batchQueue = batchQueue.filter(q => q.id !== item.id);
+              renderBatchQueue();
+            });
+          }
+
+          batchItemsList.appendChild(card);
+        });
+
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      // Execute Batch Conversion
+      document.getElementById('btn-start-batch-ocr').addEventListener('click', async () => {
+        if (batchQueue.length === 0 || isBatchRunning) return;
+        const lang = document.getElementById('batch-language-select').value || 'eng';
+
+        isBatchRunning = true;
+        batchProgressStage.classList.remove('hidden');
+        batchResultsStage.classList.add('hidden');
+        batchProgressBar.style.width = '2%';
+        batchProgressPct.textContent = '0%';
+        batchStatusLabel.textContent = `Initializing OCR worker for ${batchQueue.length} images...`;
+
+        try {
+          if (!window.Tesseract) {
+            throw new Error('Tesseract.js engine is still loading. Please try in a moment.');
+          }
+
+          // Single reusable worker for all batch items (massive speedup!)
+          const worker = await window.Tesseract.createWorker(lang, 1);
+          await worker.setParameters({
+            tessedit_pageseg_mode: presetMode === 'handwriting' ? 6 : 3,
+            preserve_interword_spaces: '1'
+          });
+
+          for (let i = 0; i < batchQueue.length; i++) {
+            const item = batchQueue[i];
+            item.status = 'processing';
+            renderBatchQueue();
+
+            const pct = Math.round((i / batchQueue.length) * 100);
+            batchProgressBar.style.width = `${pct}%`;
+            batchProgressPct.textContent = `${pct}%`;
+            batchStatusLabel.textContent = `Converting image ${i + 1} of ${batchQueue.length}: ${item.name}`;
+
+            try {
+              const res = await worker.recognize(item.dataUrl);
+              const text = (res && res.data && res.data.text) ? res.data.text.trim() : '';
+              item.text = text;
+              item.table = parseTableFromText(text);
+              const w = text.split(/\s+/).filter(Boolean);
+              item.words = w.length;
+              item.chars = text.length;
+              item.status = 'done';
+            } catch (err) {
+              console.error(`Failed OCR on ${item.name}:`, err);
+              item.status = 'error';
+            }
+
+            renderBatchQueue();
+          }
+
+          await worker.terminate();
+
+          // Merge all results
+          batchProgressBar.style.width = '100%';
+          batchProgressPct.textContent = '100%';
+          batchStatusLabel.textContent = 'All images converted successfully!';
+
+          let merged = '';
+          batchQueue.forEach((item, idx) => {
+            merged += `=== PAGE ${idx + 1}: ${item.name} ===\n\n`;
+            merged += (item.text || '[No text detected]') + '\n\n';
+            merged += '------------------------------------------------------------\n\n';
+          });
+
+          batchMergedText = merged;
+          batchCombinedTextarea.value = merged;
+
+          const totalWords = batchQueue.reduce((acc, cur) => acc + (cur.words || 0), 0);
+          document.getElementById('batch-results-summary').textContent = `Processed ${batchQueue.length} images • Total ${totalWords} words extracted into unified documents.`;
+
+          batchProgressStage.classList.add('hidden');
+          batchResultsStage.classList.remove('hidden');
+          showToast(`🎉 Batch complete! All ${batchQueue.length} images converted.`);
+        } catch (err) {
+          console.error(err);
+          showError(err.message || 'Batch conversion encountered an error.');
+          batchProgressStage.classList.add('hidden');
+        } finally {
+          isBatchRunning = false;
+        }
+      });
+
+      // Batch Downloads: Merged Word (.docx)
+      document.getElementById('batch-download-docx').addEventListener('click', async () => {
+        if (!batchMergedText) return;
+        try {
+          await exportDocx({
+            title: 'Batch Merged OCR Document',
+            text: batchMergedText,
+            filename: 'batch-merged-document.docx'
+          });
+          showToast('Merged Word (.docx) downloaded!');
+        } catch (e) {
+          showToast('Failed to export merged docx', 'error');
+        }
+      });
+
+      // Batch Downloads: Merged PDF (.pdf)
+      document.getElementById('batch-download-pdf').addEventListener('click', async () => {
+        if (!batchMergedText) return;
+        try {
+          await exportPdf({
+            title: 'Batch Merged OCR Document',
+            text: batchMergedText,
+            filename: 'batch-merged-document.pdf'
+          });
+          showToast('Merged PDF (.pdf) downloaded!');
+        } catch (e) {
+          showToast('Failed to export merged pdf', 'error');
+        }
+      });
+
+      // Batch Downloads: Merged Excel (.xlsx)
+      document.getElementById('batch-download-xlsx').addEventListener('click', () => {
+        if (!batchMergedText) return;
+        try {
+          exportXlsx({
+            multiSheets: batchQueue.map(item => ({
+              name: item.name,
+              text: item.text,
+              tableData: item.table
+            })),
+            filename: 'batch-all-sheets.xlsx'
+          });
+          showToast('Multi-sheet Excel (.xlsx) downloaded!');
+        } catch (e) {
+          showToast('Failed to export merged xlsx', 'error');
+        }
+      });
+
+      // Batch Downloads: Merged .TXT
+      document.getElementById('batch-download-txt').addEventListener('click', () => {
+        if (!batchMergedText) return;
+        try {
+          exportTxt({
+            text: batchMergedText,
+            filename: 'batch-merged-text.txt'
+          });
+          showToast('Merged Plain Text (.txt) downloaded!');
+        } catch (e) {
+          showToast('Failed to export merged txt', 'error');
+        }
+      });
+
+      // Batch Downloads: All as ZIP (.zip)
+      document.getElementById('batch-download-zip').addEventListener('click', async () => {
+        if (!batchMergedText) return;
+        try {
+          const files = batchQueue.map(item => ({
+            name: `${item.name.replace(/\.[^/.]+$/, '')}.txt`,
+            content: '\ufeff' + (item.text || '')
+          }));
+          files.push({
+            name: 'merged_all_text.txt',
+            content: '\ufeff' + batchMergedText
+          });
+
+          await exportZip({
+            files,
+            filename: 'batch-ocr-results.zip'
+          });
+          showToast('ZIP archive downloaded containing all files!');
+        } catch (e) {
+          showToast('Failed to export zip archive', 'error');
+        }
+      });
+
+      // Copy All Merged Text
+      document.getElementById('btn-copy-batch-text').addEventListener('click', async () => {
+        if (!batchMergedText) return;
+        await navigator.clipboard.writeText(batchMergedText);
+        showToast('All batch text copied to clipboard!');
+      });
+
+      // Save Batch to Profile
+      document.getElementById('btn-save-batch-profile').addEventListener('click', async () => {
+        if (!batchMergedText) return;
+        try {
+          const { saveWorkItem } = await import('/js/firebase.js');
+          const totalWords = batchQueue.reduce((acc, cur) => acc + (cur.words || 0), 0);
+          await saveWorkItem({
+            type: 'ocr_batch',
+            title: `Batch OCR: ${batchQueue.length} Images (${new Date().toLocaleDateString()})`,
+            content: batchMergedText,
+            summary: `${batchQueue.length} files • ${totalWords} words`,
+            metadata: {
+              filesCount: batchQueue.length,
+              language: document.getElementById('batch-language-select')?.value || 'eng'
+            }
+          });
+          showToast('✓ Batch saved to Profile!');
+        } catch (e) {
+          showToast('Failed to save batch to profile', 'error');
+        }
+      });
+
+      document.getElementById('btn-batch-reset').addEventListener('click', () => {
+        batchResultsStage.classList.add('hidden');
+        batchQueue = [];
+        renderBatchQueue();
+        batchQueueContainer.classList.add('hidden');
+      });
+
       function escapeHtml(str) {
-        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
       }
     </script>
     <script type="module" src="/js/main.js"></script>

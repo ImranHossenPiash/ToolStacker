@@ -912,8 +912,18 @@ class SignPdfApp {
     }
 
     if (!window.PDFLib) {
-      this.showToast('PDF rendering engine is still loading...', 'warning');
-      return;
+      try {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = 'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js';
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      } catch (err) {
+        this.showToast('PDF engine could not be loaded. Please check your connection and refresh.', 'error');
+        return;
+      }
     }
 
     this.showProcessingModal(true, 'Embedding signatures into PDF...');

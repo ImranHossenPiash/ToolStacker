@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
+import { videoConverterRouter } from './src/videoConverter';
 
 dotenv.config();
 
@@ -12,6 +13,9 @@ async function startServer() {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  // Mount Video to MP3 & WAV converter API routes
+  app.use(videoConverterRouter);
 
   // Health check endpoint
   app.get('/api/health', (req, res) => {
@@ -208,6 +212,20 @@ async function startServer() {
       p === '/invoice/'
     ) {
       req.url = '/tools/invoice-generator.html';
+      return next();
+    }
+    if (
+      p === '/tools/video-to-mp3' ||
+      p === '/tools/video-to-mp3/' ||
+      p === '/video-to-mp3' ||
+      p === '/video-to-mp3/' ||
+      p === '/video-to-mp3.html' ||
+      p === '/tools/video-to-audio' ||
+      p === '/tools/video-to-audio/' ||
+      p === '/video-to-audio' ||
+      p === '/video-to-audio/'
+    ) {
+      req.url = '/tools/video-to-mp3.html';
       return next();
     }
     // Auto-resolve non-extension paths to .html if exists

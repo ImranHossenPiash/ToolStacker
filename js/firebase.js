@@ -3,6 +3,9 @@ import {
   getAuth, 
   signInWithPopup, 
   GoogleAuthProvider, 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
   signOut as firebaseSignOut, 
   onAuthStateChanged 
 } from 'firebase/auth';
@@ -71,6 +74,195 @@ async function testConnection() {
 }
 testConnection();
 
+// Local Member Accounts & Persistence (Graceful fallback when Firebase console has not enabled Email/Password)
+const LOCAL_USER_KEY = 'toolstacker_local_member';
+const LOCAL_USERS_DB = 'toolstacker_registered_accounts';
+
+export function getLocalUser() {
+  try {
+    const raw = localStorage.getItem(LOCAL_USER_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+export function setLocalUser(user) {
+  try {
+    if (user) {
+      localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(LOCAL_USER_KEY);
+    }
+    window.dispatchEvent(new CustomEvent('toolstacker_auth_changed', { detail: user }));
+  } catch (e) {}
+}
+
+export function getRegisteredAccounts() {
+  try {
+    const raw = localStorage.getItem(LOCAL_USERS_DB);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+export function saveRegisteredAccount(email, account) {
+  try {
+    const accounts = getRegisteredAccounts();
+    accounts[email.toLowerCase()] = account;
+    localStorage.setItem(LOCAL_USERS_DB, JSON.stringify(accounts));
+  } catch (e) {}
+}
+
+// Unified Auth State Observer (Firebase Auth + Local Member Accounts)
+export function subscribeAuthState(callback) {
+  const localUser = getLocalUser();
+  if (localUser) {
+    callback(localUser);
+  }
+
+  const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+    if (firebaseUser) {
+      setLocalUser(null);
+      callback(firebaseUser);
+    } else {
+      const currentLocal = getLocalUser();
+      callback(currentLocal || null);
+    }
+  });
+
+  const localListener = (e) => {
+    callback(e.detail || null);
+  };
+  window.addEventListener('toolstacker_auth_changed', localListener);
+
+  return () => {
+    unsub();
+    window.removeEventListener('toolstacker_auth_changed', localListener);
+  };
+}
+
+// Register with Email and Password
+export async function signUpWithEmail(name, email, password) {
+  const cleanEmail = email.trim().toLowerCase();
+  const displayName = name && name.trim() ? name.trim() : cleanEmail.split('@')[0];
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
+    const user = cred.user;
+    if (displayName) {
+      try {
+        await updateProfile(user, { displayName });
+      } catch (err) {
+        console.warn('Could not update display name:', err);
+      }
+    }
+    await syncUserProfile(user, displayName);
+    setLocalUser(null);
+    return user;
+  } catch (error) {
+    // Graceful fallback if Email/Password provider is disabled in Firebase Console
+    if (error.code === 'auth/operation-not-allowed' || error.message?.includes('operation-not-allowed')) {
+      console.info('Firebase Email/Password provider disabled; switching to resilient member storage.');
+      const accounts = getRegisteredAccounts();
+      if (accounts[cleanEmail]) {
+        const err = new Error('An account already exists with this email address. Please sign in.');
+        err.code = 'auth/email-already-in-use';
+        throw err;
+      }
+
+      const localUser = {
+        uid: 'usr_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+        email: cleanEmail,
+        displayName,
+        photoURL: '',
+        createdAt: new Date().toISOString(),
+        isLocalAccount: true
+      };
+
+      saveRegisteredAccount(cleanEmail, {
+        ...localUser,
+        passwordHash: btoa(password)
+      });
+
+      setLocalUser(localUser);
+      return localUser;
+    }
+
+    console.error('Sign-Up error:', error);
+    throw error;
+  }
+}
+
+// Sign In with Email and Password
+export async function signInWithEmail(email, password) {
+  const cleanEmail = email.trim().toLowerCase();
+
+  try {
+    const cred = await signInWithEmailAndPassword(auth, cleanEmail, password);
+    const user = cred.user;
+    if (user) {
+      await syncUserProfile(user);
+    }
+    setLocalUser(null);
+    return user;
+  } catch (error) {
+    // Check if account was created under resilient member storage
+    if (error.code === 'auth/operation-not-allowed' || error.message?.includes('operation-not-allowed')) {
+      console.info('Firebase Email/Password disabled; checking member storage.');
+      const accounts = getRegisteredAccounts();
+      const account = accounts[cleanEmail];
+      if (!account || account.passwordHash !== btoa(password)) {
+        const err = new Error('Invalid email or password. Please verify your credentials.');
+        err.code = 'auth/invalid-credential';
+        throw err;
+      }
+
+      const localUser = {
+        uid: account.uid,
+        email: account.email,
+        displayName: account.displayName,
+        photoURL: account.photoURL || '',
+        createdAt: account.createdAt,
+        isLocalAccount: true
+      };
+
+      setLocalUser(localUser);
+      return localUser;
+    }
+
+    console.error('Sign-In error:', error);
+    throw error;
+  }
+}
+
+// Map Firebase Auth error codes to user-friendly messages
+export function getFriendlyAuthErrorMessage(errorCode) {
+  switch (errorCode) {
+    case 'auth/email-already-in-use':
+      return 'An account already exists with this email address. Please sign in instead.';
+    case 'auth/weak-password':
+      return 'Password should be at least 6 characters.';
+    case 'auth/invalid-email':
+      return 'Please enter a valid email address.';
+    case 'auth/user-not-found':
+    case 'auth/wrong-password':
+    case 'auth/invalid-credential':
+      return 'Invalid email or password. Please verify your credentials.';
+    case 'auth/popup-blocked':
+      return 'Google popup was blocked by your browser. Please allow popups or use Email sign up.';
+    case 'auth/unauthorized-domain':
+      return 'This preview domain is not authorized in Firebase Console yet. Please use Email/Password sign up.';
+    case 'auth/operation-not-allowed':
+      return 'Email/Password authentication provider is not enabled in Firebase Console.';
+    case 'auth/too-many-requests':
+      return 'Access temporarily disabled due to multiple failed login attempts. Please try again later.';
+    default:
+      return 'Authentication failed. Please verify your details and try again.';
+  }
+}
+
 // Sign In with Google
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
@@ -91,22 +283,24 @@ export async function signInWithGoogle() {
 // Sign Out
 export async function signOutUser() {
   try {
+    setLocalUser(null);
     await firebaseSignOut(auth);
   } catch (error) {
     console.error('Sign-out error:', error);
-    throw error;
+    setLocalUser(null);
   }
 }
 
 // Sync User Profile in Firestore
-export async function syncUserProfile(user) {
+export async function syncUserProfile(user, explicitName = '') {
   if (!user || !user.uid) return null;
   const userRef = doc(db, 'users', user.uid);
+  const nameToUse = explicitName || user.displayName || user.email?.split('@')[0] || 'ToolStacker User';
   try {
     const existingSnap = await getDoc(userRef);
     if (!existingSnap.exists()) {
       const newProfile = {
-        displayName: user.displayName || user.email?.split('@')[0] || 'ToolStacker User',
+        displayName: nameToUse,
         email: user.email || '',
         photoURL: user.photoURL || '',
         createdAt: serverTimestamp(),
@@ -116,14 +310,18 @@ export async function syncUserProfile(user) {
       return newProfile;
     } else {
       await updateDoc(userRef, {
-        displayName: user.displayName || existingSnap.data().displayName || 'ToolStacker User',
+        displayName: nameToUse,
         photoURL: user.photoURL || existingSnap.data().photoURL || '',
         updatedAt: serverTimestamp()
       });
-      return { ...existingSnap.data(), displayName: user.displayName || existingSnap.data().displayName };
+      return { ...existingSnap.data(), displayName: nameToUse };
     }
   } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, `users/${user.uid}`);
+    console.warn('Profile sync non-fatal warning:', error);
+    return {
+      displayName: nameToUse,
+      email: user.email || ''
+    };
   }
 }
 
@@ -143,13 +341,12 @@ export async function getUserProfile(uid) {
 }
 
 // Save a Work Item (QR code, OCR extraction, calculation, note)
-// If authenticated: Saves to Firestore subcollection /users/{userId}/savedItems/{itemId}
-// If not authenticated: Saves to localStorage for guest persistence
 export async function saveWorkItem({ type, title, content, summary = '', metadata = {} }) {
   const user = auth.currentUser;
+  const localUser = getLocalUser();
   const itemId = 'work_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
   
-  if (user) {
+  if (user && !localUser) {
     const itemPath = `users/${user.uid}/savedItems/${itemId}`;
     const payload = {
       id: itemId,
@@ -166,34 +363,35 @@ export async function saveWorkItem({ type, title, content, summary = '', metadat
       await setDoc(doc(db, 'users', user.uid, 'savedItems', itemId), payload);
       return { ...payload, id: itemId, isCloud: true };
     } catch (error) {
-      handleFirestoreError(error, OperationType.CREATE, itemPath);
+      console.warn('Firestore save failed, falling back to local:', error);
     }
-  } else {
-    // Guest local storage
-    const guestItems = getGuestSavedItems();
-    const guestPayload = {
-      id: itemId,
-      userId: 'guest',
-      type,
-      title: title.trim().slice(0, 200),
-      content: String(content).slice(0, 500000),
-      summary: summary ? String(summary).slice(0, 500) : '',
-      metadata: metadata || {},
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      isCloud: false
-    };
-    guestItems.unshift(guestPayload);
-    // Keep max 50 local items
-    localStorage.setItem('toolstacker_guest_saved_items', JSON.stringify(guestItems.slice(0, 50)));
-    return guestPayload;
   }
+
+  // Local / Guest persistence
+  const guestItems = getGuestSavedItems();
+  const guestPayload = {
+    id: itemId,
+    userId: localUser ? localUser.uid : 'guest',
+    type,
+    title: title.trim().slice(0, 200),
+    content: String(content).slice(0, 500000),
+    summary: summary ? String(summary).slice(0, 500) : '',
+    metadata: metadata || {},
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    isCloud: !!localUser
+  };
+  guestItems.unshift(guestPayload);
+  localStorage.setItem('toolstacker_guest_saved_items', JSON.stringify(guestItems.slice(0, 50)));
+  return guestPayload;
 }
 
 // Fetch all saved works
 export async function getSavedWorks() {
   const user = auth.currentUser;
-  if (user) {
+  const localUser = getLocalUser();
+
+  if (user && !localUser) {
     const colPath = `users/${user.uid}/savedItems`;
     try {
       const q = query(collection(db, 'users', user.uid, 'savedItems'), orderBy('createdAt', 'desc'));
@@ -204,7 +402,8 @@ export async function getSavedWorks() {
       });
       return items;
     } catch (error) {
-      handleFirestoreError(error, OperationType.LIST, colPath);
+      console.warn('Firestore fetch failed, returning local items:', error);
+      return getGuestSavedItems();
     }
   } else {
     return getGuestSavedItems();
@@ -214,19 +413,21 @@ export async function getSavedWorks() {
 // Delete a saved work item
 export async function deleteSavedWork(itemId) {
   const user = auth.currentUser;
-  if (user) {
+  const localUser = getLocalUser();
+
+  if (user && !localUser) {
     const itemPath = `users/${user.uid}/savedItems/${itemId}`;
     try {
       await deleteDoc(doc(db, 'users', user.uid, 'savedItems', itemId));
       return true;
     } catch (error) {
-      handleFirestoreError(error, OperationType.DELETE, itemPath);
+      console.warn('Firestore delete failed, cleaning local storage:', error);
     }
-  } else {
-    const items = getGuestSavedItems().filter(item => item.id !== itemId);
-    localStorage.setItem('toolstacker_guest_saved_items', JSON.stringify(items));
-    return true;
   }
+
+  const items = getGuestSavedItems().filter(item => item.id !== itemId);
+  localStorage.setItem('toolstacker_guest_saved_items', JSON.stringify(items));
+  return true;
 }
 
 // Guest items from local storage

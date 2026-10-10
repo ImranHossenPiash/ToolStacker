@@ -6,6 +6,17 @@
 // Centralized Tools Registry
 export const TOOLS_DATA = [
   {
+    id: 'video-to-mp3',
+    title: 'Video to MP3 Converter',
+    shortDesc: 'Extract MP3 (up to 320kbps) or lossless WAV audio from video files with touch-friendly trimmer.',
+    category: 'Utilities',
+    categorySlug: 'utilities',
+    icon: 'music',
+    badge: 'New',
+    url: '/tools/video-to-mp3.html',
+    tags: ['video to mp3', 'video to audio', 'extract audio', 'mp4 to mp3', 'mkv to mp3', 'audio trimmer', 'wav', 'sound']
+  },
+  {
     id: 'image-to-text',
     title: 'Image-to-Text (OCR)',
     shortDesc: 'Extract plain and formatted text from photos, scans, and documents directly in browser.',

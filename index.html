@@ -533,6 +533,22 @@
                 </div>
                 <div class="space-y-1">
                   <a
+                    href="/tools/video-to-mp3.html"
+                    class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                      <i data-lucide="music" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs font-bold text-neutral-800 dark:text-neutral-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 flex items-center gap-1.5">
+                        <span>Video to MP3</span>
+                        <span class="px-1.5 py-0.2 rounded text-[9px] font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300">New</span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 line-clamp-1">Extract 320kbps MP3 or WAV with trimmer</p>
+                    </div>
+                  </a>
+
+                  <a
                     href="/tools/qr-code-generator.html"
                     class="group flex items-start gap-3 p-2 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800/60 transition-colors"
                   >
@@ -578,8 +594,18 @@
           </div>
         </nav>
 
-        <!-- Right Actions: Theme Toggle & Mobile Menu -->
+        <!-- Right Actions: Account, Theme Toggle & Mobile Menu -->
         <div class="flex items-center gap-2">
+          <!-- Account Link -->
+          <a
+            href="/profile.html"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
+            title="My Account & Saved Works"
+          >
+            <i data-lucide="user" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Account</span>
+          </a>
+
           <!-- Theme Toggle Button -->
           <button
             type="button"
@@ -932,6 +958,7 @@
               Popular Tools
             </h4>
             <ul class="space-y-2 text-xs text-neutral-600 dark:text-neutral-400">
+              <li><a href="/tools/video-to-mp3.html" class="hover:text-blue-600">Video to MP3 Converter</a></li>
               <li><a href="/tools/image-to-text.html" class="hover:text-blue-600">Image to Text (OCR)</a></li>
               <li><a href="/tools/discount-calculator.html" class="hover:text-blue-600">Discount Calculator</a></li>
               <li><a href="/tools/word-counter.html" class="hover:text-blue-600">Word Counter</a></li>
